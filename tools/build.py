@@ -10,8 +10,11 @@ import re
 import shutil
 import sys
 
-SRC = "/Users/DmitryRubin2/Downloads/Отчёт Теплее - для отправки.html"
-OUT = "/Users/DmitryRubin2/Documents/Claude/Projects/0._Different_projects/teplee-report"
+# Исходный артефакт и папка сайта; переопределяются переменными окружения.
+SRC = os.environ.get("TEPLEE_SRC",
+                     os.path.expanduser("~/Downloads/Отчёт Теплее - для отправки.html"))
+OUT = os.environ.get("TEPLEE_SITE",
+                     os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 SITE_URL = "https://mrdmitrydouble.github.io/teplee-report/"
 
 TITLE = "Теплее · Итоги созвона 05.08.2026 и проверка данными"
@@ -182,6 +185,38 @@ PROD_JS = """
   }, 400);
 })();
 </script>
+"""
+
+# ── без JS рантайм не прячет неразвёрнутый шаблон и не рисует графики ────────
+# Правило x-dc{display:none} приезжает из рантайма — при выключенном скриптинге
+# оно не применяется, и читатель видит сырой шаблон с {{ … }}. Прячем шаблон
+# средствами самого документа и объясняем, что произошло.
+NOSCRIPT_HEAD = """
+<noscript><style>x-dc { display: none !important; }</style></noscript>
+"""
+
+NOSCRIPT_BODY = """
+<noscript>
+<div style="min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;
+            font:17px/1.68 'Golos Text',system-ui,sans-serif;color:#231a13;text-wrap:pretty">
+  <div style="max-width:32rem">
+    <div style="font-size:12.5px;letter-spacing:.12em;text-transform:uppercase;color:#8f7a61;font-weight:600">
+      Кофейня «Теплее» · Лыткарино
+    </div>
+    <h1 style="font-family:'Playfair Display',Georgia,serif;font-weight:500;
+               font-size:clamp(28px,6.4vw,42px);line-height:1.1;margin:18px 0 16px">
+      Отчёт не открылся: в браузере выключен JavaScript
+    </h1>
+    <p style="color:#5b4835;margin:0 0 14px">
+      Отчёт держится на девяти интерактивных графиках — без JavaScript они не рисуются.
+    </p>
+    <p style="color:#5b4835;margin:0">
+      Включите JavaScript в настройках браузера и обновите страницу — или откройте
+      эту же ссылку в другом браузере.
+    </p>
+  </div>
+</div>
+</noscript>
 """
 
 NOT_FOUND = """<!DOCTYPE html>
@@ -380,8 +415,12 @@ def main():
 
     html = html.replace("<html>", '<html lang="ru">', 1)
     i = html.index("<head>") + len("<head>")
-    html = html[:i] + "\n" + "\n".join(head) + "\n" + PROD_CSS + html[i:]
+    html = html[:i] + "\n" + "\n".join(head) + "\n" + PROD_CSS + NOSCRIPT_HEAD + html[i:]
+    html = html.replace("<body>", "<body>" + NOSCRIPT_BODY, 1)
     html = html.replace("</body>", PROD_JS + "</body>", 1)
+
+    if html.count("<noscript>") != 2:
+        sys.exit("!! ожидалось два блока <noscript>, найдено %d" % html.count("<noscript>"))
 
     open(os.path.join(OUT, "index.html"), "w", encoding="utf-8").write(html)
     open(os.path.join(OUT, "404.html"), "w", encoding="utf-8").write(
