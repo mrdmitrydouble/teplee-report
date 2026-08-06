@@ -1,15 +1,70 @@
 <!DOCTYPE html>
 <html lang="ru"><head>
 <script>window.__resources={"https://unpkg.com/react@18.3.1/umd/react.production.min.js": "./assets/vendor/react.production.min.js", "https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js": "./assets/vendor/react-dom.production.min.js"};</script>
+<link rel="preload" href="./assets/fonts/golos-text-400-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="./assets/fonts/golos-text-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="./assets/fonts/playfair-display-500-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="./assets/fonts/playfair-display-500-latin.woff2" as="font" type="font/woff2" crossorigin>
 <meta name="robots" content="noindex, nofollow">
 <meta name="description" content="Кофейня «Теплее», Лыткарино. Что показали данные кассы yTimes за 10 месяцев — и что это меняет. Разбор по чекам, безубыточность, аренда, АУП.">
 <meta name="theme-color" content="#f4efe7">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 200 200%22%3E%3Crect width=%22200%22 height=%22200%22 rx=%2244%22 fill=%22%23f4efe7%22/%3E%3Cg transform=%22translate(100 104)%22 fill=%22none%22 stroke=%22%238a5a2b%22 stroke-width=%227%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Cpath d=%22M-34 -16h56v26a22 22 0 0 1-22 22h-12a22 22 0 0 1-22-22z%22/%3E%3Cpath d=%22M22 -8h11a13 13 0 0 1 0 26H22%22/%3E%3Cpath d=%22M-16 -34c-5 7 5 10 0 17M2 -34c-5 7 5 10 0 17%22/%3E%3C/g%3E%3C/svg%3E">
+<link rel="canonical" href="https://mrdmitrydouble.github.io/teplee-report/">
 <meta property="og:type" content="article">
 <meta property="og:locale" content="ru_RU">
+<meta property="og:site_name" content="Кофейня «Теплее»">
+<meta property="og:url" content="https://mrdmitrydouble.github.io/teplee-report/">
 <meta property="og:title" content="Теплее · Итоги созвона 05.08.2026 и проверка данными">
 <meta property="og:description" content="Кофейня «Теплее», Лыткарино. Что показали данные кассы yTimes за 10 месяцев — и что это меняет. Разбор по чекам, безубыточность, аренда, АУП.">
-<meta name="twitter:card" content="summary">
+<meta property="og:image" content="https://mrdmitrydouble.github.io/teplee-report/assets/img/og-cover.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:alt" content="Теплее · итоги созвона 05.08.2026">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Теплее · Итоги созвона 05.08.2026 и проверка данными">
+<meta name="twitter:description" content="Кофейня «Теплее», Лыткарино. Что показали данные кассы yTimes за 10 месяцев — и что это меняет. Разбор по чекам, безубыточность, аренда, АУП.">
+<meta name="twitter:image" content="https://mrdmitrydouble.github.io/teplee-report/assets/img/og-cover.jpg">
+
+<style>
+  /* Горизонтально прокручиваемые графики и таблицы.
+     Тень у края показывает, что блок сдвигается; на самом краю она гаснет
+     (перекрывается слоями с background-attachment: local).
+     overscroll-behavior не даёт свайпу по графику увести со страницы. */
+  .xscroll {
+    overscroll-behavior-x: contain;
+    background-image:
+      linear-gradient(to right, #fffdf9 40%, rgba(255,253,249,0)),
+      linear-gradient(to left,  #fffdf9 40%, rgba(255,253,249,0)),
+      radial-gradient(farthest-side at 0 50%,   rgba(90,60,28,.20), rgba(90,60,28,0)),
+      radial-gradient(farthest-side at 100% 50%, rgba(90,60,28,.20), rgba(90,60,28,0));
+    background-position: 0 0, 100% 0, 0 0, 100% 0;
+    background-repeat: no-repeat;
+    background-size: 40px 100%, 40px 100%, 15px 100%, 15px 100%;
+    background-attachment: local, local, scroll, scroll;
+  }
+  .xscroll:focus-visible {
+    outline: 2px solid #8a5a2b;
+    outline-offset: 3px;
+    border-radius: 10px;
+  }
+  /* Подсказка в подписи к рисунку — показывается скриптом только там,
+     где блок реально не помещается в экран. */
+  .swipe-hint { display: none; color: #a8703a; white-space: nowrap; }
+
+  a:focus-visible,
+  button:focus-visible,
+  [tabindex]:focus-visible {
+    outline: 2px solid #8a5a2b;
+    outline-offset: 3px;
+    border-radius: 8px;
+  }
+
+  @media print {
+    .xscroll { background-image: none !important; }
+    .swipe-hint { display: none !important; }
+  }
+</style>
 
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -19,10 +74,7 @@
 <x-dc>
 <helmet>
 <title>Теплее · Итоги созвона 05.08.2026 и проверка данными</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="light">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
 <style>/* cyrillic-ext */
 @font-face {
   font-family: 'Golos Text';
@@ -185,24 +237,6 @@
   src: url("./assets/fonts/jetbrains-mono-400-cyrillic.woff2") format('woff2');
   unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
 }
-/* greek */
-@font-face {
-  font-family: 'JetBrains Mono';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url("./assets/fonts/jetbrains-mono-400-greek.woff2") format('woff2');
-  unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
-}
-/* vietnamese */
-@font-face {
-  font-family: 'JetBrains Mono';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url("./assets/fonts/jetbrains-mono-400-vietnamese.woff2") format('woff2');
-  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
-}
 /* latin-ext */
 @font-face {
   font-family: 'JetBrains Mono';
@@ -239,24 +273,6 @@
   src: url("./assets/fonts/jetbrains-mono-400-cyrillic.woff2") format('woff2');
   unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
 }
-/* greek */
-@font-face {
-  font-family: 'JetBrains Mono';
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  src: url("./assets/fonts/jetbrains-mono-400-greek.woff2") format('woff2');
-  unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
-}
-/* vietnamese */
-@font-face {
-  font-family: 'JetBrains Mono';
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  src: url("./assets/fonts/jetbrains-mono-400-vietnamese.woff2") format('woff2');
-  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
-}
 /* latin-ext */
 @font-face {
   font-family: 'JetBrains Mono';
@@ -283,15 +299,6 @@
   font-display: swap;
   src: url("./assets/fonts/playfair-display-500-italic-cyrillic.woff2") format('woff2');
   unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
-}
-/* vietnamese */
-@font-face {
-  font-family: 'Playfair Display';
-  font-style: italic;
-  font-weight: 500;
-  font-display: swap;
-  src: url("./assets/fonts/playfair-display-500-italic-vietnamese.woff2") format('woff2');
-  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
 }
 /* latin-ext */
 @font-face {
@@ -320,15 +327,6 @@
   src: url("./assets/fonts/playfair-display-500-cyrillic.woff2") format('woff2');
   unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
 }
-/* vietnamese */
-@font-face {
-  font-family: 'Playfair Display';
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  src: url("./assets/fonts/playfair-display-500-vietnamese.woff2") format('woff2');
-  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
-}
 /* latin-ext */
 @font-face {
   font-family: 'Playfair Display';
@@ -355,15 +353,6 @@
   font-display: swap;
   src: url("./assets/fonts/playfair-display-500-cyrillic.woff2") format('woff2');
   unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
-}
-/* vietnamese */
-@font-face {
-  font-family: 'Playfair Display';
-  font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-  src: url("./assets/fonts/playfair-display-500-vietnamese.woff2") format('woff2');
-  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
 }
 /* latin-ext */
 @font-face {
@@ -540,7 +529,7 @@
 
 <h3 style="fontFamily:'Playfair Display',Georgia,serif;fontWeight:500;fontSize:22px;margin:1.6em 0 .5em;color:#231a13">Что изменилось для гостя</h3>
 <div style="background:#fffdf9;border:1px solid rgba(90,60,28,.12);borderRadius:18px;padding:22px;margin:16px 0;boxShadow:0 1px 3px rgba(74,50,22,.05)">
-  <p style="fontFamily:'JetBrains Mono',monospace;fontSize:12px;color:#8a5a2b;fontWeight:500;letterSpacing:.08em;textTransform:uppercase;margin:0 0 14px">Рис. 1 · Линейка основных напитков: было → стало</p>
+  <p style="fontFamily:'JetBrains Mono',monospace;fontSize:12px;color:#8a5a2b;fontWeight:500;letterSpacing:.08em;textTransform:uppercase;margin:0 0 14px">Рис. 1 · Линейка основных напитков: было → стало<span class="swipe-hint"> · листайте вбок →</span></p>
   <div id="figCups" style="display:flex;flexDirection:column;gap:0">{{ cupsFig }}</div>
   <p style="fontSize:15px;color:#5b4835;lineHeight:1.6;margin:16px 0 0">Цены и объёмы — из состава чеков (в названии каждой проданной позиции указан объём). В ту же неделю ассортимент за неделю сжался с 67 до 52 позиций (месячный счёт шире — см. Рис. 5), завтраки (сырники, каша, скрамбл) и панини — в ноль. Верхние ценники изменились всего на ±20 ₽, малые объёмы подорожали на 40–50 ₽ — но главное изменение спрятано в объёме, поэтому честная мера — <b style="fontWeight:600;color:#231a13">цена за литр</b>.</p>
 </div>
@@ -560,8 +549,8 @@
 
 <h3 style="fontFamily:'Playfair Display',Georgia,serif;fontWeight:500;fontSize:22px;margin:1.6em 0 .5em;color:#231a13">Реакция гостей — на первой же неделе</h3>
 <div style="background:#fffdf9;border:1px solid rgba(90,60,28,.12);borderRadius:18px;padding:22px;margin:16px 0;boxShadow:0 1px 3px rgba(74,50,22,.05)">
-  <p style="fontFamily:'JetBrains Mono',monospace;fontSize:12px;color:#8a5a2b;fontWeight:500;letterSpacing:.08em;textTransform:uppercase;margin:0 0 14px">Рис. 3 · Чеков в неделю, март 2025 — июль 2026</p>
-  <div style="overflowX:auto;WebkitOverflowScrolling:touch"><div id="chWeekly" style="minWidth:640px"></div></div>
+  <p style="fontFamily:'JetBrains Mono',monospace;fontSize:12px;color:#8a5a2b;fontWeight:500;letterSpacing:.08em;textTransform:uppercase;margin:0 0 14px">Рис. 3 · Чеков в неделю, март 2025 — июль 2026<span class="swipe-hint"> · листайте вбок →</span></p>
+  <div class="xscroll" style="overflowX:auto;WebkitOverflowScrolling:touch"><div id="chWeekly" style="minWidth:640px"></div></div>
   <div style="display:flex;flexWrap:wrap;gap:8px 20px;fontSize:14.5px;color:#5b4835;marginTop:12px">
     <span style="display:flex;alignItems:flex-start;gap:7px"><span style="width:13px;height:13px;borderRadius:4px;flex:none;background:#2f6fb8;marginTop:3px"></span>чеков в неделю (пн–вс)</span>
     <span style="display:flex;alignItems:flex-start;gap:7px"><span style="width:17px;height:0;flex:none;borderTop:3px dashed #c0ab8d;marginTop:8px"></span>≈318 в неделю — безубыток при нынешних расходах (45 чеков × 7 дней)</span>
@@ -600,8 +589,8 @@
 <div style="background:#fffdf9;border:1px solid rgba(90,60,28,.12);borderRadius:18px;padding:8px 22px;margin:16px 0;boxShadow:0 1px 3px rgba(74,50,22,.05)" id="figPhases">{{ phasesFig }}</div>
 
 <div style="background:#fffdf9;border:1px solid rgba(90,60,28,.12);borderRadius:18px;padding:22px;margin:16px 0;boxShadow:0 1px 3px rgba(74,50,22,.05)">
-  <p style="fontFamily:'JetBrains Mono',monospace;fontSize:12px;color:#8a5a2b;fontWeight:500;letterSpacing:.08em;textTransform:uppercase;margin:0 0 14px">Рис. 5 · Меню и поток гостей двигаются вместе (июль 2025 — июль 2026)</p>
-  <div style="overflowX:auto;WebkitOverflowScrolling:touch"><div style="minWidth:620px"><div id="chMenu"></div><div id="chChecks"></div></div></div>
+  <p style="fontFamily:'JetBrains Mono',monospace;fontSize:12px;color:#8a5a2b;fontWeight:500;letterSpacing:.08em;textTransform:uppercase;margin:0 0 14px">Рис. 5 · Меню и поток гостей двигаются вместе (июль 2025 — июль 2026)<span class="swipe-hint"> · листайте вбок →</span></p>
+  <div class="xscroll" style="overflowX:auto;WebkitOverflowScrolling:touch"><div style="minWidth:620px"><div id="chMenu"></div><div id="chChecks"></div></div></div>
   <p style="fontSize:15px;color:#5b4835;lineHeight:1.6;margin:14px 0 0">Вверху — сколько разных позиций реально продавалось за месяц, внизу — чеков в день. Сокращение меню (осень 2025) совпало с обвалом, расширение (март 2026, выделен зелёным) — с единственным подъёмом. Это совпадение на двух эпизодах, но оба раза сезонность учтена — и другого фактора такой силы в данных нет.</p>
 </div>
 </section>
@@ -619,8 +608,8 @@
 <div>
   <p style="fontFamily:'Playfair Display',Georgia,serif;fontSize:21px;fontWeight:500;fontStyle:italic;color:#231a13;lineHeight:1.35;margin:0 0 12px">«Что в меню флагман? Что продавалось вместе с капучино? Какую еду можно назвать флагманской?» <span style="display:inline-block;fontFamily:'Golos Text',sans-serif;fontStyle:normal;fontSize:12px;fontWeight:600;padding:3px 10px;borderRadius:999px;background:#f0e2ca;color:#5b4835;verticalAlign:4px">Елена</span></p>
   <p style="margin:0 0 12px;color:#3c2e21"><b style="fontWeight:600">Флагман — капучино:</b> он в 36% всех чеков (июль-2026: 474 шт, 152 тыс. ₽ = 26% выручки). Дальше латте (54 тыс.) и сезонная «Малина — белый шоколад» (39,5 тыс.). Состав чеков показывает, что было в связке с капучино и что из неё выпало:</p>
-  <p style="fontFamily:'JetBrains Mono',monospace;fontSize:12px;color:#8a5a2b;fontWeight:500;letterSpacing:.08em;textTransform:uppercase;margin:0 0 8px">Таблица 1 · Что лежит в чеке рядом с капучино</p>
-  <div style="overflowX:auto;WebkitOverflowScrolling:touch;margin:0 0 4px">
+  <p style="fontFamily:'JetBrains Mono',monospace;fontSize:12px;color:#8a5a2b;fontWeight:500;letterSpacing:.08em;textTransform:uppercase;margin:0 0 8px">Таблица 1 · Что лежит в чеке рядом с капучино<span class="swipe-hint"> · листайте вбок →</span></p>
+  <div class="xscroll" style="overflowX:auto;WebkitOverflowScrolling:touch;margin:0 0 4px">
     <sc-raw-table style="borderCollapse:collapse;width:100%;minWidth:560px;fontSize:15.5px;fontVariantNumeric:tabular-nums">
       <sc-raw-tr>
         <sc-raw-th style="padding:11px 12px;textAlign:left;borderBottom:1px solid #e3d5bd;fontSize:12.5px;textTransform:uppercase;letterSpacing:.06em;color:#8f7a61;fontWeight:600">Чеки с капучино</sc-raw-th>
@@ -646,8 +635,8 @@
   </div>
   <p style="margin:14px 0 0;color:#3c2e21"><b style="fontWeight:600">Флагманская еда по всей истории точки</b> — утренне-дневная: сырники, каша, скрамбл, панини и чиабатты, круассаны, сэндвичи. Несладкая еда приносила <b style="fontWeight:600">60–105 тыс. ₽ в месяц все первые десять месяцев</b> (сентябрь-2024 → июнь-2025) — и обнулилась 21.09.2025:</p>
   <div style="background:#fffdf9;border:1px solid rgba(90,60,28,.12);borderRadius:18px;padding:22px;margin:16px 0;boxShadow:0 1px 3px rgba(74,50,22,.05)">
-    <p style="fontFamily:'JetBrains Mono',monospace;fontSize:12px;color:#8a5a2b;fontWeight:500;letterSpacing:.08em;textTransform:uppercase;margin:0 0 14px">Рис. 6 · Выручка несладкой еды по месяцам, тыс. ₽</p>
-    <div style="overflowX:auto;WebkitOverflowScrolling:touch"><div id="chFood" style="minWidth:620px"></div></div>
+    <p style="fontFamily:'JetBrains Mono',monospace;fontSize:12px;color:#8a5a2b;fontWeight:500;letterSpacing:.08em;textTransform:uppercase;margin:0 0 14px">Рис. 6 · Выручка несладкой еды по месяцам, тыс. ₽<span class="swipe-hint"> · листайте вбок →</span></p>
+    <div class="xscroll" style="overflowX:auto;WebkitOverflowScrolling:touch"><div id="chFood" style="minWidth:620px"></div></div>
     <p style="fontSize:15px;color:#5b4835;lineHeight:1.6;margin:14px 0 0">Слева — старое меню еды (панини, чиабатты, бейглы, сырники, каши, скрамблы, сэндвичи); справа — попытки 2026 года (френч-доги, сэндвичи, косичка). Серая полоса — два разных отрезка: июль–сентябрь 2025 не пересчитаны тем же методом (меню менялось), а с 21.09.2025 по январь-2026 несладкой еды в меню действительно не было. 1–5 августа 2026 еда снова не продаётся. Точная методика — раздел 8.</p>
   </div>
 </div>
@@ -662,8 +651,8 @@
   <p style="margin:0 0 12px;color:#3c2e21"><b style="fontWeight:600">Причины</b> — см. контекст в разделе 2 (закупка, унификация меню, качество, посуда, смена управляющего). Про выросший ФОТ (фонд оплаты труда) — ниже. <b style="fontWeight:600">Результат по деньгам:</b> удельно себестоимость снизили честно — с ~33% выручки (лето-2025) до 26,6% (осень) и 23,3% (июль-2026); на каждой чашке зарабатывать стали заметно больше. Но чашек стало вдвое меньше, и в рублях это проигрыш: «выручка минус продукты» в июле <b style="fontWeight:600">736 тыс. ₽ → 449 тыс. ₽ за год</b>. Экономия на каждой чашке не окупила потерю гостей.</p>
   <p style="margin:0 0 12px;color:#3c2e21"><b style="fontWeight:600">Про ФОТ важное уточнение:</b> рост зарплатной статьи осенью-2025 (107 → 217 тыс./мес) — это не «прибавки на точке», а перераспределение <b style="fontWeight:600">общесетевых</b> управленческих расходов: летние точки на карьере закрылись, и их долю стали разносить на оставшиеся кофейни; сменилась и методика учёта. К июлю-2026, после сокращений в сети (шеф-повар, су-шеф и калькулятор — специалист по рецептурам и учёту), статья вернулась к 91 тыс./мес — уровню июня-2025:</p>
   <div style="background:#fffdf9;border:1px solid rgba(90,60,28,.12);borderRadius:18px;padding:22px;margin:16px 0;boxShadow:0 1px 3px rgba(74,50,22,.05)">
-    <p style="fontFamily:'JetBrains Mono',monospace;fontSize:12px;color:#8a5a2b;fontWeight:500;letterSpacing:.08em;textTransform:uppercase;margin:0 0 14px">Рис. 7 · Сетевые управленческие расходы, отнесённые на точку (тыс. ₽/мес)</p>
-    <div style="overflowX:auto;WebkitOverflowScrolling:touch"><div id="chAup" style="minWidth:620px"></div></div>
+    <p style="fontFamily:'JetBrains Mono',monospace;fontSize:12px;color:#8a5a2b;fontWeight:500;letterSpacing:.08em;textTransform:uppercase;margin:0 0 14px">Рис. 7 · Сетевые управленческие расходы, отнесённые на точку (тыс. ₽/мес)<span class="swipe-hint"> · листайте вбок →</span></p>
+    <div class="xscroll" style="overflowX:auto;WebkitOverflowScrolling:touch"><div id="chAup" style="minWidth:620px"></div></div>
     <p style="fontSize:15px;color:#5b4835;lineHeight:1.6;margin:14px 0 0">Подстатья «ФОТ АУП» в кассе. Что персонально входит в нынешние 91 тыс. и какая часть исчезла бы при закрытии точки — ключевой открытый вопрос (разделы 5 и 7).</p>
   </div>
 </div>
@@ -678,8 +667,8 @@
   <p style="fontFamily:'Playfair Display',Georgia,serif;fontSize:21px;fontWeight:500;fontStyle:italic;color:#231a13;lineHeight:1.35;margin:0 0 12px">«А во что тогда переформатировать — с учётом места, аудитории и конкурентов? И переформатировать ли вообще?» <span style="display:inline-block;fontFamily:'Golos Text',sans-serif;fontStyle:normal;fontSize:12px;fontWeight:600;padding:3px 10px;borderRadius:999px;background:#f0e2ca;color:#5b4835;verticalAlign:4px">Елена</span></p>
   <p style="margin:0 0 12px;color:#3c2e21"><b style="fontWeight:600">Короткий ответ: концепцию не менять — менять наполнение и расписание зала.</b> Аргумент простой: этот же зал по этому же адресу, уже при работающих кофейнях-конкурентах (One Price — с 2021 года, «Мус» — с осени 2024), весь свой первый год делал в среднем 75 чеков в день (от 64 в декабре до 86 в сентябре) и принёс <b style="fontWeight:600">+1,96 млн ₽</b> прибыли за сентябрь-2024 → сентябрь-2025 (по кассе, то есть с сетевыми расходами тех месяцев). Место и формат кассой доказаны. Да, рыночный тренд сейчас против формата (раздел 5) — но точка падала в восемь раз быстрее рынка, значит и главные потери, и главный резерв лежат не в тренде, а в собственных решениях.</p>
   <p style="margin:0 0 12px;color:#3c2e21"><b style="fontWeight:600">Что это за место (уточнили по открытым данным):</b> Лыткарино — 66,5 тыс. жителей, 22% старше 60. Точка стоит в жилом центре: в радиусе 300 м — ДК «Мир» с детскими кружками, женская консультация, детская поликлиника, библиотека. Транзитный узел (автостанция) занят «Мус», торгово-развлекательный (ТРЦ «Весна») — федеральным фастфудом, офисный — «Моти». Ниша «Теплее» — единственный в городе полноформатный зал: посадка + туалет + детская комната + работа до 22:00 (кофейни-конкуренты закрываются в 20:00). Коворкинга или антикафе в городе нет вообще.</p>
-  <p style="fontFamily:'JetBrains Mono',monospace;fontSize:12px;color:#8a5a2b;fontWeight:500;letterSpacing:.08em;textTransform:uppercase;margin:18px 0 8px">Таблица 2 · Варианты развития формата — к обсуждению, не решения</p>
-  <div style="overflowX:auto;WebkitOverflowScrolling:touch">
+  <p style="fontFamily:'JetBrains Mono',monospace;fontSize:12px;color:#8a5a2b;fontWeight:500;letterSpacing:.08em;textTransform:uppercase;margin:18px 0 8px">Таблица 2 · Варианты развития формата — к обсуждению, не решения<span class="swipe-hint"> · листайте вбок →</span></p>
+  <div class="xscroll" style="overflowX:auto;WebkitOverflowScrolling:touch">
     <sc-raw-table style="borderCollapse:collapse;width:100%;minWidth:600px;fontSize:15.5px;fontVariantNumeric:tabular-nums">
       <sc-raw-tr>
         <sc-raw-th style="padding:11px 12px;textAlign:left;borderBottom:1px solid #e3d5bd;fontSize:12.5px;textTransform:uppercase;letterSpacing:.06em;color:#8f7a61;fontWeight:600">Вариант</sc-raw-th>
@@ -730,15 +719,15 @@
 <h3 style="fontFamily:'Playfair Display',Georgia,serif;fontWeight:500;fontSize:22px;margin:1.2em 0 .5em;color:#231a13">Один и тот же год — три честных взгляда</h3>
 <p style="margin:0 0 10px;color:#3c2e21;maxWidth:70ch">На точку ежемесячно относится часть <b style="fontWeight:600">общесетевых</b> управленческих расходов — в кассе эта статья называется «АУП» (административно-управленческий персонал: управляющие, бухгалтерия, маркетинг сети). За последние 10 месяцев — 1,60 млн ₽. Считать её расходом точки целиком, не считать вовсе или считать по нынешнему сокращённому уровню — получаются три разные картины. Все три посчитаны на одних данных. (Не путать со сценариями А/Б/В из раздела 1: там — варианты решения, здесь — три способа посчитать текущий результат.)</p>
 <div style="background:#fffdf9;border:1px solid rgba(90,60,28,.12);borderRadius:18px;padding:22px;margin:16px 0;boxShadow:0 1px 3px rgba(74,50,22,.05)">
-  <p style="fontFamily:'JetBrains Mono',monospace;fontSize:12px;color:#8a5a2b;fontWeight:500;letterSpacing:.08em;textTransform:uppercase;margin:0 0 14px">Рис. 8 · Результат точки за октябрь-2025 → июль-2026 в трёх трактовках АУП</p>
-  <div style="overflowX:auto;WebkitOverflowScrolling:touch"><div id="chLens" style="minWidth:600px"></div></div>
+  <p style="fontFamily:'JetBrains Mono',monospace;fontSize:12px;color:#8a5a2b;fontWeight:500;letterSpacing:.08em;textTransform:uppercase;margin:0 0 14px">Рис. 8 · Результат точки за октябрь-2025 → июль-2026 в трёх трактовках АУП<span class="swipe-hint"> · листайте вбок →</span></p>
+  <div class="xscroll" style="overflowX:auto;WebkitOverflowScrolling:touch"><div id="chLens" style="minWidth:600px"></div></div>
   <p style="fontSize:15px;color:#5b4835;lineHeight:1.6;margin:14px 0 0">Убыток июля (−85 тыс. ₽) почти равен отнесённому за июль сетевому АУП (91 тыс. ₽): <b style="fontWeight:600;color:#231a13">без него точка в июле была в нуле (+6 тыс.)</b>. Какая трактовка правильная — зависит от того, что из АУП реально исчезнет при закрытии точки, а что просто переедет на другие точки сети. Это вопрос №1 в разделе 7.</p>
 </div>
 
 <h3 style="fontFamily:'Playfair Display',Georgia,serif;fontWeight:500;fontSize:22px;margin:1.6em 0 .5em;color:#231a13">Где безубыточность и сколько до неё</h3>
 <div style="background:#fffdf9;border:1px solid rgba(90,60,28,.12);borderRadius:18px;padding:22px;margin:16px 0;boxShadow:0 1px 3px rgba(74,50,22,.05)">
-  <p style="fontFamily:'JetBrains Mono',monospace;fontSize:12px;color:#8a5a2b;fontWeight:500;letterSpacing:.08em;textTransform:uppercase;margin:0 0 14px">Рис. 9 · Чеков в день: факт, безубыток, цели</p>
-  <div style="overflowX:auto;WebkitOverflowScrolling:touch"><div id="chScale" style="minWidth:600px"></div></div>
+  <p style="fontFamily:'JetBrains Mono',monospace;fontSize:12px;color:#8a5a2b;fontWeight:500;letterSpacing:.08em;textTransform:uppercase;margin:0 0 14px">Рис. 9 · Чеков в день: факт, безубыток, цели<span class="swipe-hint"> · листайте вбок →</span></p>
+  <div class="xscroll" style="overflowX:auto;WebkitOverflowScrolling:touch"><div id="chScale" style="minWidth:600px"></div></div>
   <p style="fontSize:15px;color:#5b4835;lineHeight:1.6;margin:14px 0 0">Шкала — чеков в день при среднем чеке 503 ₽ и структуре расходов июля-2026. Порог зависит от трактовки АУП и налогов: <b style="fontWeight:600;color:#231a13">рабочий ориентир 45 чеков в день</b> (все расходы как в кассе), при полном налоговом учёте — ближе к 50 <span style="display:inline-block;fontSize:12px;fontWeight:600;padding:2px 9px;borderRadius:999px;background:#f6e7c6;color:#6b4e0e;whiteSpace:nowrap">налоги в кассе учтены не полностью — уточняется</span>. Разрыв от текущего темпа до нуля — <b style="fontWeight:600;color:#231a13">примерно 6 чеков ≈ 3 000 ₽ выручки в день</b>. Ставка аренды 140 тыс. — сейчас 24% выручки (с коммуналкой 162 тыс. — 27,7%); здоровой нормой (15%) ставка станет при 61 чеке в день.</p>
   <p style="fontSize:15px;color:#5b4835;lineHeight:1.6;margin:10px 0 0">Продукты в расчёте порога взяты по фактическим закупкам (28,8% выручки) — это строже, чем 23,3% по рецептам из раздела 4: часть закупленного уходит в запасы, расходники и потери, поэтому для «нуля» честнее считать по деньгам, которые реально тратятся.</p>
 </div>
@@ -1049,7 +1038,7 @@ class Component extends DCLogic {
       h('span',null,''),h('span',null,'до 21.09.2025'),h('span',null,''),h('span',null,'с 21.09.2025'));
     const setStyle={display:'flex',gap:16,alignItems:'flex-end',flexWrap:'wrap',paddingTop:22};
     return h('div',{style:{display:'flex',flexDirection:'column'}},
-      h('div',{style:{overflowX:'auto',WebkitOverflowScrolling:'touch'}},
+      h('div',{className:'xscroll',style:{overflowX:'auto',WebkitOverflowScrolling:'touch'}},
         h('div',{style:{minWidth:600}},head,
           rows.map((r,i)=>h('div',{key:r.n,'data-row':'1',style:{display:'grid',gridTemplateColumns:'100px 1fr 28px 1.3fr',gap:10,
             alignItems:'end',padding:'14px 0 12px',borderBottom:i<2?'1px dashed '+CL.grid:'none'}},
@@ -1357,4 +1346,103 @@ class Component extends DCLogic {
 </script>
 
 
+
+<script>
+/* Доступность и подсказки для горизонтально прокручиваемых блоков.
+   Эти блоки шире экрана на телефоне: без tabindex до правой половины графика
+   не добраться с клавиатуры, а без подсказки читатель не понимает, что блок
+   вообще двигается. Атрибуты ставятся снаружи React — он их не перезаписывает,
+   потому что сам эти пропсы не задаёт. */
+(function () {
+  function label(sc) {
+    var svg = sc.querySelector('svg[aria-label]');
+    if (svg) return svg.getAttribute('aria-label') + ' — прокручивается вбок';
+    var cap = caption(sc);
+    if (cap) {
+      var copy = cap.cloneNode(true);
+      var h = copy.querySelector('.swipe-hint');
+      if (h) h.remove();
+      return copy.textContent.replace(/\s+/g, ' ').trim() + ' — прокручивается вбок';
+    }
+    return 'Прокручиваемая область — сдвиньте вбок';
+  }
+
+  function caption(sc) {
+    var node = sc;
+    while (node && node.parentElement) {
+      var prev = node.previousElementSibling;
+      if (prev && prev.tagName === 'P' && prev.querySelector('.swipe-hint')) return prev;
+      if (prev) return null;
+      node = node.parentElement;
+    }
+    return null;
+  }
+
+  function sync() {
+    var list = document.querySelectorAll('.xscroll');
+    for (var i = 0; i < list.length; i++) {
+      var sc = list[i];
+      var overflows = sc.scrollWidth > sc.clientWidth + 1;
+      if (overflows) {
+        if (sc.getAttribute('tabindex') === null) {
+          sc.setAttribute('tabindex', '0');
+          sc.setAttribute('role', 'group');
+          sc.setAttribute('aria-label', label(sc));
+        }
+      } else if (sc.getAttribute('tabindex') !== null) {
+        sc.removeAttribute('tabindex');
+        sc.removeAttribute('role');
+        sc.removeAttribute('aria-label');
+      }
+      var cap = caption(sc);
+      var hint = cap && cap.querySelector('.swipe-hint');
+      if (hint) hint.style.display = overflows ? 'inline' : 'none';
+    }
+  }
+
+  var timer = null;
+  function schedule() {
+    clearTimeout(timer);
+    timer = setTimeout(sync, 120);
+  }
+
+  function start() {
+    sync();
+    setTimeout(sync, 400);   // после того как графики смонтированы
+    setTimeout(sync, 1500);  // после подгрузки шрифтов
+    addEventListener('resize', schedule);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(sync);
+  }
+
+  if (document.readyState === 'loading') addEventListener('DOMContentLoaded', start);
+  else start();
+
+  /* Оглавление: состояние для скринридера и закрытие по Escape.
+     Клик по документу уже закрывает меню — им и пользуемся. */
+  function tocButton() {
+    var b = document.querySelectorAll('button');
+    for (var i = 0; i < b.length; i++) if (/Оглавление/.test(b[i].textContent)) return b[i];
+    return null;
+  }
+
+  function menuOpen() {
+    return document.querySelectorAll('a[href^="#s"]').length > 8;
+  }
+
+  addEventListener('keydown', function (e) {
+    if (e.key !== 'Escape' || !menuOpen()) return;
+    document.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+    var btn = tocButton();
+    if (btn) btn.focus();
+  });
+
+  setInterval(function () {
+    var btn = tocButton();
+    if (!btn) return;
+    var open = menuOpen() ? 'true' : 'false';
+    if (btn.getAttribute('aria-expanded') !== open) btn.setAttribute('aria-expanded', open);
+    if (!btn.hasAttribute('aria-haspopup')) btn.setAttribute('aria-haspopup', 'true');
+  }, 400);
+})();
+</script>
 </body></html>
