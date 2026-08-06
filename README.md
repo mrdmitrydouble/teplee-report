@@ -80,5 +80,18 @@ python3 tools/build.py && python3 tools/make_og.py
 
 ## Деплой
 
-GitHub Pages через GitHub Actions (`.github/workflows/pages.yml`).
-Пуш в `main` = публикация.
+GitHub Pages через GitHub Actions (`.github/workflows/pages.yml`). На домен
+выкладываются только `index.html`, `404.html`, `.nojekyll` и `assets/` —
+сборщик и этот README остаются в репозитории, но не публикуются.
+
+Публикация запускается командой:
+
+```bash
+gh workflow run pages.yml -R mrdmitrydouble/teplee-report
+```
+
+Триггер `push` в workflow объявлен, но на этом аккаунте GitHub не создаёт по пушу
+запусков пользовательских workflow — проверено четырьмя пушами подряд (GitHub видит
+`PushEvent`, а `?event=push` возвращает ноль запусков; `workflow_dispatch` и
+`schedule` при этом работают). Поэтому после пуша нужно запустить публикацию явно —
+командой выше или кнопкой **Run workflow** на вкладке Actions.
