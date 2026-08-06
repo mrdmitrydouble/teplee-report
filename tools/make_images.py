@@ -131,19 +131,26 @@ def main():
     svg_out = os.path.join(OUT, "assets/img/favicon.svg")
     open(svg_out, "w", encoding="utf-8").write(ICON_SVG)
 
-    icon_html = os.path.join(TMP, "icon.html")
-    open(icon_html, "w", encoding="utf-8").write(
-        "<html><head><style>html,body{margin:0;padding:0}"
-        "svg{display:block;width:180px;height:180px}</style></head>"
-        "<body>" + ICON_SVG + "</body></html>")
-    icon_png = os.path.join(TMP, "icon-180.png")
-    shot(icon_html, 180, 180, icon_png)
+    def render(size, radius):
+        html = os.path.join(TMP, "icon-%d.html" % size)
+        open(html, "w", encoding="utf-8").write(
+            "<html><head><style>html,body{margin:0;padding:0}"
+            "svg{display:block;width:%dpx;height:%dpx}</style></head>"
+            "<body>" % (size, size) + ICON_SVG.replace('rx="44"', 'rx="%d"' % radius)
+            + "</body></html>")
+        png = os.path.join(TMP, "icon-%d.png" % size)
+        shot(html, size, size, png)
+        return Image.open(png).convert("RGB")
 
-    base = Image.open(icon_png).convert("RGBA")
+    # iOS накладывает на ярлык собственную маску-скругление, поэтому квадрат
+    # рисуем во весь кадр — иначе по углам полезут светлые серпы.
     apple = os.path.join(OUT, "assets/img/apple-touch-icon.png")
-    base.convert("RGB").save(apple, "PNG", optimize=True)
+    render(180, 0).save(apple, "PNG", optimize=True)
+
+    # Для .ico рендерим 64 px и уменьшаем — со 180 обводка чашки на 16 px «плывёт».
     ico = os.path.join(OUT, "assets/img/favicon.ico")
-    base.save(ico, "ICO", sizes=[(16, 16), (32, 32), (48, 48)])
+    render(64, 14).save(ico, "ICO", sizes=[(16, 16), (32, 32), (48, 48)])
+
     print("favicon.svg / favicon.ico / apple-touch-icon.png:",
           os.path.getsize(svg_out), "/", os.path.getsize(ico), "/",
           os.path.getsize(apple), "байт")
