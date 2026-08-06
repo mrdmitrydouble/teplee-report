@@ -32,17 +32,6 @@ PRELOAD = [
     "playfair-display-500-latin.woff2",
 ]
 
-FAVICON = (
-    "data:image/svg+xml,"
-    "%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 200 200%22%3E"
-    "%3Crect width=%22200%22 height=%22200%22 rx=%2244%22 fill=%22%23f4efe7%22/%3E"
-    "%3Cg transform=%22translate(100 104)%22 fill=%22none%22 stroke=%22%238a5a2b%22 stroke-width=%227%22 "
-    "stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E"
-    "%3Cpath d=%22M-34 -16h56v26a22 22 0 0 1-22 22h-12a22 22 0 0 1-22-22z%22/%3E"
-    "%3Cpath d=%22M22 -8h11a13 13 0 0 1 0 26H22%22/%3E"
-    "%3Cpath d=%22M-16 -34c-5 7 5 10 0 17M2 -34c-5 7 5 10 0 17%22/%3E%3C/g%3E%3C/svg%3E"
-)
-
 # ── доработки: горизонтальные скроллеры, фокус, печать ───────────────────────
 PROD_CSS = """
 <style>
@@ -227,7 +216,9 @@ NOT_FOUND = """<!DOCTYPE html>
 <title>Страница не найдена · Теплее</title>
 <meta name="robots" content="noindex, nofollow">
 <meta name="theme-color" content="#f4efe7">
-<link rel="icon" href="__FAVICON__">
+<link rel="icon" href="/teplee-report/assets/img/favicon.ico" sizes="32x32">
+<link rel="icon" href="/teplee-report/assets/img/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/teplee-report/assets/img/apple-touch-icon.png">
 <style>
   @font-face {
     font-family: 'Golos Text'; font-style: normal; font-weight: 400; font-display: swap;
@@ -394,7 +385,9 @@ def main():
         '<meta name="robots" content="noindex, nofollow">',
         '<meta name="description" content="%s">' % DESC,
         '<meta name="theme-color" content="#f4efe7">',
-        '<link rel="icon" href="%s">' % FAVICON,
+        '<link rel="icon" href="./assets/img/favicon.ico" sizes="32x32">',
+        '<link rel="icon" href="./assets/img/favicon.svg" type="image/svg+xml">',
+        '<link rel="apple-touch-icon" href="./assets/img/apple-touch-icon.png">',
         '<link rel="canonical" href="%s">' % SITE_URL,
         '<meta property="og:type" content="article">',
         '<meta property="og:locale" content="ru_RU">',
@@ -424,7 +417,7 @@ def main():
 
     open(os.path.join(OUT, "index.html"), "w", encoding="utf-8").write(html)
     open(os.path.join(OUT, "404.html"), "w", encoding="utf-8").write(
-        NOT_FOUND.replace("__FAVICON__", FAVICON))
+        NOT_FOUND)
     open(os.path.join(OUT, ".nojekyll"), "w").write("")
 
     print("собрано →", OUT)
@@ -432,6 +425,13 @@ def main():
     print("  подсказок в подписях: %d" % html.count('class="swipe-hint"'))
     print("  снято preconnect: %d, дублей viewport: %d" % (n_pc, n_vp))
     print("  не выгружены неиспользуемые подмножества: %s" % ", ".join(sorted(dropped_fonts)))
+
+    # Картинки (превью ссылки и иконки) рисует make_images.py — сборка их стирает
+    # вместе со всем остальным, поэтому напоминаем, если их нет.
+    missing = [f for f in ("og-cover.jpg", "favicon.ico", "favicon.svg", "apple-touch-icon.png")
+               if not os.path.isfile(os.path.join(OUT, "assets/img", f))]
+    if missing:
+        print("  ! нет картинок: %s — запусти tools/make_images.py" % ", ".join(missing))
 
 
 if __name__ == "__main__":

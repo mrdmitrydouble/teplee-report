@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""Рисует og-cover.png (1200×630) для превью ссылки в мессенджерах.
+"""Рисует картинки сайта: превью ссылки для мессенджеров (1200×630),
+favicon.svg, favicon.ico и apple-touch-icon.png.
 Запускать ПОСЛЕ build.py — берёт шрифты и текстуру из собранного сайта."""
 
 import os
@@ -85,24 +86,67 @@ CARD = """<!DOCTYPE html>
 """
 
 
+# Кофейная чашка — тот же знак, что в шапке отчёта.
+ICON_SVG = """<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <rect width="200" height="200" rx="44" fill="#f4efe7"/>
+  <g transform="translate(100 104)" fill="none" stroke="#8a5a2b" stroke-width="7"
+     stroke-linecap="round" stroke-linejoin="round">
+    <path d="M-34 -16h56v26a22 22 0 0 1-22 22h-12a22 22 0 0 1-22-22z"/>
+    <path d="M22 -8h11a13 13 0 0 1 0 26H22"/>
+    <path d="M-16 -34c-5 7 5 10 0 17M2 -34c-5 7 5 10 0 17"/>
+  </g>
+</svg>
+"""
+
+
+def shot(html_path, width, height, png_path):
+    subprocess.run([
+        CHROME, "--headless", "--disable-gpu", "--hide-scrollbars",
+        "--force-device-scale-factor=1", "--allow-file-access-from-files",
+        "--window-size=%d,%d" % (width, height),
+        "--screenshot=" + png_path, "file://" + html_path,
+    ], check=True, capture_output=True)
+
+
 def main():
     if not os.path.isdir(os.path.join(OUT, "assets/fonts")):
         sys.exit("!! сначала запусти build.py")
+    from PIL import Image
+
+    # ── превью ссылки ───────────────────────────────────────────────────────
     card = os.path.join(TMP, "og-card.html")
     with open(card, "w", encoding="utf-8") as f:
         f.write(CARD.replace("FONTS", "file://" + OUT + "/assets/fonts")
                     .replace("IMG", "file://" + OUT + "/assets/img"))
     raw = os.path.join(TMP, "og-raw.png")
-    subprocess.run([
-        CHROME, "--headless", "--disable-gpu", "--hide-scrollbars",
-        "--force-device-scale-factor=1", "--allow-file-access-from-files",
-        "--window-size=1200,630", "--screenshot=" + raw, "file://" + card,
-    ], check=True, capture_output=True)
+    shot(card, 1200, 630, raw)
     # мессенджеры показывают превью как растр — JPEG втрое легче PNG с текстурой
-    from PIL import Image
     jpg = os.path.join(OUT, "assets/img/og-cover.jpg")
     Image.open(raw).convert("RGB").save(jpg, "JPEG", quality=88, optimize=True, progressive=True)
     print("og-cover.jpg:", os.path.getsize(jpg), "байт")
+
+    # ── иконки ──────────────────────────────────────────────────────────────
+    # SVG понимают современные браузеры, .ico — Safari и старые, PNG нужен iOS
+    # для ярлыка «на экран Домой».
+    svg_out = os.path.join(OUT, "assets/img/favicon.svg")
+    open(svg_out, "w", encoding="utf-8").write(ICON_SVG)
+
+    icon_html = os.path.join(TMP, "icon.html")
+    open(icon_html, "w", encoding="utf-8").write(
+        "<html><head><style>html,body{margin:0;padding:0}"
+        "svg{display:block;width:180px;height:180px}</style></head>"
+        "<body>" + ICON_SVG + "</body></html>")
+    icon_png = os.path.join(TMP, "icon-180.png")
+    shot(icon_html, 180, 180, icon_png)
+
+    base = Image.open(icon_png).convert("RGBA")
+    apple = os.path.join(OUT, "assets/img/apple-touch-icon.png")
+    base.convert("RGB").save(apple, "PNG", optimize=True)
+    ico = os.path.join(OUT, "assets/img/favicon.ico")
+    base.save(ico, "ICO", sizes=[(16, 16), (32, 32), (48, 48)])
+    print("favicon.svg / favicon.ico / apple-touch-icon.png:",
+          os.path.getsize(svg_out), "/", os.path.getsize(ico), "/",
+          os.path.getsize(apple), "байт")
 
 
 if __name__ == "__main__":

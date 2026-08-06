@@ -27,8 +27,10 @@ assets/
                                  не выгружаются — в тексте таких символов нет)
   img/paper-texture.png          фоновая текстура бумаги
   img/og-cover.jpg               превью ссылки в мессенджерах (1200×630)
+  img/favicon.svg .ico           иконка вкладки
+  img/apple-touch-icon.png       иконка ярлыка на iOS
 tools/build.py                   сборка сайта из исходного HTML-артефакта
-tools/make_og.py                 отрисовка og-cover.jpg
+tools/make_images.py             отрисовка превью и иконок
 .nojekyll                        отключает обработку Jekyll на GitHub Pages
 ```
 
@@ -73,10 +75,14 @@ python3 -m http.server 8765
 ## Пересборка
 
 ```bash
-python3 tools/build.py && python3 tools/make_og.py
+python3 tools/build.py && python3 tools/make_images.py
 ```
 
-Пути к исходному артефакту и к папке сайта — константами в начале `tools/build.py`.
+Порядок важен: `build.py` очищает папку сайта целиком, `make_images.py` дорисовывает
+превью и иконки поверх. Если запустить только сборку, она сама об этом скажет.
+
+Пути к исходному артефакту и к папке сайта берутся из переменных окружения
+`TEPLEE_SRC` и `TEPLEE_SITE`, по умолчанию — `~/Downloads/…` и корень репозитория.
 
 ## Деплой
 
