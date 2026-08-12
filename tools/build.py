@@ -11,8 +11,13 @@ import shutil
 import sys
 
 # Исходный артефакт и папка сайта; переопределяются переменными окружения.
-SRC = os.environ.get("TEPLEE_SRC",
-                     os.path.expanduser("~/Downloads/Отчёт Теплее - для отправки.html"))
+# По умолчанию — действующая редакция отчёта. Первая редакция
+# (~/Downloads/Отчёт Теплее - для отправки.html) оставлена как точка отката:
+# указывать её через TEPLEE_SRC осознанно, иначе сборка без переменной откатила
+# бы сайт на старую версию.
+SRC = os.environ.get("TEPLEE_SRC", os.path.expanduser(
+    "~/Documents/Claude/Projects/0._Different_projects/"
+    "Кофейня_Теплее_анализ_авг2026/Отчёт_Теплее_ред_2026-08-12.html"))
 OUT = os.environ.get("TEPLEE_SITE",
                      os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 SITE_URL = "https://mrdmitrydouble.github.io/teplee-report/"
@@ -59,6 +64,14 @@ PROD_CSS = """
   /* Подсказка в подписи к рисунку — показывается скриптом только там,
      где блок реально не помещается в экран. */
   .swipe-hint { display: none; color: #a8703a; white-space: nowrap; }
+
+  /* Плашки-пилюли в тексте свёрстаны с white-space: nowrap, чтобы короткие
+     подписи не ломались посреди фразы. Длинная плашка при этом распирает
+     документ вбок на всю свою длину — на телефоне вся страница уезжает.
+     На узком экране разрешаем перенос: короткие плашки этого не заметят. */
+  @media (max-width: 700px) {
+    .chip { white-space: normal !important; }
+  }
 
   a:focus-visible,
   button:focus-visible,
@@ -347,24 +360,37 @@ def main():
 
     html = re.sub(r'\s+integrity="[^"]*"', "", html)
 
+    # ── плашки-пилюли: класс для правила переноса на узком экране ───────────
+    html, n_chip = re.subn(
+        r'<span style="(?=[^"]*borderRadius:999px)(?=[^"]*whiteSpace:nowrap)([^"]*)">',
+        r'<span class="chip" style="\1">', html)
+    if not n_chip:
+        sys.exit("!! плашек не найдено — изменилась их вёрстка, правило переноса не сработает")
+
     # ── горизонтальные скроллеры: класс + подсказка в подписи ───────────────
+    # Редакция от 12.08.2026 добавила ленту изменений меню и две таблицы —
+    # прокручиваемых блоков стало 11 вместо 9, таблицы перенумерованы.
+    N_SCROLL = 11
+
     html, n_inline = re.subn(r'<div style="overflowX:auto;', '<div class="xscroll" style="overflowX:auto;', html)
     html, n_js = re.subn(r"h\('div',\{style:\{overflowX:'auto',WebkitOverflowScrolling:'touch'\}\}",
                          "h('div',{className:'xscroll',style:{overflowX:'auto',WebkitOverflowScrolling:'touch'}}", html)
-    if n_inline + n_js != 9:
-        sys.exit("!! ожидалось 9 прокручиваемых блоков, размечено %d" % (n_inline + n_js))
+    if n_inline + n_js != N_SCROLL:
+        sys.exit("!! ожидалось %d прокручиваемых блоков, размечено %d"
+                 % (N_SCROLL, n_inline + n_js))
 
     hint = '<span class="swipe-hint"> · листайте вбок →</span>'
     caption_re = re.compile(r"(<p style=\"fontFamily:'JetBrains Mono'[^\"]*\">(?:(?!</p>).)*?)(</p>)", re.S)
-    captions = ["Рис. 1 ", "Рис. 3 ", "Рис. 5 ", "Таблица 1 ", "Рис. 6 ",
-                "Рис. 7 ", "Таблица 2 ", "Рис. 8 ", "Рис. 9 "]
+    captions = ["Рис. 1 ", "Рис. 3 ", "Рис. 5 ", "Рис. 6 ", "Рис. 7 ", "Рис. 8 ", "Рис. 9 ",
+                "Таблица 1 ", "Таблица 2 ", "Таблица 3 ", "Таблица 4 "]
 
     def add_hint(m):
         return m.group(1) + hint + m.group(2) if any(c in m.group(1) for c in captions) else m.group(0)
 
     html, n_hint = caption_re.subn(add_hint, html)
-    if html.count('class="swipe-hint"') != 9:
-        sys.exit("!! подсказок размечено %d, ожидалось 9" % html.count('class="swipe-hint"'))
+    if html.count('class="swipe-hint"') != N_SCROLL:
+        sys.exit("!! подсказок размечено %d, ожидалось %d"
+                 % (html.count('class="swipe-hint"'), N_SCROLL))
 
     # ── дубль viewport из <helmet> (в <head> он уже есть) ───────────────────
     head_end = html.index("</head>")
@@ -423,6 +449,7 @@ def main():
     print("собрано →", OUT)
     print("  скроллеров размечено: %d (инлайн %d + React %d)" % (n_inline + n_js, n_inline, n_js))
     print("  подсказок в подписях: %d" % html.count('class="swipe-hint"'))
+    print("  плашек размечено: %d" % n_chip)
     print("  снято preconnect: %d, дублей viewport: %d" % (n_pc, n_vp))
     print("  не выгружены неиспользуемые подмножества: %s" % ", ".join(sorted(dropped_fonts)))
 

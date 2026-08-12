@@ -54,6 +54,14 @@
      где блок реально не помещается в экран. */
   .swipe-hint { display: none; color: #a8703a; white-space: nowrap; }
 
+  /* Плашки-пилюли в тексте свёрстаны с white-space: nowrap, чтобы короткие
+     подписи не ломались посреди фразы. Длинная плашка при этом распирает
+     документ вбок на всю свою длину — на телефоне вся страница уезжает.
+     На узком экране разрешаем перенос: короткие плашки этого не заметят. */
+  @media (max-width: 700px) {
+    .chip { white-space: normal !important; }
+  }
+
   a:focus-visible,
   button:focus-visible,
   [tabindex]:focus-visible {
@@ -465,8 +473,20 @@
   </div>
   <h1 style="fontFamily:'Playfair Display',Georgia,serif;fontWeight:500;fontSize:clamp(34px,6.4vw,58px);lineHeight:1.08;letterSpacing:-.012em;margin:18px 0 20px;maxWidth:24ch">Что показали данные кассы — и <span style="fontStyle:italic;color:#8a5a2b">что это меняет</span></h1>
   <p style="color:#5b4835;fontSize:17px;lineHeight:1.7;maxWidth:68ch;margin:0 0 14px">Документ для трёх участников созвона: <b style="fontWeight:600;color:#231a13">Дмитрий Р. и Елена</b> — инвесторы-совладельцы, <b style="fontWeight:600;color:#231a13">Дмитрий А.</b> — совладелец и управляющий всей сетью кофеен (Лыткарино, «Дзержинка», сезонные точки); на самой точке работает управляющая <b style="fontWeight:600;color:#231a13">Алиса</b> (с июля 2026).</p>
-  <p style="color:#5b4835;fontSize:17px;lineHeight:1.7;maxWidth:68ch;margin:0">После созвона все вопросы были проверены по первичным данным кассы yTimes — включая <b style="fontWeight:600;color:#231a13">состав каждого чека</b> (этот срез раньше не использовался, он и дал главные ответы). Чтение — 15 минут; вернуться в любое место можно через «Оглавление» в верхней панели.</p>
+  <p style="color:#5b4835;fontSize:17px;lineHeight:1.7;maxWidth:68ch;margin:0">После созвона все вопросы были проверены по первичным данным кассы yTimes — включая <b style="fontWeight:600;color:#231a13">состав каждого чека</b> (этот срез раньше не использовался, он и дал главные ответы). Чтение целиком — около 30 минут. Если времени мало: раздел 1 — что решили, раздел 3 — что меняли и что из этого вышло, раздел 6 — что можно делать. Вернуться в любое место можно через «Оглавление» в верхней панели.</p>
   <p style="color:#5b4835;fontSize:17px;lineHeight:1.7;maxWidth:68ch;margin:14px 0 0">Анализ и выводы делались с помощью искусственного интеллекта, а это значит, что в них гарантированно будут содержаться ошибки. Просьба к <b style="fontWeight:600;color:#231a13">Дмитрию А.</b> проверить данные и выводы. Каждая цифра сводится к отчёту кассы; как перепроверить — раздел 8.</p>
+
+  <div style="margin:22px 0 0;padding:18px 20px;background:#fffdf9;border:1px solid rgba(90,60,28,.14);borderLeft:3px solid #c9a06a;borderRadius:14px">
+    <p style="margin:0 0 10px;fontSize:12.5px;letterSpacing:.1em;textTransform:uppercase;color:#8f7a61;fontWeight:600">Редакция от 12 августа 2026 — что изменилось</p>
+    <ul style="margin:0;paddingLeft:1.15em;fontSize:16px;lineHeight:1.6;color:#3c2e21">
+      <li style="margin:.4em 0">По чекам восстановлена <b style="fontWeight:600;color:#231a13">вся история меню за два года</b>, а не один переход. Оказалось, что часть больших объёмов вернули ещё в апреле, а меню меняли каждый месяц — разделы 2 и 3 переписаны.</li>
+      <li style="margin:.4em 0">Августовские цифры <b style="fontWeight:600;color:#231a13">обновлены до 11 августа</b> (в первой редакции было пять дней).</li>
+      <li style="margin:.4em 0">Дмитрий А. ответил по «Дзержинке» — вопрос закрыт (разделы 4 и 7).</li>
+      <li style="margin:.4em 0"><b style="fontWeight:600;color:#231a13">Проверены внешние факторы</b> — погода по дням, городские события, конкуренты, население. Часть выводов от этого укрепилась, часть ослабла; всё разобрано в разделе 3.</li>
+      <li style="margin:.4em 0"><b style="fontWeight:600;color:#231a13">Учтены комментарии Дмитрия А.</b> к первой редакции: АУП и его план, налоги и юрлицо, судьба еды после 21.09, сравнение продаж капучино — разделы 3, 5 и 7.</li>
+      <li style="margin:.4em 0">Исправлены три неточности первой редакции: про еду осенью, про масштаб сокращения меню и про бабл-ти. Что именно — в разделе 8.</li>
+    </ul>
+  </div>
   <nav style="display:flex;flexWrap:wrap;gap:8px;margin:26px 0 4px">
     <sc-for list="{{ secs }}" as="s" hint-placeholder-count="8">
       <a href="{{ s.href }}" style="fontSize:14px;padding:8px 15px;border:1px solid rgba(90,60,28,.16);background:#fffdf9;borderRadius:999px;textDecoration:none;color:#5b4835" style-hover="borderColor:#c9a06a;color:#8a5a2b;background:#fff">
@@ -489,7 +509,7 @@
     <p style="fontFamily:'Playfair Display',Georgia,serif;fontSize:19px;fontWeight:600;margin:0 0 12px;color:#231a13">Зафиксировали</p>
     <ul style="margin:0;paddingLeft:1.15em;fontSize:16.5px;lineHeight:1.62;color:#3c2e21">
       <li style="margin:.45em 0">Рамка решения — три сценария: <b style="fontWeight:600">А</b> вывести в ноль/плюс и продать · <b style="fontWeight:600">Б</b> вывести в плюс и оставить · <b style="fontWeight:600">В</b> закрыть и распродать.</li>
-      <li style="margin:.45em 0">Закрытие сейчас — худший по деньгам выход: оборудование целой точки реально продать лишь за ~150–170 тыс. ₽ <span style="display:inline-block;fontSize:12px;fontWeight:600;padding:2px 9px;borderRadius:999px;background:#f0e2ca;color:#5b4835;whiteSpace:nowrap">оценка Дмитрия А.</span></li>
+      <li style="margin:.45em 0">Закрытие сейчас — худший по деньгам выход: оборудование целой точки реально продать лишь за ~150–170 тыс. ₽ <span class="chip" style="display:inline-block;fontSize:12px;fontWeight:600;padding:2px 9px;borderRadius:999px;background:#f0e2ca;color:#5b4835;whiteSpace:nowrap">оценка Дмитрия А.</span></li>
       <li style="margin:.45em 0">Общее желание — сделать одну серьёзную попытку исправления до развилки. <b style="fontWeight:600">Сам план — на следующий разговор.</b></li>
     </ul>
   </div>
@@ -506,6 +526,7 @@
     <ul style="margin:0;paddingLeft:1.15em;fontSize:16.5px;lineHeight:1.62;color:#3c2e21">
       <li style="margin:.45em 0">Канал связи: Viber без VPN не заработал — <b style="fontWeight:600">общего канала по-прежнему нет</b>.</li>
       <li style="margin:.45em 0">Стоп-лосс: до какого месяца и какой суммы поддерживаем точку.</li>
+      <li style="margin:.45em 0">Налоги: юрлицо подходит к порогу НДС — по словам Дмитрия А., возможно, до конца августа; нужно быстрое решение (раздел 7).</li>
       <li style="margin:.45em 0">Условия «совместного управления» — что конкретно предлагается.</li>
       <li style="margin:.45em 0">Кто отвечает за исполнение изменений и по каким цифрам меряем результат.</li>
     </ul>
@@ -514,7 +535,8 @@
     <p style="fontFamily:'Playfair Display',Georgia,serif;fontSize:19px;fontWeight:600;margin:0 0 12px;color:#231a13">Проработано после созвона</p>
     <ul style="margin:0;paddingLeft:1.15em;fontSize:16.5px;lineHeight:1.62;color:#3c2e21">
       <li style="margin:.45em 0">Пересняты данные кассы за 24 месяца + <b style="fontWeight:600">впервые: состав чеков</b> (объёмы напитков, «с собой»/зал, что покупают вместе) и история смен.</li>
-      <li style="margin:.45em 0">Перелом датирован <b style="fontWeight:600">с точностью до дня</b>; пересчитаны цены «за литр», безубыточность, три взгляда на прибыль.</li>
+      <li style="margin:.45em 0">По чекам восстановлена <b style="fontWeight:600">вся история меню</b>: 302 позиции за 25 месяцев, объёмы напитков по датам, что вводили и что выводили каждый месяц.</li>
+      <li style="margin:.45em 0">Изменения меню датированы <b style="fontWeight:600">с точностью до дня</b>; пересчитаны цены «за литр», безубыточность, три взгляда на прибыль.</li>
       <li style="margin:.45em 0">Собран внешний контур: рынок кофеен 2026, конкуренты, город.</li>
     </ul>
   </div>
@@ -524,7 +546,7 @@
   <div style="background:linear-gradient(#fffdf9,#fdf8f0);border:1px solid rgba(90,60,28,.12);borderRadius:18px;padding:20px">
     <div style="fontFamily:'Playfair Display',Georgia,serif;fontSize:clamp(30px,5vw,42px);fontWeight:500;lineHeight:1.05;color:#231a13;fontVariantNumeric:tabular-nums">{{ kpi1 }}</div>
     <div style="fontSize:15px;color:#3c2e21;marginTop:8px;lineHeight:1.4">чеков в день, июль-2026</div>
-    <div style="fontSize:13.5px;color:#8f7a61;marginTop:4px">год назад — 78,1</div>
+    <div style="fontSize:13.5px;color:#8f7a61;marginTop:4px">год назад — 78,1 · август 1–11: <b style="fontWeight:600;color:#1c7a4a">40,7</b></div>
   </div>
   <div style="background:linear-gradient(#fffdf9,#fdf8f0);border:1px solid rgba(90,60,28,.12);borderRadius:18px;padding:20px">
     <div style="fontFamily:'Playfair Display',Georgia,serif;fontSize:clamp(30px,5vw,42px);fontWeight:500;lineHeight:1.05;color:#231a13;fontVariantNumeric:tabular-nums">≈{{ kpi2 }}</div>
@@ -545,81 +567,164 @@
 </section>
 
 <!-- ═══════════ 2 ═══════════ -->
-<section id="s2" data-screen-label="2 Перелом 21 сентября" style="scrollMarginTop:80px;marginTop:64px">
+<section id="s2" data-screen-label="2 Изменения 21 сентября" style="scrollMarginTop:80px;marginTop:64px">
 <div style="display:flex;alignItems:center;gap:16px;margin:0 0 34px;color:#c9a06a"><span style="flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(168,112,58,.35))"></span><span style="display:flex;alignItems:center;gap:7px"><svg sc-camel-view-box="0 0 24 24" width="15" height="15" fill="none" aria-hidden="true" style="display:block;opacity:.85"><g transform="rotate(-38 12 12)"><ellipse cx="12" cy="12" rx="5.2" ry="8.2" fill="#f0e2ca" stroke="#c9a06a" stroke-width="1.4"></ellipse><path d="M12 4.4c-1.5 2.1 1.5 3.3 0 5.4-1.5 2.1 1.5 3.3 0 5.4" stroke="#c9a06a" stroke-width="1.4" stroke-linecap="round"></path></g></svg><svg sc-camel-view-box="0 0 24 24" width="11" height="11" fill="none" aria-hidden="true" style="display:block;opacity:.5"><g transform="rotate(22 12 12)"><ellipse cx="12" cy="12" rx="5.2" ry="8.2" fill="#f0e2ca" stroke="#c9a06a" stroke-width="1.7"></ellipse><path d="M12 4.4c-1.5 2.1 1.5 3.3 0 5.4-1.5 2.1 1.5 3.3 0 5.4" stroke="#c9a06a" stroke-width="1.7" stroke-linecap="round"></path></g></svg></span><span style="flex:1;height:1px;background:linear-gradient(90deg,rgba(168,112,58,.35),transparent)"></span></div>
 <h2 style="fontFamily:'Playfair Display',Georgia,serif;fontWeight:500;fontSize:clamp(25px,4.2vw,36px);lineHeight:1.2;letterSpacing:-.008em;margin:0 0 18px;display:flex;alignItems:baseline;gap:14px">
   <span style="flex:none;width:38px;height:38px;borderRadius:50%;background:#f0e2ca;border:1px solid #c9a06a;color:#8a5a2b;display:inline-flex;alignItems:center;justifyContent:center;fontSize:18px;transform:translateY(4px)">2</span>
-  <span>Главная находка: перелом случился в один день — 21 сентября 2025</span>
+  <span>Что изменилось 21 сентября 2025 — и что стало с линейкой потом</span>
 </h2>
-<p style="margin:0 0 10px;color:#3c2e21;maxWidth:70ch">Раньше мы говорили «осенние решения», «сентябрь–октябрь». Почековые данные дали точную дату: <b style="fontWeight:600">по 20.09.2025 включительно касса продавала одну линейку напитков, с 21.09 — другую.</b> В тот же пакет вошли цены, объёмы, сокращение меню и завтраки.</p>
+<p style="margin:0 0 10px;color:#3c2e21;maxWidth:70ch">Раньше в разговоре звучало «осенние решения», «сентябрь–октябрь». Почековые данные дали точную дату: <b style="fontWeight:600">по 20.09.2025 включительно касса продавала одну линейку напитков, с 21.09 — другую</b>, без переходного периода. Этим обновлением одним днём поменялись цены, объёмы и ассортимент напитков. С едой картина не одномоментная: завтраки продавались всё реже уже с начала сентября и после 21-го из чеков исчезли, а сэндвичи и чиабатты прервались на десять дней и с октября продавались снова — подробно в разделе 3. Перенастройка 21 сентября была не последней: в апреле 2026 часть больших объёмов вернули — поэтому ниже три состояния, а не два.</p>
 
-<h3 style="fontFamily:'Playfair Display',Georgia,serif;fontWeight:500;fontSize:22px;margin:1.6em 0 .5em;color:#231a13">Что изменилось для гостя</h3>
+<h3 style="fontFamily:'Playfair Display',Georgia,serif;fontWeight:500;fontSize:22px;margin:1.6em 0 .5em;color:#231a13">Что было в стакане: до, после и сейчас</h3>
 <div style="background:#fffdf9;border:1px solid rgba(90,60,28,.12);borderRadius:18px;padding:22px;margin:16px 0;boxShadow:0 1px 3px rgba(74,50,22,.05)">
-  <p style="fontFamily:'JetBrains Mono',monospace;fontSize:12px;color:#8a5a2b;fontWeight:500;letterSpacing:.08em;textTransform:uppercase;margin:0 0 14px">Рис. 1 · Линейка основных напитков: было → стало<span class="swipe-hint"> · листайте вбок →</span></p>
+  <p style="fontFamily:'JetBrains Mono',monospace;fontSize:13.5px;color:#8a5a2b;fontWeight:600;letterSpacing:.06em;textTransform:uppercase;lineHeight:1.4;margin:0 0 16px;paddingBottom:9px;borderBottom:1.5px solid #e3d5bd">Рис. 1 · Объёмы и цены основных напитков в три момента времени<span class="swipe-hint"> · листайте вбок →</span></p>
   <div id="figCups" style="display:flex;flexDirection:column;gap:0">{{ cupsFig }}</div>
-  <p style="fontSize:15px;color:#5b4835;lineHeight:1.6;margin:16px 0 0">Цены и объёмы — из состава чеков (в названии каждой проданной позиции указан объём). В ту же неделю ассортимент за неделю сжался с 67 до 52 позиций (месячный счёт шире — см. Рис. 5), завтраки (сырники, каша, скрамбл) и панини — в ноль. Верхние ценники изменились всего на ±20 ₽, малые объёмы подорожали на 40–50 ₽ — но главное изменение спрятано в объёме, поэтому честная мера — <b style="fontWeight:600;color:#231a13">цена за литр</b>.</p>
+  <p style="fontSize:15px;color:#5b4835;lineHeight:1.6;margin:16px 0 0">Объём и цена — из состава чеков: в названии каждой проданной позиции записан объём («Латте 600 мл. с собой»). Верхние ценники в сентябре изменились всего на ±20 ₽, малые объёмы подорожали на 40–50 ₽, а основное изменение пришлось на объём — поэтому сопоставимая мера здесь <b style="fontWeight:600;color:#231a13">цена за литр</b>. У рафа и какао до 21.09 объём в кассе не записан (проходил модификатором «стандарт» / «двойной»), поэтому он не указан — придумывать его мы не стали.</p>
+  <p style="fontSize:15px;color:#5b4835;lineHeight:1.6;margin:12px 0 0">Остальные напитки, коротко: <b style="fontWeight:600;color:#231a13">флэт уайт</b> 0,25 и 0,5 л → только 0,2 л (по большому стакану это самое сильное изменение из всех — 720 ₽/л было, 1 650 ₽/л стало), потолок не возвращали; <b style="fontWeight:600;color:#231a13">какао</b> — «стандарт»/«двойной» → 0,2 л, в апреле 2026 добавили 0,4 л; <b style="fontWeight:600;color:#231a13">фильтр</b> 0,2 и 0,4 → 0,2 и 0,3; <b style="fontWeight:600;color:#231a13">айс-латте</b> 0,4 л всё время, объём не менялся.</p>
 </div>
 
-<div style="borderLeft:2px solid #c9a06a;padding:14px 18px;background:#fffdf9;borderRadius:0 14px 14px 0;fontSize:16px;color:#5b4835;lineHeight:1.62;margin:18px 0"><b style="fontWeight:600;color:#231a13">Зачем это делалось — контекст от Дмитрия А. (созвон):</b> дорожала закупка и ожидался дальнейший рост цен на зерно; меню унифицировали по сети, чтобы удержать «поплывшую» рецептуру; большие объёмы не в кого было наливать в зале (нет посуды), и они считались несовместимыми с образом аккуратной кофейни; параллельно срочно меняли управляющего. Мотивы рациональные — вопрос в том, что дал их суммарный эффект. Смотрим на данные.</div>
+<div style="borderLeft:2px solid #c9a06a;padding:14px 18px;background:#fffdf9;borderRadius:0 14px 14px 0;fontSize:16px;color:#5b4835;lineHeight:1.62;margin:18px 0"><b style="fontWeight:600;color:#231a13">Зачем это делалось — контекст от Дмитрия А. (созвон):</b> дорожала закупка и ожидался дальнейший рост цен на зерно; меню унифицировали по сети, чтобы удержать «поплывшую» рецептуру; большие объёмы не в кого было наливать в зале (нет посуды), и они считались несовместимыми с образом аккуратной кофейни; параллельно срочно меняли управляющего. Дальше в разделе — что происходило с продажами после этого обновления.</div>
 
-<h3 style="fontFamily:'Playfair Display',Georgia,serif;fontWeight:500;fontSize:22px;margin:1.6em 0 .5em;color:#231a13">Почему потолок объёма — это важно</h3>
+<div style="borderLeft:2px solid #c9a06a;padding:14px 18px;background:#fffdf9;borderRadius:0 14px 14px 0;fontSize:16px;color:#5b4835;lineHeight:1.62;margin:18px 0"><b style="fontWeight:600;color:#231a13">Цены росли и до сентября, постепенно.</b> Большой капучино: 270 ₽ (осень 2024) → 300 (декабрь) → 310 (март 2025) → 330 (июнь). Большой американо за тот же год — 200 → 270 ₽. То есть 21 сентября — это не первое подорожание за год, а смена продукта: ценник почти на месте, объём меньше.</div>
+
+<h3 style="fontFamily:'Playfair Display',Georgia,serif;fontWeight:500;fontSize:22px;margin:1.6em 0 .5em;color:#231a13">Почему важен именно потолок объёма</h3>
 <div style="background:#fffdf9;border:1px solid rgba(90,60,28,.12);borderRadius:18px;padding:22px;margin:16px 0;boxShadow:0 1px 3px rgba(74,50,22,.05)">
-  <p style="fontFamily:'JetBrains Mono',monospace;fontSize:12px;color:#8a5a2b;fontWeight:500;letterSpacing:.08em;textTransform:uppercase;margin:0 0 14px">Рис. 2 · Какую долю продаж капучино делает самый большой доступный стакан</p>
+  <p style="fontFamily:'JetBrains Mono',monospace;fontSize:13.5px;color:#8a5a2b;fontWeight:600;letterSpacing:.06em;textTransform:uppercase;lineHeight:1.4;margin:0 0 16px;paddingBottom:9px;borderBottom:1.5px solid #e3d5bd">Рис. 2 · Какую долю продаж делает самый большой доступный стакан</p>
   <div id="chVolumes"></div>
   <div style="display:flex;flexWrap:wrap;gap:8px 20px;fontSize:14.5px;color:#5b4835;marginTop:12px">
     <span style="display:flex;alignItems:center;gap:7px"><span style="width:13px;height:13px;borderRadius:4px;flex:none;background:#2f6fb8"></span>самый большой из доступных</span>
     <span style="display:flex;alignItems:center;gap:7px"><span style="width:13px;height:13px;borderRadius:4px;flex:none;background:#f0e2ca;border:1px solid #ddc9a8"></span>меньший</span>
   </div>
-  <p style="fontSize:15px;color:#5b4835;lineHeight:1.6;margin:14px 0 0">По чекам: <b style="fontWeight:600;color:#231a13">какой потолок ни поставь, на него приходится 62–78% продаж капучино.</b> Пока продавался 0,4 — большинство покупок было 0,4; убрали — большинство упёрлось в 0,3. Важно: доля 62% была и в 2025-м, при полном потоке гостей, — это устройство спроса, а не «остались одни любители большого». Большой объём — основной продукт точки. Сегодня у «Мус Кофе» капучино 0,4 л стоит 280 ₽ — дешевле нашего 0,3.</p>
+  <p style="fontSize:15px;color:#5b4835;lineHeight:1.6;margin:14px 0 0">Зачем этот график: он отвечает на вопрос, что происходит со спросом, когда меняется самый большой доступный стакан. Ответ по верхней половине: <b style="fontWeight:600;color:#231a13">какой потолок ни поставь, на него приходится 62–78% продаж капучино</b> — верхний объём каждый раз оказывается основным продуктом, а не нишей. Пока продавался 0,4 — большинство покупок было 0,4; стал потолком 0,3 — большинство перешло на него. Доля 62% была и в 2025-м, при полном потоке гостей, то есть это устройство спроса, а не следствие спада.</p>
+  <p style="fontSize:15px;color:#5b4835;lineHeight:1.6;margin:12px 0 0">Нижняя половина — самая интересная. Апрельский возврат 0,6 л у латте даёт то, чего в данных больше нигде нет: <b style="fontWeight:600;color:#231a13">прямую проверку на собственных гостях.</b> Доля большого стакана росла четыре месяца подряд — 8% → 23% → 31% → 36% → 46%. Спрос на объём подтверждается, но <b style="fontWeight:600;color:#231a13">набирается он месяцами, а не за неделю</b> — гости узнают о возврате постепенно. Это стоит закладывать в ожидания от любых похожих шагов.</p>
+  <p style="fontSize:15px;color:#5b4835;lineHeight:1.6;margin:12px 0 0">Для сравнения по рынку: у «Мус Кофе» капучино 0,4 л стоит 280 ₽ — дешевле, чем наш 0,3 л за 350 ₽ <span class="chip" style="display:inline-block;fontSize:12px;fontWeight:600;padding:2px 9px;borderRadius:999px;background:#f0e2ca;color:#5b4835;whiteSpace:nowrap">фото меню-борда, авг-2026</span>.</p>
 </div>
 
-<h3 style="fontFamily:'Playfair Display',Georgia,serif;fontWeight:500;fontSize:22px;margin:1.6em 0 .5em;color:#231a13">Реакция гостей — на первой же неделе</h3>
+<h3 style="fontFamily:'Playfair Display',Georgia,serif;fontWeight:500;fontSize:22px;margin:1.6em 0 .5em;color:#231a13">Как отреагировали гости</h3>
 <div style="background:#fffdf9;border:1px solid rgba(90,60,28,.12);borderRadius:18px;padding:22px;margin:16px 0;boxShadow:0 1px 3px rgba(74,50,22,.05)">
-  <p style="fontFamily:'JetBrains Mono',monospace;fontSize:12px;color:#8a5a2b;fontWeight:500;letterSpacing:.08em;textTransform:uppercase;margin:0 0 14px">Рис. 3 · Чеков в неделю, март 2025 — июль 2026<span class="swipe-hint"> · листайте вбок →</span></p>
+  <p style="fontFamily:'JetBrains Mono',monospace;fontSize:13.5px;color:#8a5a2b;fontWeight:600;letterSpacing:.06em;textTransform:uppercase;lineHeight:1.4;margin:0 0 16px;paddingBottom:9px;borderBottom:1.5px solid #e3d5bd">Рис. 3 · Чеков в неделю, март 2025 — июль 2026<span class="swipe-hint"> · листайте вбок →</span></p>
   <div class="xscroll" style="overflowX:auto;WebkitOverflowScrolling:touch"><div id="chWeekly" style="minWidth:640px"></div></div>
   <div style="display:flex;flexWrap:wrap;gap:8px 20px;fontSize:14.5px;color:#5b4835;marginTop:12px">
     <span style="display:flex;alignItems:flex-start;gap:7px"><span style="width:13px;height:13px;borderRadius:4px;flex:none;background:#2f6fb8;marginTop:3px"></span>чеков в неделю (пн–вс)</span>
     <span style="display:flex;alignItems:flex-start;gap:7px"><span style="width:17px;height:0;flex:none;borderTop:3px dashed #c0ab8d;marginTop:8px"></span>≈318 в неделю — безубыток при нынешних расходах (45 чеков × 7 дней)</span>
   </div>
-  <p style="fontSize:15px;color:#5b4835;lineHeight:1.6;margin:14px 0 0">За полгода до перелома не было ни одной недели ниже 488 чеков. После 21.09 — лишь одна неделя из 45 поднялась выше 500 (29.09). Наведите или коснитесь графика — покажет значения недели.</p>
+  <p style="fontSize:15px;color:#5b4835;lineHeight:1.6;margin:14px 0 0">За полгода до 21 сентября не было ни одной недели ниже 488 чеков. После 21.09 выше 500 поднялась одна неделя из 45 (29.09). Наведите или коснитесь графика — покажет значения недели.</p>
 </div>
 
 <div style="display:grid;gridTemplateColumns:repeat(auto-fit,minmax(320px,1fr));gap:16px;margin:16px 0">
   <div style="background:#fffdf9;border:1px solid rgba(90,60,28,.12);borderRadius:18px;padding:22px;boxShadow:0 1px 3px rgba(74,50,22,.05)">
-    <p style="fontFamily:'JetBrains Mono',monospace;fontSize:12px;color:#8a5a2b;fontWeight:500;letterSpacing:.08em;textTransform:uppercase;margin:0 0 14px">Рис. 4 · Это не сезон: тот же календарь год назад</p>
+    <p style="fontFamily:'JetBrains Mono',monospace;fontSize:13.5px;color:#8a5a2b;fontWeight:600;letterSpacing:.06em;textTransform:uppercase;lineHeight:1.4;margin:0 0 16px;paddingBottom:9px;borderBottom:1.5px solid #e3d5bd">Рис. 4 · Тот же календарь год назад — сезон учтён</p>
     <div id="chDecades"></div>
     <div style="display:flex;flexWrap:wrap;gap:8px 20px;fontSize:14.5px;color:#5b4835;marginTop:10px">
       <span style="display:flex;alignItems:center;gap:7px"><span style="width:13px;height:13px;borderRadius:4px;flex:none;background:#2f6fb8"></span>2024</span>
       <span style="display:flex;alignItems:center;gap:7px"><span style="width:13px;height:13px;borderRadius:4px;flex:none;background:#d9722f"></span>2025</span>
     </div>
-    <p style="fontSize:15px;color:#5b4835;lineHeight:1.6;margin:14px 0 0">Чеков в день. Конец сентября проседает всегда: в 2024-м −8,6%, и октябрь отыграл. В 2025-м просадка <b style="fontWeight:600;color:#231a13">−20,5%</b>, а октябрь остался на дне: 64,3 чека в день против 84,2 годом раньше. Сверх обычного сезонного спада точка потеряла ещё ≈13% гостей — сразу.</p>
+    <p style="fontSize:15px;color:#5b4835;lineHeight:1.6;margin:14px 0 0">Чеков в день. Конец сентября проседает всегда: в 2024-м −8,6%, и октябрь отыграл. В 2025-м просадка <b style="fontWeight:600;color:#231a13">−20,5%</b>, и октябрь не отыграл: 64,3 чека в день против 84,2 годом раньше. То есть сверх обычного сезонного спада точка потеряла ещё около 13% гостей, и произошло это сразу.</p>
   </div>
   <div style="background:#fffdf9;border:1px solid rgba(90,60,28,.12);borderRadius:18px;padding:22px;boxShadow:0 1px 3px rgba(74,50,22,.05)">
     <p style="fontFamily:'Playfair Display',Georgia,serif;fontSize:19px;fontWeight:600;margin:0 0 12px;color:#231a13">А что рынок?</p>
-    <p style="fontSize:16px;lineHeight:1.62;color:#3c2e21;margin:0 0 10px">Фон до перелома измерен на своих же данных: 1–20 сентября 2025 точка шла на <b style="fontWeight:600">−11%</b> к тому же периоду 2024 года — это суммарный вклад рынка и открывшихся конкурентов.</p>
+    <p style="fontSize:16px;lineHeight:1.62;color:#3c2e21;margin:0 0 10px">Насколько точка проседала до 21 сентября — измерено на её же собственных данных: 1–20 сентября 2025 точка шла на <b style="fontWeight:600">−11%</b> к тому же периоду 2024 года. В эти проценты входят рынок, открывшиеся конкуренты — и, как показала проверка погоды, рекордно тёплая база сравнения: сентябрь-2024 был самым тёплым сентябрём за историю наблюдений (раздел 3).</p>
     <p style="fontSize:16px;lineHeight:1.62;color:#3c2e21;margin:0 0 10px">Для сравнения: у кофеен России в 1-м полугодии 2026 чеков стало меньше на <b style="fontWeight:600">6%</b> за год (средний чек 469 ₽; данные «Эвотор» / «Коммерсантъ»). У «Теплее» июль-2026 к июлю-2025 — на <b style="fontWeight:600">52%</b> при чеке 503 ₽.</p>
-    <p style="fontSize:16px;lineHeight:1.62;color:#3c2e21;margin:0"><b style="fontWeight:600">Из этих 52% падения рынок объясняет 6–11.</b> Остальное — собственные события точки.</p>
+    <p style="fontSize:16px;lineHeight:1.62;color:#3c2e21;margin:0"><b style="fontWeight:600">Рыночный фон, по этой оценке, объясняет 6–11 из 52 процентных пунктов падения.</b> Это порядок величины, а не точное разложение: оценка получена вычитанием, её границы и оговорки — в разделе 3. Остальное — события вокруг и внутри самой точки; что именно и когда — там же.</p>
   </div>
 </div>
 </section>
 
 <!-- ═══════════ 3 ═══════════ -->
-<section id="s3" data-screen-label="3 Хронология спада" style="scrollMarginTop:80px;marginTop:64px">
+<section id="s3" data-screen-label="3 Что меняли и что вышло" style="scrollMarginTop:80px;marginTop:64px">
 <div style="display:flex;alignItems:center;gap:16px;margin:0 0 34px;color:#c9a06a"><span style="flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(168,112,58,.35))"></span><span style="display:flex;alignItems:center;gap:7px"><svg sc-camel-view-box="0 0 24 24" width="15" height="15" fill="none" aria-hidden="true" style="display:block;opacity:.85"><g transform="rotate(-38 12 12)"><ellipse cx="12" cy="12" rx="5.2" ry="8.2" fill="#f0e2ca" stroke="#c9a06a" stroke-width="1.4"></ellipse><path d="M12 4.4c-1.5 2.1 1.5 3.3 0 5.4-1.5 2.1 1.5 3.3 0 5.4" stroke="#c9a06a" stroke-width="1.4" stroke-linecap="round"></path></g></svg><svg sc-camel-view-box="0 0 24 24" width="11" height="11" fill="none" aria-hidden="true" style="display:block;opacity:.5"><g transform="rotate(22 12 12)"><ellipse cx="12" cy="12" rx="5.2" ry="8.2" fill="#f0e2ca" stroke="#c9a06a" stroke-width="1.7"></ellipse><path d="M12 4.4c-1.5 2.1 1.5 3.3 0 5.4-1.5 2.1 1.5 3.3 0 5.4" stroke="#c9a06a" stroke-width="1.7" stroke-linecap="round"></path></g></svg></span><span style="flex:1;height:1px;background:linear-gradient(90deg,rgba(168,112,58,.35),transparent)"></span></div>
 <h2 style="fontFamily:'Playfair Display',Georgia,serif;fontWeight:500;fontSize:clamp(25px,4.2vw,36px);lineHeight:1.2;letterSpacing:-.008em;margin:0 0 18px;display:flex;alignItems:baseline;gap:14px">
   <span style="flex:none;width:38px;height:38px;borderRadius:50%;background:#f0e2ca;border:1px solid #c9a06a;color:#8a5a2b;display:inline-flex;alignItems:center;justifyContent:center;fontSize:18px;transform:translateY(4px)">3</span>
-  <span>Как разворачивался спад — по фазам</span>
+  <span>Что меняли за год и что из этого вышло</span>
 </h2>
-<p style="margin:0 0 10px;color:#3c2e21;maxWidth:70ch">Вопрос «что было первым: цены, завтраки или отток гостей?» имеет точный ответ: <b style="fontWeight:600">до 21.09 спада не было, а всё перечисленное случилось одновременно, одним пакетом.</b> Дальше события шли так:</p>
+<p style="margin:0 0 10px;color:#3c2e21;maxWidth:70ch">Вопрос «что было первым: цены, завтраки или отток гостей?» имеет точный ответ: <b style="fontWeight:600">до 21.09 спада не было</b>. Напитки поменялись одним днём: цены, объёмы и ассортимент разом. Еда — не одним движением: завтраки продавались всё реже с начала сентября (2,0 порции в день в августе → 1,3 в первые двадцать дней сентября) и после 21-го из чеков исчезли, а сэндвичи и чиабатты пропали из чеков на десять дней и с октября продавались снова, до конца декабря. Формальную дату вывода позиции из меню касса не показывает — по ней видно только, продавалась ли позиция. Но это был не единственный эпизод. <b style="fontWeight:600">Меню на точке меняли каждый месяц все два года:</b> в среднем из продажи уходило 14 позиций и приходило 12 — вводили сезонные линейки, снимали то, что не пошло. Это обычная работа, а не сбой. Сентябрь-2025 отличается не самим фактом изменения, а масштабом: за месяц из продажи вышли <b style="fontWeight:600">42 позиции — вдвое больше, чем в любой другой месяц за два года</b> (следующий максимум — 23). Шесть из этих 42 — переименования при унификации меню сети, то есть реально сняли 36. И одновременно с этим поменялись объёмы и цены.</p>
+<p style="margin:0 0 10px;color:#3c2e21;maxWidth:70ch">Ниже — сначала общая канва, затем полная лента изменений и весь список того, что пробовали, с результатом каждого шага. Это и есть материал для решения, что делать дальше: часть изменений уже проверена на гостях этой самой точки.</p>
 
 <div style="background:#fffdf9;border:1px solid rgba(90,60,28,.12);borderRadius:18px;padding:8px 22px;margin:16px 0;boxShadow:0 1px 3px rgba(74,50,22,.05)" id="figPhases">{{ phasesFig }}</div>
 
 <div style="background:#fffdf9;border:1px solid rgba(90,60,28,.12);borderRadius:18px;padding:22px;margin:16px 0;boxShadow:0 1px 3px rgba(74,50,22,.05)">
-  <p style="fontFamily:'JetBrains Mono',monospace;fontSize:12px;color:#8a5a2b;fontWeight:500;letterSpacing:.08em;textTransform:uppercase;margin:0 0 14px">Рис. 5 · Меню и поток гостей двигаются вместе (июль 2025 — июль 2026)<span class="swipe-hint"> · листайте вбок →</span></p>
-  <div class="xscroll" style="overflowX:auto;WebkitOverflowScrolling:touch"><div style="minWidth:620px"><div id="chMenu"></div><div id="chChecks"></div></div></div>
-  <p style="fontSize:15px;color:#5b4835;lineHeight:1.6;margin:14px 0 0">Вверху — сколько разных позиций реально продавалось за месяц, внизу — чеков в день. Сокращение меню (осень 2025) совпало с обвалом, расширение (март 2026, выделен зелёным) — с единственным подъёмом. Это совпадение на двух эпизодах, но оба раза сезонность учтена — и другого фактора такой силы в данных нет.</p>
+  <p style="fontFamily:'JetBrains Mono',monospace;fontSize:13.5px;color:#8a5a2b;fontWeight:600;letterSpacing:.06em;textTransform:uppercase;lineHeight:1.4;margin:0 0 16px;paddingBottom:9px;borderBottom:1.5px solid #e3d5bd">Рис. 5 · Что было в продаже и когда — и сколько было чеков<span class="swipe-hint"> · листайте вбок →</span></p>
+  <div class="xscroll" style="overflowX:auto;WebkitOverflowScrolling:touch"><div id="chBands" style="minWidth:760px"></div></div>
+  <div style="display:flex;flexWrap:wrap;gap:8px 20px;fontSize:14.5px;color:#5b4835;marginTop:12px">
+    <span style="display:flex;alignItems:center;gap:7px"><span style="width:13px;height:13px;borderRadius:4px;flex:none;background:#2f6fb8"></span>было в продаже</span>
+    <span style="display:flex;alignItems:center;gap:7px"><span style="width:13px;height:13px;borderRadius:4px;flex:none;background:#1c7a4a"></span>появилось или вернулось после сентября-2025</span>
+  </div>
+  <p style="fontSize:15px;color:#5b4835;lineHeight:1.6;margin:14px 0 0">Первые пять строк — самые большие объёмы напитков, остальные — категории еды и напитков. Полоса закрашена там, где позиция реально продавалась хотя бы раз за месяц: это данные кассы, а не меню-борд. Внизу — чеков в день за тот же месяц. Видно две вещи сразу: сентябрьское обновление сняло сразу шесть верхних строк, а весь 2026 год — это попытки что-то вернуть, часть которых держится до сих пор.</p>
+</div>
+
+<h3 style="fontFamily:'Playfair Display',Georgia,serif;fontWeight:500;fontSize:22px;margin:1.8em 0 .5em;color:#231a13">Что уже пробовали и что из этого получилось</h3>
+<p style="margin:0 0 14px;color:#3c2e21;maxWidth:70ch">Полный список изменений за два года, по годам. Там, где результат в кассе не выделяется отдельно, так и написано — достраивать его мы не стали.</p>
+
+<div style="background:#fffdf9;border:1px solid rgba(90,60,28,.12);borderRadius:18px;padding:22px;margin:16px 0;boxShadow:0 1px 3px rgba(74,50,22,.05)">
+  <p style="fontFamily:'JetBrains Mono',monospace;fontSize:13.5px;color:#8a5a2b;fontWeight:600;letterSpacing:.06em;textTransform:uppercase;lineHeight:1.4;margin:0 0 16px;paddingBottom:9px;borderBottom:1.5px solid #e3d5bd">Таблица 1 · 2025 год: что вводили и что выводили<span class="swipe-hint"> · листайте вбок →</span></p>
+  <div class="xscroll" style="overflowX:auto;WebkitOverflowScrolling:touch;margin:0 0 4px">
+  <sc-raw-table style="borderCollapse:collapse;width:100%;minWidth:620px;fontSize:15.5px">
+  <sc-raw-tr><sc-raw-th style="padding:12px 14px;textAlign:left;borderBottom:1.5px solid #dcc9a8;fontSize:12px;textTransform:uppercase;letterSpacing:.06em;color:#7a6349;fontWeight:700;background:#f7f1e6;whiteSpace:nowrap">Изменение</sc-raw-th><sc-raw-th style="padding:12px 14px;textAlign:left;borderBottom:1.5px solid #dcc9a8;fontSize:12px;textTransform:uppercase;letterSpacing:.06em;color:#7a6349;fontWeight:700;background:#f7f1e6;whiteSpace:nowrap">Когда</sc-raw-th><sc-raw-th style="padding:12px 14px;textAlign:left;borderBottom:1.5px solid #dcc9a8;fontSize:12px;textTransform:uppercase;letterSpacing:.06em;color:#7a6349;fontWeight:700;background:#f7f1e6;whiteSpace:nowrap">Что было с продажами дальше</sc-raw-th></sc-raw-tr>
+  <sc-raw-tr style="background:#fbf7ef"><sc-raw-td style="padding:13px 14px;borderBottom:1px solid #f0e7d6;verticalAlign:top;color:#3c2e21;lineHeight:1.5">Ввели бабл-ти — «Ежевика» и «Хамелеон»</sc-raw-td><sc-raw-td style="padding:13px 14px;borderBottom:1px solid #f0e7d6;verticalAlign:top;color:#8a5a2b;whiteSpace:nowrap;fontSize:14px;fontWeight:600">март 2025</sc-raw-td><sc-raw-td style="padding:13px 14px;borderBottom:1px solid #f0e7d6;verticalAlign:top;color:#3c2e21;lineHeight:1.5">31 → 44 → 66 шт в месяц, 50 тыс. ₽ за сезон. Сняты к июлю</sc-raw-td></sc-raw-tr>
+  <sc-raw-tr><sc-raw-td style="padding:13px 14px;borderBottom:1px solid #f0e7d6;verticalAlign:top;color:#3c2e21;lineHeight:1.5">Ввели косичку с ветчиной и сыром</sc-raw-td><sc-raw-td style="padding:13px 14px;borderBottom:1px solid #f0e7d6;verticalAlign:top;color:#8a5a2b;whiteSpace:nowrap;fontSize:14px;fontWeight:600">март 2025</sc-raw-td><sc-raw-td style="padding:13px 14px;borderBottom:1px solid #f0e7d6;verticalAlign:top;color:#3c2e21;lineHeight:1.5">12 шт в марте, дальше нерегулярно — 6–14 шт в мае–июле, пауза с августа по октябрь. С ноября 2025 держится 10–38 шт в месяц и продаётся до сих пор — самая живучая позиция еды</sc-raw-td></sc-raw-tr>
+  <sc-raw-tr style="background:#fbf7ef"><sc-raw-td style="padding:13px 14px;borderBottom:1px solid #f0e7d6;verticalAlign:top;color:#3c2e21;lineHeight:1.5">Летняя линейка напитков: балерина, тархун-тоник, ягодный бунт, дыня-папайя, слэй, база, пина-колада</sc-raw-td><sc-raw-td style="padding:13px 14px;borderBottom:1px solid #f0e7d6;verticalAlign:top;color:#8a5a2b;whiteSpace:nowrap;fontSize:14px;fontWeight:600">май–июнь 2025</sc-raw-td><sc-raw-td style="padding:13px 14px;borderBottom:1px solid #f0e7d6;verticalAlign:top;color:#3c2e21;lineHeight:1.5">по 20–50 шт за сезон каждая; ассортимент вышел на пик — <b style="fontWeight:600;color:#231a13">134 позиции в мае</b></sc-raw-td></sc-raw-tr>
+  <sc-raw-tr><sc-raw-td style="padding:13px 14px;borderBottom:1px solid #f0e7d6;verticalAlign:top;color:#3c2e21;lineHeight:1.5">Сняли летнюю линейку и бабл-ти</sc-raw-td><sc-raw-td style="padding:13px 14px;borderBottom:1px solid #f0e7d6;verticalAlign:top;color:#8a5a2b;whiteSpace:nowrap;fontSize:14px;fontWeight:600">июль–август 2025</sc-raw-td><sc-raw-td style="padding:13px 14px;borderBottom:1px solid #f0e7d6;verticalAlign:top;color:#3c2e21;lineHeight:1.5">позиций 134 → 99 за три месяца. Поток гостей при этом держался: 76–79 чеков в день</sc-raw-td></sc-raw-tr>
+  <sc-raw-tr style="background:#fbf7ef"><sc-raw-td style="padding:13px 14px;borderBottom:1px solid #f0e7d6;verticalAlign:top;color:#3c2e21;lineHeight:1.5">Ввели чайно-травяную линейку: смородина-мята, гречишный, облепиха-тимьян, малина-тимьян</sc-raw-td><sc-raw-td style="padding:13px 14px;borderBottom:1px solid #f0e7d6;verticalAlign:top;color:#8a5a2b;whiteSpace:nowrap;fontSize:14px;fontWeight:600">21.09.2025</sc-raw-td><sc-raw-td style="padding:13px 14px;borderBottom:1px solid #f0e7d6;verticalAlign:top;color:#3c2e21;lineHeight:1.5">вся чайная категория <b style="fontWeight:600;color:#1c7a4a">43 → 133 шт в месяц</b> к октябрю, из них на новые позиции 89. В деньгах новые позиции давали 22–36 тыс. ₽ в месяц до апреля-2026. Единственное изменение сентября с измеримым плюсом</sc-raw-td></sc-raw-tr>
+  <sc-raw-tr><sc-raw-td style="padding:13px 14px;borderBottom:1px solid #f0e7d6;verticalAlign:top;color:#3c2e21;lineHeight:1.5">Опустили потолок объёма у капучино, латте, рафа, американо, флэт уайта и какао</sc-raw-td><sc-raw-td style="padding:13px 14px;borderBottom:1px solid #f0e7d6;verticalAlign:top;color:#8a5a2b;whiteSpace:nowrap;fontSize:14px;fontWeight:600">21.09.2025</sc-raw-td><sc-raw-td style="padding:13px 14px;borderBottom:1px solid #f0e7d6;verticalAlign:top;color:#3c2e21;lineHeight:1.5">−18% чеков на первой полной неделе (518 → 424); сверх обычного сезонного спада — ещё около 13% гостей за десять дней</sc-raw-td></sc-raw-tr>
+  <sc-raw-tr style="background:#fbf7ef"><sc-raw-td style="padding:13px 14px;borderBottom:1px solid #f0e7d6;verticalAlign:top;color:#3c2e21;lineHeight:1.5">Подняли цену малых объёмов на 40–50 ₽</sc-raw-td><sc-raw-td style="padding:13px 14px;borderBottom:1px solid #f0e7d6;verticalAlign:top;color:#8a5a2b;whiteSpace:nowrap;fontSize:14px;fontWeight:600">21.09.2025</sc-raw-td><sc-raw-td style="padding:13px 14px;borderBottom:1px solid #f0e7d6;verticalAlign:top;color:#3c2e21;lineHeight:1.5">средний чек за год вырос на 13,5% — но чеков стало вдвое меньше</sc-raw-td></sc-raw-tr>
+  <sc-raw-tr><sc-raw-td style="padding:13px 14px;borderBottom:1px solid #f0e7d6;verticalAlign:top;color:#3c2e21;lineHeight:1.5">Завтраки — сырники, каша, скрамбл — ушли из чеков</sc-raw-td><sc-raw-td style="padding:13px 14px;borderBottom:1px solid #f0e7d6;verticalAlign:top;color:#8a5a2b;whiteSpace:nowrap;fontSize:14px;fontWeight:600">август → 21.09.2025</sc-raw-td><sc-raw-td style="padding:13px 14px;borderBottom:1px solid #f0e7d6;verticalAlign:top;color:#3c2e21;lineHeight:1.5">продажи снижались ещё до обновления: 2,0 в день в августе → 1,3 в первые 20 дней сентября; с 21.09 — ноль, и до августа-2026 завтраки не возвращались. Дату вывода из меню касса не показывает</sc-raw-td></sc-raw-tr>
+  <sc-raw-tr style="background:#fbf7ef"><sc-raw-td style="padding:13px 14px;borderBottom:1px solid #f0e7d6;verticalAlign:top;color:#3c2e21;lineHeight:1.5">Унифицировали меню по сети: 6 позиций переименованы, 36 выведены из продажи, 9 введены</sc-raw-td><sc-raw-td style="padding:13px 14px;borderBottom:1px solid #f0e7d6;verticalAlign:top;color:#8a5a2b;whiteSpace:nowrap;fontSize:14px;fontWeight:600">сентябрь–октябрь 2025</sc-raw-td><sc-raw-td style="padding:13px 14px;borderBottom:1px solid #f0e7d6;verticalAlign:top;color:#3c2e21;lineHeight:1.5"><b style="fontWeight:600;color:#231a13">100 → 67 позиций</b> за месяц. Переименования (Раф → Раф Классический и другие) снятием не являются</sc-raw-td></sc-raw-tr>
+  <sc-raw-tr><sc-raw-td style="padding:13px 14px;borderBottom:1px solid #f0e7d6;verticalAlign:top;color:#3c2e21;lineHeight:1.5">Несладкая еда пропала из чеков разом — и вернулась частично</sc-raw-td><sc-raw-td style="padding:13px 14px;borderBottom:1px solid #f0e7d6;verticalAlign:top;color:#8a5a2b;whiteSpace:nowrap;fontSize:14px;fontWeight:600">21–30 сентября 2025</sc-raw-td><sc-raw-td style="padding:13px 14px;borderBottom:1px solid #f0e7d6;verticalAlign:top;color:#3c2e21;lineHeight:1.5">за десять дней — одна продажа во всей категории; с октября сэндвичи (52 шт) и чиабатты (16) продавались снова, завтраки — нет</sc-raw-td></sc-raw-tr><sc-raw-tr><sc-raw-td style="padding:13px 14px;borderBottom:1px solid #f0e7d6;verticalAlign:top;color:#3c2e21;lineHeight:1.5">Чиабатты, панини и бейглы сходили на нет</sc-raw-td><sc-raw-td style="padding:13px 14px;borderBottom:1px solid #f0e7d6;verticalAlign:top;color:#8a5a2b;whiteSpace:nowrap;fontSize:14px;fontWeight:600">октябрь 2025 — январь 2026</sc-raw-td><sc-raw-td style="padding:13px 14px;borderBottom:1px solid #f0e7d6;verticalAlign:top;color:#3c2e21;lineHeight:1.5">73 шт в августе → 39 в сентябре → 16–25 в месяц октябрь–декабрь → 0 с января. Сэндвичи держались дольше: 52 → 37 → 14 → 0 к январю</sc-raw-td></sc-raw-tr>
+  <sc-raw-tr style="background:#fbf7ef"><sc-raw-td style="padding:13px 14px;borderBottom:1px solid #f0e7d6;verticalAlign:top;color:#3c2e21;lineHeight:1.5">Ввели арахисовый раф, зимний пунш, сливочное пиво</sc-raw-td><sc-raw-td style="padding:13px 14px;borderBottom:1px solid #f0e7d6;verticalAlign:top;color:#8a5a2b;whiteSpace:nowrap;fontSize:14px;fontWeight:600">декабрь 2025</sc-raw-td><sc-raw-td style="padding:13px 14px;borderBottom:1px solid #f0e7d6;verticalAlign:top;color:#3c2e21;lineHeight:1.5">по 7–11 шт в месяц; сняты к маю 2026</sc-raw-td></sc-raw-tr>
+  </sc-raw-table></div>
+</div>
+
+<div style="background:#fffdf9;border:1px solid rgba(90,60,28,.12);borderRadius:18px;padding:22px;margin:16px 0;boxShadow:0 1px 3px rgba(74,50,22,.05)">
+  <p style="fontFamily:'JetBrains Mono',monospace;fontSize:13.5px;color:#8a5a2b;fontWeight:600;letterSpacing:.06em;textTransform:uppercase;lineHeight:1.4;margin:0 0 16px;paddingBottom:9px;borderBottom:1.5px solid #e3d5bd">Таблица 2 · 2026 год: что пробовали вернуть<span class="swipe-hint"> · листайте вбок →</span></p>
+  <div class="xscroll" style="overflowX:auto;WebkitOverflowScrolling:touch;margin:0 0 4px">
+  <sc-raw-table style="borderCollapse:collapse;width:100%;minWidth:620px;fontSize:15.5px">
+  <sc-raw-tr><sc-raw-th style="padding:12px 14px;textAlign:left;borderBottom:1.5px solid #dcc9a8;fontSize:12px;textTransform:uppercase;letterSpacing:.06em;color:#7a6349;fontWeight:700;background:#f7f1e6;whiteSpace:nowrap">Изменение</sc-raw-th><sc-raw-th style="padding:12px 14px;textAlign:left;borderBottom:1.5px solid #dcc9a8;fontSize:12px;textTransform:uppercase;letterSpacing:.06em;color:#7a6349;fontWeight:700;background:#f7f1e6;whiteSpace:nowrap">Когда</sc-raw-th><sc-raw-th style="padding:12px 14px;textAlign:left;borderBottom:1.5px solid #dcc9a8;fontSize:12px;textTransform:uppercase;letterSpacing:.06em;color:#7a6349;fontWeight:700;background:#f7f1e6;whiteSpace:nowrap">Что было с продажами дальше</sc-raw-th></sc-raw-tr>
+  <sc-raw-tr style="background:#fbf7ef"><sc-raw-td style="padding:13px 14px;borderBottom:1px solid #f0e7d6;verticalAlign:top;color:#3c2e21;lineHeight:1.5">Сняли чиабатты и оставшиеся сэндвичи</sc-raw-td><sc-raw-td style="padding:13px 14px;borderBottom:1px solid #f0e7d6;verticalAlign:top;color:#8a5a2b;whiteSpace:nowrap;fontSize:14px;fontWeight:600">январь 2026</sc-raw-td><sc-raw-td style="padding:13px 14px;borderBottom:1px solid #f0e7d6;verticalAlign:top;color:#3c2e21;lineHeight:1.5">несладкая еда 14,4 → 8,5 тыс. ₽ в месяц — минимум за всю историю точки</sc-raw-td></sc-raw-tr>
+  <sc-raw-tr><sc-raw-td style="padding:13px 14px;borderBottom:1px solid #f0e7d6;verticalAlign:top;color:#3c2e21;lineHeight:1.5">Ввели френч-доги: курица, свинина, говядина</sc-raw-td><sc-raw-td style="padding:13px 14px;borderBottom:1px solid #f0e7d6;verticalAlign:top;color:#8a5a2b;whiteSpace:nowrap;fontSize:14px;fontWeight:600">февраль 2026</sc-raw-td><sc-raw-td style="padding:13px 14px;borderBottom:1px solid #f0e7d6;verticalAlign:top;color:#3c2e21;lineHeight:1.5"><b style="fontWeight:600;color:#1c7a4a">67 → 97 шт в марте</b>, 31 тыс. ₽ — совпало с лучшим месяцем года</sc-raw-td></sc-raw-tr>
+  <sc-raw-tr style="background:#fbf7ef"><sc-raw-td style="padding:13px 14px;borderBottom:1px solid #f0e7d6;verticalAlign:top;color:#3c2e21;lineHeight:1.5">Вернули сэндвичи: ветчина-сыр и с тунцом</sc-raw-td><sc-raw-td style="padding:13px 14px;borderBottom:1px solid #f0e7d6;verticalAlign:top;color:#8a5a2b;whiteSpace:nowrap;fontSize:14px;fontWeight:600">март 2026</sc-raw-td><sc-raw-td style="padding:13px 14px;borderBottom:1px solid #f0e7d6;verticalAlign:top;color:#3c2e21;lineHeight:1.5"><b style="fontWeight:600;color:#1c7a4a">27 → 51 → 66 → 66 шт</b> в месяц с марта по июнь</sc-raw-td></sc-raw-tr>
+  <sc-raw-tr><sc-raw-td style="padding:13px 14px;borderBottom:1px solid #f0e7d6;verticalAlign:top;color:#3c2e21;lineHeight:1.5">Ассортимент расширился с 62 до 72 позиций</sc-raw-td><sc-raw-td style="padding:13px 14px;borderBottom:1px solid #f0e7d6;verticalAlign:top;color:#8a5a2b;whiteSpace:nowrap;fontSize:14px;fontWeight:600">март 2026</sc-raw-td><sc-raw-td style="padding:13px 14px;borderBottom:1px solid #f0e7d6;verticalAlign:top;color:#3c2e21;lineHeight:1.5"><b style="fontWeight:600;color:#1c7a4a">чеки +42% за месяц</b> при сезонной норме +6%. Маркетинговых расходов в этом месяце не было</sc-raw-td></sc-raw-tr>
+  <sc-raw-tr style="background:#fbf7ef"><sc-raw-td style="padding:13px 14px;borderBottom:1px solid #f0e7d6;verticalAlign:top;color:#3c2e21;lineHeight:1.5">Вернули большой латте 0,6 л и раф 0,6 л, добавили какао 0,4 л</sc-raw-td><sc-raw-td style="padding:13px 14px;borderBottom:1px solid #f0e7d6;verticalAlign:top;color:#8a5a2b;whiteSpace:nowrap;fontSize:14px;fontWeight:600">апрель 2026</sc-raw-td><sc-raw-td style="padding:13px 14px;borderBottom:1px solid #f0e7d6;verticalAlign:top;color:#3c2e21;lineHeight:1.5">доля большого стакана у латте выросла с 8% до 46% за четыре месяца. <b style="fontWeight:600;color:#231a13">Общий поток гостей при этом продолжил снижаться</b>: 49,2 → 37,5 чека в день</sc-raw-td></sc-raw-tr>
+  <sc-raw-tr><sc-raw-td style="padding:13px 14px;borderBottom:1px solid #f0e7d6;verticalAlign:top;color:#3c2e21;lineHeight:1.5">Ввели летнюю линейку: лимонады, смузи, крем-латте «Фисташка», глясе «Черника», бамбл «Гранат-Базилик»</sc-raw-td><sc-raw-td style="padding:13px 14px;borderBottom:1px solid #f0e7d6;verticalAlign:top;color:#8a5a2b;whiteSpace:nowrap;fontSize:14px;fontWeight:600">апрель 2026</sc-raw-td><sc-raw-td style="padding:13px 14px;borderBottom:1px solid #f0e7d6;verticalAlign:top;color:#3c2e21;lineHeight:1.5"><b style="fontWeight:600;color:#1c7a4a">144 шт в мае</b>, 84 в июле. В августе айс-латте вышел на первое место по штукам среди всех напитков</sc-raw-td></sc-raw-tr>
+  <sc-raw-tr style="background:#fbf7ef"><sc-raw-td style="padding:13px 14px;borderBottom:1px solid #f0e7d6;verticalAlign:top;color:#3c2e21;lineHeight:1.5">Сняли фисташковый раф, конфеты КО-КО, облепиху-тимьян, малину-тимьян, баббл-ти</sc-raw-td><sc-raw-td style="padding:13px 14px;borderBottom:1px solid #f0e7d6;verticalAlign:top;color:#8a5a2b;whiteSpace:nowrap;fontSize:14px;fontWeight:600">май 2026</sc-raw-td><sc-raw-td style="padding:13px 14px;borderBottom:1px solid #f0e7d6;verticalAlign:top;color:#3c2e21;lineHeight:1.5">чайно-травяная линейка 105 → 31 шт в месяц</sc-raw-td></sc-raw-tr>
+  <sc-raw-tr><sc-raw-td style="padding:13px 14px;borderBottom:1px solid #f0e7d6;verticalAlign:top;color:#3c2e21;lineHeight:1.5">Френч-доги перестали продаваться</sc-raw-td><sc-raw-td style="padding:13px 14px;borderBottom:1px solid #f0e7d6;verticalAlign:top;color:#8a5a2b;whiteSpace:nowrap;fontSize:14px;fontWeight:600">июнь 2026</sc-raw-td><sc-raw-td style="padding:13px 14px;borderBottom:1px solid #f0e7d6;verticalAlign:top;color:#3c2e21;lineHeight:1.5">97 → 40 → 21 → 0 шт. Причина в кассе не видна — вопрос к точке (раздел 7)</sc-raw-td></sc-raw-tr>
+  <sc-raw-tr style="background:#fbf7ef"><sc-raw-td style="padding:13px 14px;borderBottom:1px solid #f0e7d6;verticalAlign:top;color:#3c2e21;lineHeight:1.5">Сэндвичи перестали продаваться</sc-raw-td><sc-raw-td style="padding:13px 14px;borderBottom:1px solid #f0e7d6;verticalAlign:top;color:#8a5a2b;whiteSpace:nowrap;fontSize:14px;fontWeight:600">август 2026</sc-raw-td><sc-raw-td style="padding:13px 14px;borderBottom:1px solid #f0e7d6;verticalAlign:top;color:#3c2e21;lineHeight:1.5">66 → 24 → 0 шт. Причина в кассе не видна — вопрос к точке (раздел 7)</sc-raw-td></sc-raw-tr>
+  <sc-raw-tr><sc-raw-td style="padding:13px 14px;borderBottom:1px solid #f0e7d6;verticalAlign:top;color:#3c2e21;lineHeight:1.5">Ввели блинчики с мясом и готовые сырники</sc-raw-td><sc-raw-td style="padding:13px 14px;borderBottom:1px solid #f0e7d6;verticalAlign:top;color:#8a5a2b;whiteSpace:nowrap;fontSize:14px;fontWeight:600">август 2026</sc-raw-td><sc-raw-td style="padding:13px 14px;borderBottom:1px solid #f0e7d6;verticalAlign:top;color:#3c2e21;lineHeight:1.5"><b style="fontWeight:600;color:#1c7a4a">первые тёплые завтраки с сентября 2025</b> — 4 шт за 11 дней, слишком мало для выводов</sc-raw-td></sc-raw-tr>
+  <sc-raw-tr style="background:#fbf7ef"><sc-raw-td style="padding:13px 14px;borderBottom:1px solid #f0e7d6;verticalAlign:top;color:#3c2e21;lineHeight:1.5">Фильтр-кофе, кукис и торт «Малина-шоколад» не продавались</sc-raw-td><sc-raw-td style="padding:13px 14px;borderBottom:1px solid #f0e7d6;verticalAlign:top;color:#8a5a2b;whiteSpace:nowrap;fontSize:14px;fontWeight:600">август 2026</sc-raw-td><sc-raw-td style="padding:13px 14px;borderBottom:1px solid #f0e7d6;verticalAlign:top;color:#3c2e21;lineHeight:1.5">окно всего 11 дней, поэтому вывод предварительный: позиции с редкими продажами на коротком окне могут не показаться</sc-raw-td></sc-raw-tr>
+  </sc-raw-table></div>
+  <p style="fontSize:15px;color:#5b4835;lineHeight:1.6;margin:16px 0 0">Главный вывод для планирования: <b style="fontWeight:600;color:#231a13">ассортимент двигает выручку в обе стороны, но не мгновенно и не любым шагом.</b> Расширение марта совпало с лучшим месяцем года; возврат больших объёмов в апреле спроса на объём не опроверг (доля 0,6 л росла четыре месяца подряд), но общий поток не поднял.</p>
+</div>
+
+<h3 style="fontFamily:'Playfair Display',Georgia,serif;fontWeight:500;fontSize:22px;margin:1.8em 0 .5em;color:#231a13">Насколько твёрдые эти выводы</h3>
+<p style="margin:0 0 8px;color:#3c2e21;maxWidth:70ch">То, что два события совпали по времени, ещё не значит, что одно вызвало другое. Чтобы отделить эффект изменений от обычной сезонности, каждый месяц сравнивается <b style="fontWeight:600">с тем же месяцем прошлого года</b>: это убирает обычную сезонность, потому что сравниваются одинаковые календарные периоды. Но год к году совпадает календарь, а не конкретная погода, — поэтому к этой редакции погода проверена отдельно, по суточным данным метеостанции и независимому реанализу. Результаты вшиты в оговорки ниже.</p>
+
+<div style="background:#fffdf9;border:1px solid rgba(90,60,28,.12);borderRadius:18px;padding:22px;margin:16px 0;boxShadow:0 1px 3px rgba(74,50,22,.05)">
+  <p style="margin:0 0 12px;fontSize:12.5px;letterSpacing:.08em;textTransform:uppercase;color:#8f7a61;fontWeight:600">Насколько точка отстаёт от своего прошлогоднего уровня</p>
+  <div style="display:flex;flexWrap:wrap;gap:10px;margin:0 0 12px">
+    <div style="flex:1 1 120px;background:#faf5ec;border:1px solid #eee3d0;borderRadius:12px;padding:12px 14px"><div style="fontSize:13px;color:#8f7a61">февраль-2026</div><div style="fontSize:22px;fontWeight:600;color:#b03a34;fontFamily:'Playfair Display',Georgia,serif">−49%</div><div style="fontSize:13px;color:#5b4835;lineHeight:1.35">дно</div></div>
+    <div style="flex:1 1 120px;background:#f2f8f4;border:1px solid #cfe6d8;borderRadius:12px;padding:12px 14px"><div style="fontSize:13px;color:#8f7a61">март-2026</div><div style="fontSize:22px;fontWeight:600;color:#1c7a4a;fontFamily:'Playfair Display',Georgia,serif">−31%</div><div style="fontSize:13px;color:#5b4835;lineHeight:1.35">меню расширили</div></div>
+    <div style="flex:1 1 120px;background:#faf5ec;border:1px solid #eee3d0;borderRadius:12px;padding:12px 14px"><div style="fontSize:13px;color:#8f7a61">апрель-2026</div><div style="fontSize:22px;fontWeight:600;color:#3c2e21;fontFamily:'Playfair Display',Georgia,serif">−34%</div><div style="fontSize:13px;color:#5b4835;lineHeight:1.35">вернули объёмы</div></div>
+    <div style="flex:1 1 120px;background:#faf5ec;border:1px solid #eee3d0;borderRadius:12px;padding:12px 14px"><div style="fontSize:13px;color:#8f7a61">июль-2026</div><div style="fontSize:22px;fontWeight:600;color:#b03a34;fontFamily:'Playfair Display',Georgia,serif">−52%</div><div style="fontSize:13px;color:#5b4835;lineHeight:1.35">еда ушла</div></div>
+    <div style="flex:1 1 120px;background:#faf5ec;border:1px solid #eee3d0;borderRadius:12px;padding:12px 14px"><div style="fontSize:13px;color:#8f7a61">август 1–11</div><div style="fontSize:22px;fontWeight:600;color:#3c2e21;fontFamily:'Playfair Display',Georgia,serif">−49%</div><div style="fontSize:13px;color:#5b4835;lineHeight:1.35">11 дней</div></div>
+  </div>
+  <p style="fontSize:15px;color:#5b4835;lineHeight:1.6;margin:0">Чем меньше число, тем ближе точка к своему прошлогоднему уровню. Единственный месяц, где разрыв заметно сократился, — март; обычная сезонность здесь ни при чём, потому что сравниваются одни и те же месяцы разных лет. <b style="fontWeight:600;color:#231a13">Оговорка:</b> февраль-2026 был аномально холодным и снежным (на 3,8 °C ниже февраля-2025, морозы до −27 °C), поэтому его −49% частично утяжелены погодой — и часть улучшения к марту это просто возврат к норме, а не эффект меню.</p>
+</div>
+
+<div style="background:#fffdf9;border:1px solid rgba(90,60,28,.12);borderRadius:18px;padding:8px 22px 16px;margin:16px 0;boxShadow:0 1px 3px rgba(74,50,22,.05)">
+<div style="padding:16px 0;borderBottom:1px dashed #eee3d0"><p style="margin:0 0 6px;fontSize:16.5px;lineHeight:1.5;color:#231a13"><span class="chip" style="display:inline-block;fontSize:11.5px;fontWeight:700;padding:3px 10px;borderRadius:999px;background:#dff0e6;color:#1c7a4a;whiteSpace:nowrap;verticalAlign:2px">вывод твёрдый</span> <b style="fontWeight:600">Обновление 21 сентября 2025 снизило поток гостей</b></p><p style="margin:0 0 4px;fontSize:15px;lineHeight:1.55;color:#3c2e21"><span style="color:#8f7a61">Держится на:</span> дата известна по чекам с точностью до дня; те же десять дней 2024 года дали −8,6%, а 2025-го — −20,5%. Плюс проверка погодой: <b style="fontWeight:600;color:#231a13">21–23 сентября были тремя самыми тёплыми днями месяца</b> (22-го поставлен суточный рекорд +26,7 °C), и именно в эти дни поток упал с 82,7 до 63,0 чека в день. Похолодание пришло только 24-го — и поток на нём уже не изменился: 62,9 чека в день. Дождей тоже не было: осадков в конце сентября 2025 выпало меньше, чем в 2024-м.</p><p style="margin:0;fontSize:15px;lineHeight:1.55;color:#3c2e21"><span style="color:#8f7a61">Что этим не проверено:</span> что происходило в городе именно 21–30 сентября 2025: новостей за это окно не нашлось ни одной, а архив местных СМИ за тот период почти не индексируется — отсутствие находки не равно отсутствию события. И принципиальное ограничение: как повёл бы себя поток без обновления, знать нельзя — сравнить не с чем; возможно, снижение продолжилось бы и само. Ближайшая замена такому сравнению — март-2026, когда меню двинули в обратную сторону; он разобран ниже отдельным выводом, осторожным.</p></div>
+<div style="padding:16px 0;borderBottom:1px dashed #eee3d0"><p style="margin:0 0 6px;fontSize:16.5px;lineHeight:1.5;color:#231a13"><span class="chip" style="display:inline-block;fontSize:11.5px;fontWeight:700;padding:3px 10px;borderRadius:999px;background:#f6e7c6;color:#6b4e0e;whiteSpace:nowrap;verticalAlign:2px">вывод осторожный</span> <b style="fontWeight:600">Внешний фон до 21 сентября составлял −11%</b></p><p style="margin:0 0 4px;fontSize:15px;lineHeight:1.55;color:#3c2e21"><span style="color:#8f7a61">Держится на:</span> собственные данные точки: 1–20 сентября 2025 против тех же дней 2024 года.</p><p style="margin:0;fontSize:15px;lineHeight:1.55;color:#3c2e21"><span style="color:#8f7a61">Что этим не проверено:</span> сентябрь 2024 оказался <b style="fontWeight:600;color:#231a13">абсолютным рекордом тепла за всю историю наблюдений</b> в Москве (+17,1 °C при норме +11,9). Значит часть этих −11% — не рынок и не конкуренты, а исключительно тёплая база сравнения. Разделить эти доли по имеющимся данным нельзя.</p></div>
+<div style="padding:16px 0;borderBottom:1px dashed #eee3d0"><p style="margin:0 0 6px;fontSize:16.5px;lineHeight:1.5;color:#231a13"><span class="chip" style="display:inline-block;fontSize:11.5px;fontWeight:700;padding:3px 10px;borderRadius:999px;background:#f6e7c6;color:#6b4e0e;whiteSpace:nowrap;verticalAlign:2px">вывод осторожный</span> <b style="fontWeight:600">Контрольная просадка 2024 года равна −8,6%</b></p><p style="margin:0 0 4px;fontSize:15px;lineHeight:1.55;color:#3c2e21"><span style="color:#8f7a61">Держится на:</span> фактические чеки точки за 21–30 сентября 2024 против 1–20 сентября 2024.</p><p style="margin:0;fontSize:15px;lineHeight:1.55;color:#3c2e21"><span style="color:#8f7a61">Что этим не проверено:</span> ДК «Мир» — главный дом культуры города, на той же улице в 200 метрах — <b style="fontWeight:600;color:#231a13">закрылся на капремонт 17 сентября 2024</b>, за четыре дня до начала контрольного окна. Поэтому просадка 2024 года могла быть не чисто сезонной, и настоящая сезонная норма ближе к нулю, чем к −8,6%.</p></div>
+<div style="padding:16px 0;borderBottom:1px dashed #eee3d0"><p style="margin:0 0 6px;fontSize:16.5px;lineHeight:1.5;color:#231a13"><span class="chip" style="display:inline-block;fontSize:11.5px;fontWeight:700;padding:3px 10px;borderRadius:999px;background:#f6e7c6;color:#6b4e0e;whiteSpace:nowrap;verticalAlign:2px">вывод осторожный</span> <b style="fontWeight:600">Причина падения — в первую очередь изменения меню</b></p><p style="margin:0 0 4px;fontSize:15px;lineHeight:1.55;color:#3c2e21"><span style="color:#8f7a61">Держится на:</span> масштаб и совпадение по дате: 42 позиции за месяц против обычных 14, одновременно с объёмами и ценами.</p><p style="margin:0;fontSize:15px;lineHeight:1.55;color:#3c2e21"><span style="color:#8f7a61">Что этим не проверено:</span> в то же окно попали два внешних события, которых мы раньше не видели. <b style="fontWeight:600;color:#231a13">18 сентября 2025</b> объявлено решение поставить полусферы на парковке у дома № 12 по улице Ленина — то есть у самого здания кофейни. И <b style="fontWeight:600;color:#231a13">26 сентября 2025</b> в этом же доме появилось новое кафе с едой и суши («Хит», 70 метров, сегодня рейтинг 5,0 и 102 отзыва); в июле там же открылся суши-бар Maneki Village. Вклад парковки и новых соседей отделить от вклада меню по данным кассы нельзя.</p></div>
+<div style="padding:16px 0;borderBottom:1px dashed #eee3d0"><p style="margin:0 0 6px;fontSize:16.5px;lineHeight:1.5;color:#231a13"><span class="chip" style="display:inline-block;fontSize:11.5px;fontWeight:700;padding:3px 10px;borderRadius:999px;background:#f6e7c6;color:#6b4e0e;whiteSpace:nowrap;verticalAlign:2px">вывод осторожный</span> <b style="fontWeight:600">Расширение меню в марте 2026 подняло поток</b></p><p style="margin:0 0 4px;fontSize:15px;lineHeight:1.55;color:#3c2e21"><span style="color:#8f7a61">Держится на:</span> отставание от того же месяца прошлого года сократилось с −49% в феврале до −31% в марте — лучший показатель года. Маркетинговых расходов в марте не было. По России всплеска в марте 2026 не было: оборот общепита вырос на 8,8% к февралю при 10,7% лишних календарных дней, то есть в пересчёте на день даже снизился.</p><p style="margin:0;fontSize:15px;lineHeight:1.55;color:#3c2e21"><span style="color:#8f7a61">Что этим не проверено:</span> сразу три поправки. В марте стабилизировался состав команды (текучка смен упала до 18% против 62–63% в январе–феврале). Февраль 2026 был <b style="fontWeight:600;color:#231a13">погодной аномалией со знаком минус</b> — на 3,8 °C холоднее февраля 2025, морозы до −27 °C, снега на треть выше нормы, — поэтому февральские −49% частично утяжелены погодой, и часть улучшения к марту это просто возврат к норме. И это один эпизод: одного случая мало, чтобы считать связь доказанной.</p></div>
+<div style="padding:16px 0;borderBottom:1px dashed #eee3d0"><p style="margin:0 0 6px;fontSize:16.5px;lineHeight:1.5;color:#231a13"><span class="chip" style="display:inline-block;fontSize:11.5px;fontWeight:700;padding:3px 10px;borderRadius:999px;background:#f6e7c6;color:#6b4e0e;whiteSpace:nowrap;verticalAlign:2px">вывод осторожный</span> <b style="fontWeight:600">Возврат больших объёмов в апреле 2026 поток не поднял</b></p><p style="margin:0 0 4px;fontSize:15px;lineHeight:1.55;color:#3c2e21"><span style="color:#8f7a61">Держится на:</span> отставание от прошлого года после апреля не сокращалось, а росло: −34% в апреле → −52% в июле.</p><p style="margin:0;fontSize:15px;lineHeight:1.55;color:#3c2e21"><span style="color:#8f7a61">Что этим не проверено:</span> апрель 2026 был <b style="fontWeight:600;color:#231a13">холодным и вторым по дождливости за век</b>: на 3,1 °C холоднее апреля 2025 и вдвое мокрее нормы. Эффект возврата объёмов мог быть им перекрыт. Плюс в те же месяцы из продажи ушли френч-доги и сэндвичи, а сам возврат коснулся латте с рафом (229 продаж в июле), а не капучино (474).</p></div>
+<div style="padding:16px 0;borderBottom:1px dashed #eee3d0"><p style="margin:0 0 6px;fontSize:16.5px;lineHeight:1.5;color:#231a13"><span class="chip" style="display:inline-block;fontSize:11.5px;fontWeight:700;padding:3px 10px;borderRadius:999px;background:#dff0e6;color:#1c7a4a;whiteSpace:nowrap;verticalAlign:2px">вывод твёрдый</span> <b style="fontWeight:600">Спрос на большой объём существует</b></p><p style="margin:0 0 4px;fontSize:15px;lineHeight:1.55;color:#3c2e21"><span style="color:#8f7a61">Держится на:</span> на четырёх разных периодах на максимальный доступный стакан приходится 62–78% продаж капучино — и до сокращения, и после. Плюс доля вернувшегося 0,6 л у латте выросла с 8% до 46% за четыре месяца.</p><p style="margin:0;fontSize:15px;lineHeight:1.55;color:#3c2e21"><span style="color:#8f7a61">Что этим не проверено:</span> сколько именно гостей вернётся, если поднять потолок у капучино. Доля внутри напитка и общий поток — разные вещи.</p></div>
+<div style="padding:16px 0;borderBottom:1px dashed #eee3d0"><p style="margin:0 0 6px;fontSize:16.5px;lineHeight:1.5;color:#231a13"><span class="chip" style="display:inline-block;fontSize:11.5px;fontWeight:700;padding:3px 10px;borderRadius:999px;background:#dff0e6;color:#1c7a4a;whiteSpace:nowrap;verticalAlign:2px">вывод твёрдый</span> <b style="fontWeight:600">Снижение с апреля по июль 2026 погодой не объясняется</b></p><p style="margin:0 0 4px;fontSize:15px;lineHeight:1.55;color:#3c2e21"><span style="color:#8f7a61">Держится на:</span> май 2026 был на 2,3 °C теплее мая 2025, июнь — на 1,5 °C теплее и суше, июль — на 1,8 °C прохладнее и вдвое суше июля 2025. То есть погода в эти месяцы была не хуже прошлогодней, а поток всё равно снижался с 49,2 до 37,5 чека в день.</p><p style="margin:0;fontSize:15px;lineHeight:1.55;color:#3c2e21"><span style="color:#8f7a61">Что этим не проверено:</span> что именно происходило внутри точки в эти месяцы: из данных видно только, что френч-доги и сэндвичи перестали продаваться.</p></div>
+<div style="padding:16px 0;borderBottom:1px dashed #eee3d0"><p style="margin:0 0 6px;fontSize:16.5px;lineHeight:1.5;color:#231a13"><span class="chip" style="display:inline-block;fontSize:11.5px;fontWeight:700;padding:3px 10px;borderRadius:999px;background:#f6e7c6;color:#6b4e0e;whiteSpace:nowrap;verticalAlign:2px">вывод осторожный</span> <b style="fontWeight:600">Рынок объясняет 6–11 процентных пунктов падения из 52</b></p><p style="margin:0 0 4px;fontSize:15px;lineHeight:1.55;color:#3c2e21"><span style="color:#8f7a61">Держится на:</span> кассовые данные по отрасли: трафик кофеен России −7,3% за январь–октябрь 2025 («Платформа ОФД») и −6% за 1-е полугодие 2026 («Эвотор»). Именно формат кофейни с посадкой сжимается быстрее всего: −13% точек по России и −12% по Москве за год («2ГИС»). При этом оборот общепита Московской области в сопоставимых ценах рос: +3,7% за 2025 год и +7,8% за 1-е полугодие 2026 (Росстат).</p><p style="margin:0;fontSize:15px;lineHeight:1.55;color:#3c2e21"><span style="color:#8f7a61">Что этим не проверено:</span> локальная конкуренция в самом городе: из девяти кофейных точек Лыткарино <b style="fontWeight:600;color:#231a13">пять появились уже после сентября 2025</b> («Моти» — только в июле 2026, на момент осеннего падения её не существовало). И сама оценка «6–11 из 52» — это вычитание отраслевых индикаторов из общего падения, а не прямое измерение; читать её стоит как порядок величины.</p></div>
+<div style="padding:16px 0;"><p style="margin:0 0 6px;fontSize:16.5px;lineHeight:1.5;color:#231a13"><span class="chip" style="display:inline-block;fontSize:11.5px;fontWeight:700;padding:3px 10px;borderRadius:999px;background:#eee3d0;color:#6b5a45;whiteSpace:nowrap;verticalAlign:2px">пока не вывод</span> <b style="fontWeight:600">Август 2026 идёт лучше июля</b></p><p style="margin:0 0 4px;fontSize:15px;lineHeight:1.55;color:#3c2e21"><span style="color:#8f7a61">Держится на:</span> 40,7 чека в день против 37,5; отставание от прошлого года сократилось с −52% до −49%.</p><p style="margin:0;fontSize:15px;lineHeight:1.55;color:#3c2e21"><span style="color:#8f7a61">Что этим не проверено:</span> одиннадцать дней — не месяц, и в окне на один выходной больше обычного. Плюс <b style="fontWeight:600;color:#231a13">первая декада августа 2026 вошла в пятёрку самых тёплых за 80 лет</b> и была в семь раз суше прошлогодней. Значит часть роста — погода. Вернуться к этой цифре стоит по итогам месяца.</p></div>
+  <p style="margin:16px 0 0;fontSize:15px;lineHeight:1.6;color:#5b4835"><b style="fontWeight:600;color:#231a13">Что удалось снять с списка неизвестного.</b> Погода проверена по суточным данным метеостанции и независимому реанализу — по всем ключевым месяцам. Отток жителей как фактор снят: по Росстату население Лыткарино три года подряд растёт (66,1 → 66,5 → 66,9 тыс.). Рыночный контур измерен по кассовым данным отрасли.</p>
+  <p style="margin:10px 0 0;fontSize:15px;lineHeight:1.6;color:#5b4835"><b style="fontWeight:600;color:#231a13">Что осталось непроверяемым.</b> Стояла ли позиция на витрине и предлагал ли её бариста; списания и остатки склада; кто именно работал за стойкой в конкретный день; вклад запрета парковки и новых соседей по дому — они попали ровно в то же окно, что и изменения меню, и разделить их доли по кассе нельзя. Метеоданные — по станции в 30 км от Лыткарино с перекрёстной проверкой по модели в 2 км от города; своей метеостанции у Лыткарино нет.</p>
 </div>
 </section>
+
 
 <!-- ═══════════ 4 ═══════════ -->
 <section id="s4" data-screen-label="4 Ответы на вопросы" style="scrollMarginTop:80px;marginTop:64px">
@@ -634,50 +739,58 @@
 <div>
   <p style="fontFamily:'Playfair Display',Georgia,serif;fontSize:21px;fontWeight:500;fontStyle:italic;color:#231a13;lineHeight:1.35;margin:0 0 12px">«Что в меню флагман? Что продавалось вместе с капучино? Какую еду можно назвать флагманской?» <span style="display:inline-block;fontFamily:'Golos Text',sans-serif;fontStyle:normal;fontSize:12px;fontWeight:600;padding:3px 10px;borderRadius:999px;background:#f0e2ca;color:#5b4835;verticalAlign:4px">Елена</span></p>
   <p style="margin:0 0 12px;color:#3c2e21"><b style="fontWeight:600">Флагман — капучино:</b> он в 36% всех чеков (июль-2026: 474 шт, 152 тыс. ₽ = 26% выручки). Дальше латте (54 тыс.) и сезонная «Малина — белый шоколад» (39,5 тыс.). Состав чеков показывает, что было в связке с капучино и что из неё выпало:</p>
-  <p style="fontFamily:'JetBrains Mono',monospace;fontSize:12px;color:#8a5a2b;fontWeight:500;letterSpacing:.08em;textTransform:uppercase;margin:0 0 8px">Таблица 1 · Что лежит в чеке рядом с капучино<span class="swipe-hint"> · листайте вбок →</span></p>
+  <p style="fontFamily:'JetBrains Mono',monospace;fontSize:13.5px;color:#8a5a2b;fontWeight:600;letterSpacing:.06em;textTransform:uppercase;lineHeight:1.4;margin:0 0 16px;paddingBottom:9px;borderBottom:1.5px solid #e3d5bd">Таблица 3 · Что лежит в чеке рядом с капучино — год назад и сейчас<span class="swipe-hint"> · листайте вбок →</span></p>
   <div class="xscroll" style="overflowX:auto;WebkitOverflowScrolling:touch;margin:0 0 4px">
-    <sc-raw-table style="borderCollapse:collapse;width:100%;minWidth:560px;fontSize:15.5px;fontVariantNumeric:tabular-nums">
+    <sc-raw-table style="borderCollapse:collapse;width:100%;minWidth:560px;fontSize:15.5px">
       <sc-raw-tr>
-        <sc-raw-th style="padding:11px 12px;textAlign:left;borderBottom:1px solid #e3d5bd;fontSize:12.5px;textTransform:uppercase;letterSpacing:.06em;color:#8f7a61;fontWeight:600">Чеки с капучино</sc-raw-th>
-        <sc-raw-th style="padding:11px 12px;textAlign:left;borderBottom:1px solid #e3d5bd;fontSize:12.5px;textTransform:uppercase;letterSpacing:.06em;color:#8f7a61;fontWeight:600">Июль-2025 (570 чеков)</sc-raw-th>
-        <sc-raw-th style="padding:11px 12px;textAlign:left;borderBottom:1px solid #e3d5bd;fontSize:12.5px;textTransform:uppercase;letterSpacing:.06em;color:#8f7a61;fontWeight:600">Июль-2026 (414 чеков)</sc-raw-th>
+        <sc-raw-th style="padding:12px 14px;textAlign:left;borderBottom:1.5px solid #dcc9a8;fontSize:12px;textTransform:uppercase;letterSpacing:.06em;color:#7a6349;fontWeight:700;background:#f7f1e6;width:46%">Июль-2025 · 570 чеков с капучино</sc-raw-th>
+        <sc-raw-th style="padding:12px 14px;textAlign:left;borderBottom:1.5px solid #dcc9a8;fontSize:12px;textTransform:uppercase;letterSpacing:.06em;color:#7a6349;fontWeight:700;background:#f7f1e6;width:54%">Июль-2026 · 414 чеков с капучино</sc-raw-th>
       </sc-raw-tr>
       <sc-raw-tr>
-        <sc-raw-td style="padding:11px 12px;borderBottom:1px solid #eee3d0;verticalAlign:top;color:#3c2e21">Чаще всего рядом</sc-raw-td>
-        <sc-raw-td style="padding:11px 12px;borderBottom:1px solid #eee3d0;verticalAlign:top;color:#3c2e21">второй кофе (американо 54, латте 28); <b style="fontWeight:600">сырники 12, панини 11, скрамбл 11, каша 11</b>; эклер 11, чай 11</sc-raw-td>
-        <sc-raw-td style="padding:11px 12px;borderBottom:1px solid #eee3d0;verticalAlign:top;color:#3c2e21">«солёный ирис» 28, латте 22, американо 18, эклер 17 — <b style="fontWeight:600">еды почти нет</b> (сэндвич 6)</sc-raw-td>
-      </sc-raw-tr>
-      <sc-raw-tr>
-        <sc-raw-td style="padding:11px 12px;borderBottom:1px solid #eee3d0;verticalAlign:top;color:#3c2e21">Еда в капучино-чеках</sc-raw-td>
-        <sc-raw-td style="padding:11px 12px;borderBottom:1px solid #eee3d0;textAlign:right;color:#231a13"><b style="fontWeight:600">11,1%</b></sc-raw-td>
-        <sc-raw-td style="padding:11px 12px;borderBottom:1px solid #eee3d0;textAlign:right;color:#b03a34"><b style="fontWeight:600">4,3%</b></sc-raw-td>
-      </sc-raw-tr>
-      <sc-raw-tr>
-        <sc-raw-td style="padding:11px 12px;borderBottom:1px solid #eee3d0;verticalAlign:top;color:#3c2e21">Еда во всех чеках точки</sc-raw-td>
-        <sc-raw-td style="padding:11px 12px;borderBottom:1px solid #eee3d0;textAlign:right;color:#3c2e21">10,0%</sc-raw-td>
-        <sc-raw-td style="padding:11px 12px;borderBottom:1px solid #eee3d0;textAlign:right;color:#3c2e21">4,4%</sc-raw-td>
+        <sc-raw-td style="padding:13px 14px;verticalAlign:top;color:#3c2e21;lineHeight:1.55">второй кофе — американо 54, латте 28<br><b style="fontWeight:600;color:#231a13">сырники 12, панини 11, скрамбл 11, каша 11</b><br>эклер 11, чай 11</sc-raw-td>
+        <sc-raw-td style="padding:13px 14px;verticalAlign:top;color:#3c2e21;lineHeight:1.55">«солёный ирис» 28, латте 22, американо 18<br>эклер 17, айс-латте 11, трубочки 11<br><b style="fontWeight:600;color:#231a13">из еды — только сэндвич 6</b></sc-raw-td>
       </sc-raw-tr>
     </sc-raw-table>
   </div>
-  <p style="margin:14px 0 0;color:#3c2e21"><b style="fontWeight:600">Флагманская еда по всей истории точки</b> — утренне-дневная: сырники, каша, скрамбл, панини и чиабатты, круассаны, сэндвичи. Несладкая еда приносила <b style="fontWeight:600">60–105 тыс. ₽ в месяц все первые десять месяцев</b> (сентябрь-2024 → июнь-2025) — и обнулилась 21.09.2025:</p>
+  <div style="display:flex;flexWrap:wrap;gap:12px;margin:16px 0 0">
+    <div style="flex:1 1 240px;background:#faf5ec;border:1px solid #eee3d0;borderRadius:14px;padding:14px 16px">
+      <div style="fontSize:13.5px;color:#8f7a61;marginBottom:6px">Доля чеков с едой — среди тех, где есть капучино</div>
+      <div style="display:flex;alignItems:baseline;gap:10px;fontFamily:'Playfair Display',Georgia,serif">
+        <span style="fontSize:26px;fontWeight:600;color:#231a13">11,1%</span>
+        <span style="fontSize:17px;color:#8f7a61">→</span>
+        <span style="fontSize:26px;fontWeight:600;color:#b03a34">4,3%</span>
+      </div>
+      <div style="fontSize:13px;color:#8f7a61;marginTop:4px">июль-2025 → июль-2026</div>
+    </div>
+    <div style="flex:1 1 240px;background:#faf5ec;border:1px solid #eee3d0;borderRadius:14px;padding:14px 16px">
+      <div style="fontSize:13.5px;color:#8f7a61;marginBottom:6px">Доля чеков с едой — по всей точке</div>
+      <div style="display:flex;alignItems:baseline;gap:10px;fontFamily:'Playfair Display',Georgia,serif">
+        <span style="fontSize:26px;fontWeight:600;color:#231a13">10,0%</span>
+        <span style="fontSize:17px;color:#8f7a61">→</span>
+        <span style="fontSize:26px;fontWeight:600;color:#b03a34">4,4%</span>
+      </div>
+      <div style="fontSize:13px;color:#8f7a61;marginTop:4px">июль-2025 → июль-2026</div>
+    </div>
+  </div>
+  <p style="margin:14px 0 0;color:#3c2e21"><b style="fontWeight:600">Флагманская еда по всей истории точки</b> — утренне-дневная: сырники, каша, скрамбл, панини и чиабатты, круассаны, сэндвичи. Несладкая еда приносила <b style="fontWeight:600">60–105 тыс. ₽ в месяц все первые десять месяцев</b> (сентябрь-2024 → июнь-2025), после 21.09.2025 опустилась до 9–27 тыс. и частично вернулась весной 2026:</p>
   <div style="background:#fffdf9;border:1px solid rgba(90,60,28,.12);borderRadius:18px;padding:22px;margin:16px 0;boxShadow:0 1px 3px rgba(74,50,22,.05)">
-    <p style="fontFamily:'JetBrains Mono',monospace;fontSize:12px;color:#8a5a2b;fontWeight:500;letterSpacing:.08em;textTransform:uppercase;margin:0 0 14px">Рис. 6 · Выручка несладкой еды по месяцам, тыс. ₽<span class="swipe-hint"> · листайте вбок →</span></p>
+    <p style="fontFamily:'JetBrains Mono',monospace;fontSize:13.5px;color:#8a5a2b;fontWeight:600;letterSpacing:.06em;textTransform:uppercase;lineHeight:1.4;margin:0 0 16px;paddingBottom:9px;borderBottom:1.5px solid #e3d5bd">Рис. 6 · Выручка несладкой еды по месяцам, тыс. ₽<span class="swipe-hint"> · листайте вбок →</span></p>
     <div class="xscroll" style="overflowX:auto;WebkitOverflowScrolling:touch"><div id="chFood" style="minWidth:620px"></div></div>
-    <p style="fontSize:15px;color:#5b4835;lineHeight:1.6;margin:14px 0 0">Слева — старое меню еды (панини, чиабатты, бейглы, сырники, каши, скрамблы, сэндвичи); справа — попытки 2026 года (френч-доги, сэндвичи, косичка). Серая полоса — два разных отрезка: июль–сентябрь 2025 не пересчитаны тем же методом (меню менялось), а с 21.09.2025 по январь-2026 несладкой еды в меню действительно не было. 1–5 августа 2026 еда снова не продаётся. Точная методика — раздел 8.</p>
+    <p style="fontSize:15px;color:#5b4835;lineHeight:1.6;margin:14px 0 0">Все 24 месяца посчитаны <b style="fontWeight:600;color:#231a13">одним и тем же фильтром</b> — в первой редакции отчёта середина ряда была закрыта серой полосой, теперь она раскрыта. Видно, что из продажи еда не уходила полностью: с октября-2025 по январь-2026 она давала 9–27 тыс. ₽ в месяц (косичка и остатки чиабатт с сэндвичами), а с февраля-2026 частично вернулась — до 45 тыс. в марте. Последний столбец бледный: это только 1–11 августа, и в нём уже есть новые блинчики с мясом и готовые сырники. Состав фильтра — в подписи над графиком, подробности — раздел 8.</p>
   </div>
 </div>
 
 <div>
   <p style="fontFamily:'Playfair Display',Georgia,serif;fontSize:21px;fontWeight:500;fontStyle:italic;color:#231a13;lineHeight:1.35;margin:0 0 12px">«Чем объясняется рост потребления капучино полтора месяца после повышения цен?» <span style="display:inline-block;fontFamily:'Golos Text',sans-serif;fontStyle:normal;fontSize:12px;fontWeight:600;padding:3px 10px;borderRadius:999px;background:#f0e2ca;color:#5b4835;verticalAlign:4px">Елена</span></p>
-  <p style="margin:0;color:#3c2e21">Рекорд создала <b style="fontWeight:600">старая линейка</b>: из 849 сентябрьских капучино <b style="fontWeight:600">595 (70%) проданы до 21.09</b> — в том числе все 386 больших стаканов 0,4 л; новый 0,3 добавил после 21-го лишь 194. Сам рост августа–сентября — обычный сезонный перелив из холодных напитков в горячие (холодная кофейная линейка за сентябрь −222 шт, горячие +96). Справедливо и наблюдение Елены: <b style="fontWeight:600">доля</b> капучино в чеке после изменений выросла (0,27 → 0,39 к октябрю) — но за счёт сезона и сузившегося меню, а не одобрения цен: самих чеков становилось меньше с первой же недели (518 → 424). Урок на будущее: эффект любого изменения замерять по дням и неделям вокруг даты — месячный итог смешивает «до» и «после».</p>
+  <p style="margin:0;color:#3c2e21">Рекорд создала <b style="fontWeight:600">старая линейка</b>: из 849 сентябрьских капучино 595 проданы за первые двадцать дней — старой линейкой, включая все 386 больших стаканов 0,4 л; на новую линейку пришлись последние десять дней и 254 штуки. Окна разной длины сравниваем в пересчёте на день: <b style="fontWeight:600">29,8 капучино в день до обновления → 25,4 после (−15%)</b>. Общий поток за те же дни упал сильнее (−20%), поэтому доля капучино в чеке выросла. Сам рост августа–сентября в штуках — обычный сезонный перелив из холодных напитков в горячие (холодная кофейная линейка за сентябрь −222 шт, горячие +96). Это и заметила Елена: <b style="fontWeight:600">доля</b> капучино в чеке выросла (0,27 → 0,39 к октябрю) — но за счёт сезона, сузившегося меню и того, что остальные позиции просели сильнее, а не за счёт одобрения цен: самих чеков становилось меньше с первой недели (518 → 424). Урок на будущее: эффект любого изменения замерять по дням и неделям вокруг даты — месячный итог смешивает «до» и «после».</p>
 </div>
 
 <div>
   <p style="fontFamily:'Playfair Display',Georgia,serif;fontSize:21px;fontWeight:500;fontStyle:italic;color:#231a13;lineHeight:1.35;margin:0 0 12px">«Что было причиной изменений в сентябре? Удалось ли снизить себестоимость — с учётом выросшего ФОТ?» <span style="display:inline-block;fontFamily:'Golos Text',sans-serif;fontStyle:normal;fontSize:12px;fontWeight:600;padding:3px 10px;borderRadius:999px;background:#f0e2ca;color:#5b4835;verticalAlign:4px">Елена</span></p>
-  <p style="margin:0 0 12px;color:#3c2e21"><b style="fontWeight:600">Причины</b> — см. контекст в разделе 2 (закупка, унификация меню, качество, посуда, смена управляющего). Про выросший ФОТ (фонд оплаты труда) — ниже. <b style="fontWeight:600">Результат по деньгам:</b> удельно себестоимость снизили честно — с ~33% выручки (лето-2025) до 26,6% (осень) и 23,3% (июль-2026); на каждой чашке зарабатывать стали заметно больше. Но чашек стало вдвое меньше, и в рублях это проигрыш: «выручка минус продукты» в июле <b style="fontWeight:600">736 тыс. ₽ → 449 тыс. ₽ за год</b>. Экономия на каждой чашке не окупила потерю гостей.</p>
+  <p style="margin:0 0 12px;color:#3c2e21"><b style="fontWeight:600">Причины</b> — см. контекст в разделе 2 (закупка, унификация меню, качество, посуда, смена управляющего). Про выросший ФОТ (фонд оплаты труда) — ниже. <b style="fontWeight:600">Результат по деньгам:</b> в пересчёте на одну чашку себестоимость снизили заметно — с ~33% выручки (лето-2025) до 26,6% (осень) и 23,3% (июль-2026), то есть на каждой проданной чашке стали зарабатывать больше. Но чашек стало вдвое меньше, и в рублях это проигрыш: «выручка минус продукты» в июле <b style="fontWeight:600">736 тыс. ₽ → 449 тыс. ₽ за год</b>. Экономия на каждой чашке не окупила потерю гостей.</p>
   <p style="margin:0 0 12px;color:#3c2e21"><b style="fontWeight:600">Про ФОТ важное уточнение:</b> рост зарплатной статьи осенью-2025 (107 → 217 тыс./мес) — это не «прибавки на точке», а перераспределение <b style="fontWeight:600">общесетевых</b> управленческих расходов: летние точки на карьере закрылись, и их долю стали разносить на оставшиеся кофейни; сменилась и методика учёта. К июлю-2026, после сокращений в сети (шеф-повар, су-шеф и калькулятор — специалист по рецептурам и учёту), статья вернулась к 91 тыс./мес — уровню июня-2025:</p>
   <div style="background:#fffdf9;border:1px solid rgba(90,60,28,.12);borderRadius:18px;padding:22px;margin:16px 0;boxShadow:0 1px 3px rgba(74,50,22,.05)">
-    <p style="fontFamily:'JetBrains Mono',monospace;fontSize:12px;color:#8a5a2b;fontWeight:500;letterSpacing:.08em;textTransform:uppercase;margin:0 0 14px">Рис. 7 · Сетевые управленческие расходы, отнесённые на точку (тыс. ₽/мес)<span class="swipe-hint"> · листайте вбок →</span></p>
+    <p style="fontFamily:'JetBrains Mono',monospace;fontSize:13.5px;color:#8a5a2b;fontWeight:600;letterSpacing:.06em;textTransform:uppercase;lineHeight:1.4;margin:0 0 16px;paddingBottom:9px;borderBottom:1.5px solid #e3d5bd">Рис. 7 · Сетевые управленческие расходы, отнесённые на точку (тыс. ₽/мес)<span class="swipe-hint"> · листайте вбок →</span></p>
     <div class="xscroll" style="overflowX:auto;WebkitOverflowScrolling:touch"><div id="chAup" style="minWidth:620px"></div></div>
     <p style="fontSize:15px;color:#5b4835;lineHeight:1.6;margin:14px 0 0">Подстатья «ФОТ АУП» в кассе. Что персонально входит в нынешние 91 тыс. и какая часть исчезла бы при закрытии точки — ключевой открытый вопрос (разделы 5 и 7).</p>
   </div>
@@ -691,40 +804,41 @@
 
 <div>
   <p style="fontFamily:'Playfair Display',Georgia,serif;fontSize:21px;fontWeight:500;fontStyle:italic;color:#231a13;lineHeight:1.35;margin:0 0 12px">«А во что тогда переформатировать — с учётом места, аудитории и конкурентов? И переформатировать ли вообще?» <span style="display:inline-block;fontFamily:'Golos Text',sans-serif;fontStyle:normal;fontSize:12px;fontWeight:600;padding:3px 10px;borderRadius:999px;background:#f0e2ca;color:#5b4835;verticalAlign:4px">Елена</span></p>
-  <p style="margin:0 0 12px;color:#3c2e21"><b style="fontWeight:600">Короткий ответ: концепцию не менять — менять наполнение и расписание зала.</b> Аргумент простой: этот же зал по этому же адресу, уже при работающих кофейнях-конкурентах (One Price — с 2021 года, «Мус» — с осени 2024), весь свой первый год делал в среднем 75 чеков в день (от 64 в декабре до 86 в сентябре) и принёс <b style="fontWeight:600">+1,96 млн ₽</b> прибыли за сентябрь-2024 → сентябрь-2025 (по кассе, то есть с сетевыми расходами тех месяцев). Место и формат кассой доказаны. Да, рыночный тренд сейчас против формата (раздел 5) — но точка падала в восемь раз быстрее рынка, значит и главные потери, и главный резерв лежат не в тренде, а в собственных решениях.</p>
-  <p style="margin:0 0 12px;color:#3c2e21"><b style="fontWeight:600">Что это за место (уточнили по открытым данным):</b> Лыткарино — 66,5 тыс. жителей, 22% старше 60. Точка стоит в жилом центре: в радиусе 300 м — ДК «Мир» с детскими кружками, женская консультация, детская поликлиника, библиотека. Транзитный узел (автостанция) занят «Мус», торгово-развлекательный (ТРЦ «Весна») — федеральным фастфудом, офисный — «Моти». Ниша «Теплее» — единственный в городе полноформатный зал: посадка + туалет + детская комната + работа до 22:00 (кофейни-конкуренты закрываются в 20:00). Коворкинга или антикафе в городе нет вообще.</p>
-  <p style="fontFamily:'JetBrains Mono',monospace;fontSize:12px;color:#8a5a2b;fontWeight:500;letterSpacing:.08em;textTransform:uppercase;margin:18px 0 8px">Таблица 2 · Варианты развития формата — к обсуждению, не решения<span class="swipe-hint"> · листайте вбок →</span></p>
+  <p style="margin:0 0 12px;color:#3c2e21"><b style="fontWeight:600">Короткий ответ: концепцию не менять — менять наполнение и расписание зала.</b> Аргумент простой: этот зал по этому адресу, уже при работающих кофейнях-конкурентах (One Price — с 2021 года, «Мус» — с осени 2024), весь свой первый год делал в среднем 75 чеков в день (от 64 в декабре до 86 в сентябре) и принёс <b style="fontWeight:600">+1,96 млн ₽</b> прибыли за сентябрь-2024 → сентябрь-2025 (по кассе, то есть с сетевыми расходами тех месяцев). Место и формат кассой доказаны. Рыночный тренд сейчас против формата (раздел 5) — но точка падала в восемь раз быстрее рынка, то есть и основная часть потерь, и основной резерв лежат не в тренде, а в том, что происходило внутри.</p>
+  <p style="margin:0 0 12px;color:#3c2e21"><b style="fontWeight:600">Опыт переформатирования у сети уже есть — стоит его расспросить.</b> В ответ на запрос по «Дзержинке» Дмитрий А. написал, что сравнивать её с Лыткарино не получится: в 2025 году кофейня там превратилась в кафе, в ноябре был перезапуск — появилась кухня, сделали ремонт, концепция стала дороже. Для сравнения двух точек это действительно закрывает вопрос (раздел 7), но для вопроса Елены это как раз самый ценный источник: <b style="fontWeight:600">кто-то из своих уже проходил этот путь целиком</b>. Что перезапуск дал по выручке и числу гостей, за сколько окупалась кухня, что из этого применимо к залу без кухни — это разговор, который стоит одного созвона.</p>
+  <p style="margin:0 0 12px;color:#3c2e21"><b style="fontWeight:600">Что это за место (уточнили по открытым данным):</b> Лыткарино — 66,5 тыс. жителей, 22% старше 60. Точка стоит в жилом центре: в радиусе 300 м — женская консультация, детская поликлиника, библиотека и ДК «Мир». Важная поправка: <b style="fontWeight:600">ДК «Мир» закрыт на капитальный ремонт с 17 сентября 2024 года</b>, кружки оттуда переехали — то есть весь прибыльный первый год точка отработала уже без этого соседа. Транзитный узел (автостанция) занят «Мус», торгово-развлекательный (ТРЦ «Весна») — федеральным фастфудом. Кофейня «Моти» появилась в городе только в июле 2026 года. Ниша «Теплее» — единственный в городе полноформатный зал: посадка + туалет + детская комната + работа до 22:00 (кофейни-конкуренты закрываются в 20:00). Коворкинга или антикафе в городе нет вообще.</p>
+  <p style="fontFamily:'JetBrains Mono',monospace;fontSize:13.5px;color:#8a5a2b;fontWeight:600;letterSpacing:.06em;textTransform:uppercase;lineHeight:1.4;margin:18px 0 16px;paddingBottom:9px;borderBottom:1.5px solid #e3d5bd">Таблица 4 · Варианты развития формата — к обсуждению, не решения<span class="swipe-hint"> · листайте вбок →</span></p>
   <div class="xscroll" style="overflowX:auto;WebkitOverflowScrolling:touch">
     <sc-raw-table style="borderCollapse:collapse;width:100%;minWidth:600px;fontSize:15.5px;fontVariantNumeric:tabular-nums">
       <sc-raw-tr>
-        <sc-raw-th style="padding:11px 12px;textAlign:left;borderBottom:1px solid #e3d5bd;fontSize:12.5px;textTransform:uppercase;letterSpacing:.06em;color:#8f7a61;fontWeight:600">Вариант</sc-raw-th>
-        <sc-raw-th style="padding:11px 12px;textAlign:left;borderBottom:1px solid #e3d5bd;fontSize:12.5px;textTransform:uppercase;letterSpacing:.06em;color:#8f7a61;fontWeight:600">Суть</sc-raw-th>
-        <sc-raw-th style="padding:11px 12px;textAlign:right;borderBottom:1px solid #e3d5bd;fontSize:12.5px;textTransform:uppercase;letterSpacing:.06em;color:#8f7a61;fontWeight:600">Вложения*</sc-raw-th>
-        <sc-raw-th style="padding:11px 12px;textAlign:left;borderBottom:1px solid #e3d5bd;fontSize:12.5px;textTransform:uppercase;letterSpacing:.06em;color:#8f7a61;fontWeight:600">Главный риск</sc-raw-th>
+        <sc-raw-th style="padding:12px 14px;textAlign:left;borderBottom:1.5px solid #dcc9a8;fontSize:12px;textTransform:uppercase;letterSpacing:.06em;color:#7a6349;fontWeight:700;background:#f7f1e6;whiteSpace:nowrap">Вариант</sc-raw-th>
+        <sc-raw-th style="padding:12px 14px;textAlign:left;borderBottom:1.5px solid #dcc9a8;fontSize:12px;textTransform:uppercase;letterSpacing:.06em;color:#7a6349;fontWeight:700;background:#f7f1e6;whiteSpace:nowrap">Суть</sc-raw-th>
+        <sc-raw-th style="padding:12px 14px;textAlign:right;borderBottom:1.5px solid #dcc9a8;fontSize:12px;textTransform:uppercase;letterSpacing:.06em;color:#7a6349;fontWeight:700;background:#f7f1e6;whiteSpace:nowrap">Вложения*</sc-raw-th>
+        <sc-raw-th style="padding:12px 14px;textAlign:left;borderBottom:1.5px solid #dcc9a8;fontSize:12px;textTransform:uppercase;letterSpacing:.06em;color:#7a6349;fontWeight:700;background:#f7f1e6;whiteSpace:nowrap">Главный риск</sc-raw-th>
+      </sc-raw-tr>
+      <sc-raw-tr style="background:#fbf7ef">
+        <sc-raw-td style="padding:13px 14px;borderBottom:1px solid #f0e7d6;verticalAlign:top;color:#3c2e21;lineHeight:1.5"><b style="fontWeight:600">0. Вернуть основу</b><br><span style="fontSize:13.5px;color:#8f7a61">база, без неё остальное не работает</span></sc-raw-td>
+        <sc-raw-td style="padding:13px 14px;borderBottom:1px solid #f0e7d6;verticalAlign:top;color:#3c2e21;lineHeight:1.5">большой капучино, 6–8 позиций еды, еда — в меню-борд и витрину, цены выровнять с оглядкой на «Мус»</sc-raw-td>
+        <sc-raw-td style="padding:13px 14px;borderBottom:1px solid #f0e7d6;verticalAlign:top;textAlign:right;color:#3c2e21;whiteSpace:nowrap;fontVariantNumeric:tabular-nums">60–150 тыс.</sc-raw-td>
+        <sc-raw-td style="padding:13px 14px;borderBottom:1px solid #f0e7d6;verticalAlign:top;color:#3c2e21;lineHeight:1.5">возврат объёма набирает силу месяцами: у латте доля 0,6 л росла с 8% до 46% четыре месяца. Результат честно оценивать не раньше чем через 8 недель</sc-raw-td>
       </sc-raw-tr>
       <sc-raw-tr>
-        <sc-raw-td style="padding:11px 12px;borderBottom:1px solid #eee3d0;verticalAlign:top;color:#3c2e21"><b style="fontWeight:600">0. Вернуть основу</b><br><span style="fontSize:13.5px;color:#8f7a61">база, без неё остальное не работает</span></sc-raw-td>
-        <sc-raw-td style="padding:11px 12px;borderBottom:1px solid #eee3d0;verticalAlign:top;color:#3c2e21">большой капучино, 6–8 позиций еды, еда — в меню-борд и витрину, цены выровнять с оглядкой на «Мус»</sc-raw-td>
-        <sc-raw-td style="padding:11px 12px;borderBottom:1px solid #eee3d0;verticalAlign:top;textAlign:right;color:#3c2e21">60–150 тыс.</sc-raw-td>
-        <sc-raw-td style="padding:11px 12px;borderBottom:1px solid #eee3d0;verticalAlign:top;color:#3c2e21">гости уходили за неделю, возвращаться будут месяцами — не судить о результате раньше 8 недель</sc-raw-td>
+        <sc-raw-td style="padding:13px 14px;borderBottom:1px solid #f0e7d6;verticalAlign:top;color:#3c2e21;lineHeight:1.5"><b style="fontWeight:600">1. Детский слот</b></sc-raw-td>
+        <sc-raw-td style="padding:13px 14px;borderBottom:1px solid #f0e7d6;verticalAlign:top;color:#3c2e21;lineHeight:1.5">игровая — из декорации в расписание: будни 16–19, детское меню, дни рождения. Расчёт на кружки ДК «Мир» пока не работает — он на капремонте с сентября 2024; стоит уточнить в администрации срок открытия</sc-raw-td>
+        <sc-raw-td style="padding:13px 14px;borderBottom:1px solid #f0e7d6;verticalAlign:top;textAlign:right;color:#3c2e21;whiteSpace:nowrap;fontVariantNumeric:tabular-nums">50–120 тыс.</sc-raw-td>
+        <sc-raw-td style="padding:13px 14px;borderBottom:1px solid #f0e7d6;verticalAlign:top;color:#3c2e21;lineHeight:1.5">суббота два года — худший день недели: семейный спрос выходного дня не доказан. Плюс главный детский якорь района (ДК «Мир») закрыт на ремонт</sc-raw-td>
+      </sc-raw-tr>
+      <sc-raw-tr style="background:#fbf7ef">
+        <sc-raw-td style="padding:13px 14px;borderBottom:1px solid #f0e7d6;verticalAlign:top;color:#3c2e21;lineHeight:1.5"><b style="fontWeight:600">2. Дневной рабочий зал</b></sc-raw-td>
+        <sc-raw-td style="padding:13px 14px;borderBottom:1px solid #f0e7d6;verticalAlign:top;color:#3c2e21;lineHeight:1.5">розетки, интернет, тихие часы будни 10–17 — для удалёнщиков (в городе сесть с ноутбуком негде)</sc-raw-td>
+        <sc-raw-td style="padding:13px 14px;borderBottom:1px solid #f0e7d6;verticalAlign:top;textAlign:right;color:#3c2e21;whiteSpace:nowrap;fontVariantNumeric:tabular-nums">30–70 тыс.</sc-raw-td>
+        <sc-raw-td style="padding:13px 14px;borderBottom:1px solid #f0e7d6;verticalAlign:top;color:#3c2e21;lineHeight:1.5">гость на 3 часа с одним кофе</sc-raw-td>
       </sc-raw-tr>
       <sc-raw-tr>
-        <sc-raw-td style="padding:11px 12px;borderBottom:1px solid #eee3d0;verticalAlign:top;color:#3c2e21"><b style="fontWeight:600">1. Детский слот</b></sc-raw-td>
-        <sc-raw-td style="padding:11px 12px;borderBottom:1px solid #eee3d0;verticalAlign:top;color:#3c2e21">игровая — из декорации в расписание: будни 16–19 под кружки ДК «Мир», детское меню, дни рождения</sc-raw-td>
-        <sc-raw-td style="padding:11px 12px;borderBottom:1px solid #eee3d0;verticalAlign:top;textAlign:right;color:#3c2e21">50–120 тыс.</sc-raw-td>
-        <sc-raw-td style="padding:11px 12px;borderBottom:1px solid #eee3d0;verticalAlign:top;color:#3c2e21">суббота два года — худший день недели: семейный спрос выходного дня не доказан</sc-raw-td>
-      </sc-raw-tr>
-      <sc-raw-tr>
-        <sc-raw-td style="padding:11px 12px;borderBottom:1px solid #eee3d0;verticalAlign:top;color:#3c2e21"><b style="fontWeight:600">2. Дневной рабочий зал</b></sc-raw-td>
-        <sc-raw-td style="padding:11px 12px;borderBottom:1px solid #eee3d0;verticalAlign:top;color:#3c2e21">розетки, интернет, тихие часы будни 10–17 — для удалёнщиков (в городе сесть с ноутбуком негде)</sc-raw-td>
-        <sc-raw-td style="padding:11px 12px;borderBottom:1px solid #eee3d0;verticalAlign:top;textAlign:right;color:#3c2e21">30–70 тыс.</sc-raw-td>
-        <sc-raw-td style="padding:11px 12px;borderBottom:1px solid #eee3d0;verticalAlign:top;color:#3c2e21">гость на 3 часа с одним кофе</sc-raw-td>
-      </sc-raw-tr>
-      <sc-raw-tr>
-        <sc-raw-td style="padding:11px 12px;borderBottom:1px solid #eee3d0;verticalAlign:top;color:#3c2e21"><b style="fontWeight:600">3. Проще и сытнее</b></sc-raw-td>
-        <sc-raw-td style="padding:11px 12px;borderBottom:1px solid #eee3d0;verticalAlign:top;color:#3c2e21">ланч 350–450 ₽, супы/доги/сэндвичи на имеющемся оборудовании, витрина навынос</sc-raw-td>
-        <sc-raw-td style="padding:11px 12px;borderBottom:1px solid #eee3d0;verticalAlign:top;textAlign:right;color:#3c2e21">50–150 тыс.</sc-raw-td>
-        <sc-raw-td style="padding:11px 12px;borderBottom:1px solid #eee3d0;verticalAlign:top;color:#3c2e21">еда уже трижды исчезала из продажи (21.09.2025, доги к июню, сэндвичи к августу) — без ежедневного контроля наличия повторится</sc-raw-td>
+        <sc-raw-td style="padding:13px 14px;borderBottom:1px solid #f0e7d6;verticalAlign:top;color:#3c2e21;lineHeight:1.5"><b style="fontWeight:600">3. Проще и сытнее</b></sc-raw-td>
+        <sc-raw-td style="padding:13px 14px;borderBottom:1px solid #f0e7d6;verticalAlign:top;color:#3c2e21;lineHeight:1.5">ланч 350–450 ₽, супы/доги/сэндвичи на имеющемся оборудовании, витрина навынос</sc-raw-td>
+        <sc-raw-td style="padding:13px 14px;borderBottom:1px solid #f0e7d6;verticalAlign:top;textAlign:right;color:#3c2e21;whiteSpace:nowrap;fontVariantNumeric:tabular-nums">50–150 тыс.</sc-raw-td>
+        <sc-raw-td style="padding:13px 14px;borderBottom:1px solid #f0e7d6;verticalAlign:top;color:#3c2e21;lineHeight:1.5">еда трижды пропадала из продажи (21.09.2025, френч-доги к июню, сэндвичи к августу), причём каждый раз при живом спросе. Значит, ключевой вопрос не «что ввести», а как удержать позицию в наличии</sc-raw-td>
       </sc-raw-tr>
     </sc-raw-table>
   </div>
@@ -745,26 +859,28 @@
 <h3 style="fontFamily:'Playfair Display',Georgia,serif;fontWeight:500;fontSize:22px;margin:1.2em 0 .5em;color:#231a13">Один и тот же год — три честных взгляда</h3>
 <p style="margin:0 0 10px;color:#3c2e21;maxWidth:70ch">На точку ежемесячно относится часть <b style="fontWeight:600">общесетевых</b> управленческих расходов — в кассе эта статья называется «АУП» (административно-управленческий персонал: управляющие, бухгалтерия, маркетинг сети). За последние 10 месяцев — 1,60 млн ₽. Считать её расходом точки целиком, не считать вовсе или считать по нынешнему сокращённому уровню — получаются три разные картины. Все три посчитаны на одних данных. (Не путать со сценариями А/Б/В из раздела 1: там — варианты решения, здесь — три способа посчитать текущий результат.)</p>
 <div style="background:#fffdf9;border:1px solid rgba(90,60,28,.12);borderRadius:18px;padding:22px;margin:16px 0;boxShadow:0 1px 3px rgba(74,50,22,.05)">
-  <p style="fontFamily:'JetBrains Mono',monospace;fontSize:12px;color:#8a5a2b;fontWeight:500;letterSpacing:.08em;textTransform:uppercase;margin:0 0 14px">Рис. 8 · Результат точки за октябрь-2025 → июль-2026 в трёх трактовках АУП<span class="swipe-hint"> · листайте вбок →</span></p>
+  <p style="fontFamily:'JetBrains Mono',monospace;fontSize:13.5px;color:#8a5a2b;fontWeight:600;letterSpacing:.06em;textTransform:uppercase;lineHeight:1.4;margin:0 0 16px;paddingBottom:9px;borderBottom:1.5px solid #e3d5bd">Рис. 8 · Результат точки за октябрь-2025 → июль-2026 в трёх трактовках АУП<span class="swipe-hint"> · листайте вбок →</span></p>
   <div class="xscroll" style="overflowX:auto;WebkitOverflowScrolling:touch"><div id="chLens" style="minWidth:600px"></div></div>
-  <p style="fontSize:15px;color:#5b4835;lineHeight:1.6;margin:14px 0 0">Убыток июля (−85 тыс. ₽) почти равен отнесённому за июль сетевому АУП (91 тыс. ₽): <b style="fontWeight:600;color:#231a13">без него точка в июле была в нуле (+6 тыс.)</b>. Какая трактовка правильная — зависит от того, что из АУП реально исчезнет при закрытии точки, а что просто переедет на другие точки сети. Это вопрос №1 в разделе 7.</p>
+  <p style="fontSize:15px;color:#5b4835;lineHeight:1.6;margin:14px 0 0">Убыток июля (−85 тыс. ₽) почти равен отнесённому за июль сетевому АУП (91 тыс. ₽): <b style="fontWeight:600;color:#231a13">без него точка в июле была в нуле (+6 тыс.)</b>. Все три числа — одна и та же касса; различие только в том, какую часть сетевого АУП считать расходом именно этой точки. <b style="fontWeight:600;color:#231a13">После первой редакции Дмитрий А. ответил:</b> при закрытии точки сетевой АУП не исчез бы — его пришлось бы сокращать дальше; он считает АУП избыточным и уже сокращает, передавая задачи управляющим. План на следующий месяц — <b style="fontWeight:600;color:#231a13">около 40 тыс. ₽/мес</b>. Открытым остаётся состав суммы: кто входит персонально и входит ли Алиса (раздел 7).</p>
 </div>
 
 <h3 style="fontFamily:'Playfair Display',Georgia,serif;fontWeight:500;fontSize:22px;margin:1.6em 0 .5em;color:#231a13">Где безубыточность и сколько до неё</h3>
 <div style="background:#fffdf9;border:1px solid rgba(90,60,28,.12);borderRadius:18px;padding:22px;margin:16px 0;boxShadow:0 1px 3px rgba(74,50,22,.05)">
-  <p style="fontFamily:'JetBrains Mono',monospace;fontSize:12px;color:#8a5a2b;fontWeight:500;letterSpacing:.08em;textTransform:uppercase;margin:0 0 14px">Рис. 9 · Чеков в день: факт, безубыток, цели<span class="swipe-hint"> · листайте вбок →</span></p>
+  <p style="fontFamily:'JetBrains Mono',monospace;fontSize:13.5px;color:#8a5a2b;fontWeight:600;letterSpacing:.06em;textTransform:uppercase;lineHeight:1.4;margin:0 0 16px;paddingBottom:9px;borderBottom:1.5px solid #e3d5bd">Рис. 9 · Чеков в день: факт, безубыток, цели<span class="swipe-hint"> · листайте вбок →</span></p>
   <div class="xscroll" style="overflowX:auto;WebkitOverflowScrolling:touch"><div id="chScale" style="minWidth:600px"></div></div>
-  <p style="fontSize:15px;color:#5b4835;lineHeight:1.6;margin:14px 0 0">Шкала — чеков в день при среднем чеке 503 ₽ и структуре расходов июля-2026. Порог зависит от трактовки АУП и налогов: <b style="fontWeight:600;color:#231a13">рабочий ориентир 45 чеков в день</b> (все расходы как в кассе), при полном налоговом учёте — ближе к 50 <span style="display:inline-block;fontSize:12px;fontWeight:600;padding:2px 9px;borderRadius:999px;background:#f6e7c6;color:#6b4e0e;whiteSpace:nowrap">налоги в кассе учтены не полностью — уточняется</span>. Разрыв от текущего темпа до нуля — <b style="fontWeight:600;color:#231a13">примерно 6 чеков ≈ 3 000 ₽ выручки в день</b>. Ставка аренды 140 тыс. — сейчас 24% выручки (с коммуналкой 162 тыс. — 27,7%); здоровой нормой (15%) ставка станет при 61 чеке в день.</p>
+  <p style="fontSize:15px;color:#5b4835;lineHeight:1.6;margin:14px 0 0">Шкала — чеков в день при среднем чеке 503 ₽ и структуре расходов июля-2026. Порог зависит от трактовки АУП и налогов: <b style="fontWeight:600;color:#231a13">рабочий ориентир 45 чеков в день</b> (все расходы как в кассе), при полном налоговом учёте — ближе к 50 <span style="display:inline-block;fontSize:12px;fontWeight:600;padding:2px 9px;borderRadius:999px;background:#f6e7c6;color:#6b4e0e">в кассе отражена не вся налоговая нагрузка — режим и суммы уточняются</span>. Разрыв от августовского темпа до нуля — <b style="fontWeight:600;color:#231a13">примерно 4–5 чеков ≈ 2 000–2 500 ₽ выручки в день</b> (в июле было 6). Если сетевой АУП снизится до ~40 тыс. ₽/мес — план, названный Дмитрием А., — постоянные расходы опустятся до ~442 тыс., а порог — до <b style="fontWeight:600;color:#231a13">~634 тыс. ₽/мес ≈ 41 чека в день</b> (при августовском чеке 483 ₽ — около 42): это уровень нынешнего августовского темпа. Проверить можно будет по кассе следующего месяца. Ставка аренды 140 тыс. — сейчас 24% выручки (с коммуналкой 162 тыс. — 27,7%); здоровой нормой (15%) ставка станет при 61 чеке в день.</p>
   <p style="fontSize:15px;color:#5b4835;lineHeight:1.6;margin:10px 0 0">Продукты в расчёте порога взяты по фактическим закупкам (28,8% выручки) — это строже, чем 23,3% по рецептам из раздела 4: часть закупленного уходит в запасы, расходники и потери, поэтому для «нуля» честнее считать по деньгам, которые реально тратятся.</p>
 </div>
 
 <h3 style="fontFamily:'Playfair Display',Georgia,serif;fontWeight:500;fontSize:22px;margin:1.6em 0 .5em;color:#231a13">Рынок вокруг — коротко</h3>
 <ul style="margin:.4em 0 .7em;paddingLeft:1.15em;color:#3c2e21">
-  <li style="margin:.55em 0"><b style="fontWeight:600">Кофейни России, 1-е полугодие 2026:</b> гостей меньше на 6% за год, средний чек 469 ₽ (+7%). Сжимается именно наш формат — «кофейня с посадкой в среднем ценовом сегменте» (в Москве за 2025 год таких стало на 12% меньше); растут точки навынос и кофе в магазинах.</li>
+  <li style="margin:.55em 0"><b style="fontWeight:600">Гостей в кофейнях по стране становится меньше, а денег — больше.</b> Число покупок в кофейнях России: −7,3% за январь–октябрь 2025 <span style="display:inline-block;fontSize:12px;fontWeight:600;padding:2px 9px;borderRadius:999px;background:#f0e2ca;color:#5b4835">«Платформа ОФД»</span> и −6% за 1-е полугодие 2026 при среднем чеке 469 ₽, +7% <span style="display:inline-block;fontSize:12px;fontWeight:600;padding:2px 9px;borderRadius:999px;background:#f0e2ca;color:#5b4835">«Эвотор»</span>. При этом оборот общепита Московской области в сопоставимых ценах <b style="fontWeight:600">рос</b>: +3,7% за 2025 год и +7,8% за 1-е полугодие 2026 <span style="display:inline-block;fontSize:12px;fontWeight:600;padding:2px 9px;borderRadius:999px;background:#f0e2ca;color:#5b4835">Росстат</span>. Рынок не схлопывается — он перетекает: <b style="fontWeight:600">классических кофеен с посадкой в России стало на 13% меньше</b> (в Москве на 12%), а точек навынос на 4–5% больше <span style="display:inline-block;fontSize:12px;fontWeight:600;padding:2px 9px;borderRadius:999px;background:#f0e2ca;color:#5b4835">«2ГИС», янв-2026</span>.</li>
+  <li style="margin:.55em 0"><b style="fontWeight:600">В самом городе конкурентов стало заметно больше:</b> на август 2026 в Лыткарино работают девять точек кофейного формата, и <b style="fontWeight:600">пять из них открылись уже после сентября 2025</b>. Отдельно стоит отметить два заведения с едой и суши, открывшихся в том же доме, что и «Теплее» (ул. Ленина, 12): Maneki Village в июле 2025 и «Хит» в конце сентября 2025 <span style="display:inline-block;fontSize:12px;fontWeight:600;padding:2px 9px;borderRadius:999px;background:#f0e2ca;color:#5b4835">даты — по первым отзывам на Яндекс.Картах</span>. Кофейня «Моти», о которой шла речь раньше, появилась только в июле 2026 — осенью 2025 её ещё не было.</li>
   <li style="margin:.55em 0"><b style="fontWeight:600">Против «Мус» мы дороже на 67% за литр</b> флагманского напитка: наш капучино 0,3 л · 350 ₽ (1 167 ₽/л) против их 0,4 л · 280 ₽ (700 ₽/л) <span style="display:inline-block;fontSize:12px;fontWeight:600;padding:2px 9px;borderRadius:999px;background:#f0e2ca;color:#5b4835">цены — фото меню-бордов, авг-2026</span>. По выпечке разрыв с «Моти» — в 2,5–2,8 раза.</li>
   <li style="margin:.55em 0"><b style="fontWeight:600">Если продавать кофейню:</b> покупатели готового бизнеса обычно платят 12–24 её месячные прибыли и первым делом смотрят помесячную выручку за год <span style="display:inline-block;fontSize:12px;fontWeight:600;padding:2px 9px;borderRadius:999px;background:#f0e2ca;color:#5b4835">практика брокеров готового бизнеса, 2026</span>. С падающим графиком продажа затягивается на 6–12 месяцев, и цену сбивают. Практический вывод: <b style="fontWeight:600">продавать выгодно только после восстановления показателей</b> — то есть сценарии «продать» и «чинить» начинаются с одного и того же шага. Оборудование отдельно после 4–5 лет работы стоит 15–20% от нового <span style="display:inline-block;fontSize:12px;fontWeight:600;padding:2px 9px;borderRadius:999px;background:#f0e2ca;color:#5b4835">рынок б/у оборудования</span> — оценка «за всё ~150–170 тыс.» с созвона правдоподобна.</li>
-  <li style="margin:.55em 0"><b style="fontWeight:600">Налоги-2026 (НДС 22% и новые пороги для малого бизнеса):</b> точку с выручкой ~8 млн ₽ в год (4,64 млн за 7 месяцев 2026) они не затрагивают минимум до 2028-го — порог освобождения в 2026-м 20 млн, в 2027-м 15 млн <span style="display:inline-block;fontSize:12px;fontWeight:600;padding:2px 9px;borderRadius:999px;background:#f0e2ca;color:#5b4835">Налоговый кодекс, ред. 2026</span>. Этот фактор из решения можно исключить.</li>
-  <li style="margin:.55em 0"><b style="fontWeight:600">Что говорят гости:</b> рейтинг 5,0 (252 оценки); «Атмосфера» и «Интерьер» — 100% положительных упоминаний. Слабые аспекты — «Чистота» (65% положительных) и «Время ожидания» (35% упоминаний — отрицательные). Продукт и место работают; не хватает только потока гостей.</li>
+  <li style="margin:.55em 0"><b style="fontWeight:600">Налоги-2026 — фактор вернулся в решение, и он срочный.</b> В первой редакции мы писали, что НДС 22% и новые пороги точку с выручкой ~8 млн ₽ в год не затрагивают до 2028 года. Для точки это верно, но порог освобождения от НДС считается <b style="fontWeight:600">по юрлицу в целом</b>: по словам Дмитрия А., на этом же юрлице работает и точка на Пруду, поэтому совокупная выручка подойдёт к порогу значительно раньше — возможно, уже до конца августа. Выход за порог означает НДС на весь оборот: в рознице это либо повышение цен, либо потеря маржи — порог безубыточности в обоих случаях уходит заметно выше 45 чеков. Возможное решение и сроки — в разделе 7 <span class="chip" style="display:inline-block;fontSize:12px;fontWeight:600;padding:2px 9px;borderRadius:999px;background:#f0e2ca;color:#5b4835;whiteSpace:nowrap">со слов Дмитрия А., 12.08.2026</span></li>
+  <li style="margin:.55em 0"><b style="fontWeight:600">Что говорят гости:</b> рейтинг 5,0 (252 оценки); «Атмосфера» и «Интерьер» — 100% положительных упоминаний. Ниже других два аспекта: «Чистота» — 65% положительных, «Время ожидания» — 35% упоминаний отрицательные. Продукт и место работают; не хватает потока гостей.</li>
+  <li style="margin:.55em 0"><b style="fontWeight:600">Август идёт лучше июля:</b> 448 чеков за 1–11 августа = 40,7 в день против июльских 37,5, средний чек 483 ₽. Одиннадцать дней — не тренд, и в окне на один выходной больше обычного; с поправкой на это получается около 40. Но направление впервые с марта не вниз, и это стоит отследить по итогам месяца.</li>
 </ul>
 </section>
 
@@ -775,61 +891,58 @@
   <span style="flex:none;width:38px;height:38px;borderRadius:50%;background:#f0e2ca;border:1px solid #c9a06a;color:#8a5a2b;display:inline-flex;alignItems:center;justifyContent:center;fontSize:18px;transform:translateY(4px)">6</span>
   <span>Что можно делать уже сейчас — идеи к обсуждению</span>
 </h2>
-<p style="margin:0 0 10px;color:#3c2e21;maxWidth:70ch">Ниже — не поручения и не согласованный план, а действия с нулевой или малой ценой; каждое привязано к цифре из данных. Годятся на «пока решаем большое».</p>
-<div style="display:grid;gridTemplateColumns:repeat(auto-fit,minmax(320px,1fr));gap:16px;margin:20px 0">
-  <div style="background:#fffdf9;border:1px solid rgba(90,60,28,.12);borderRadius:18px;padding:22px;boxShadow:0 1px 3px rgba(74,50,22,.05)">
-    <p style="fontFamily:'Playfair Display',Georgia,serif;fontSize:19px;fontWeight:600;margin:0 0 12px;color:#231a13">Продукт</p>
-    <ul style="margin:0;paddingLeft:1.15em;fontSize:16.5px;lineHeight:1.62;color:#3c2e21">
-      <li style="margin:.5em 0"><b style="fontWeight:600">Большой капучино (0,4).</b> 62–78% гостей всегда берут максимальный объём; у «Мус» 0,4 = 280 ₽. Ориентир цены — 330–360 ₽.</li>
-      <li style="margin:.5em 0"><b style="fontWeight:600">Еда — видимой:</b> сэндвичи и выпечка в меню-борд (доску меню над кассой) и в витрину. В мае–июне сэндвичи продавались по 66 шт/мес, будучи «невидимыми» — их не было ни в борде, ни в витрине, предлагали устно.</li>
-      <li style="margin:.5em 0"><b style="fontWeight:600">Сезонная линейка «Осень» к 1 сентября.</b> Сезонные напитки — самая устойчивая категория (−12% при общем −52%); в сильные сезоны было 6–8 позиций.</li>
-      <li style="margin:.5em 0"><b style="fontWeight:600">Контроль наличия еды дважды в день</b> (к 12:30 и 17:30): пики продаж — 13:00, 15:00 и 18:00, а не утро.</li>
-    </ul>
-  </div>
-  <div style="background:#fffdf9;border:1px solid rgba(90,60,28,.12);borderRadius:18px;padding:22px;boxShadow:0 1px 3px rgba(74,50,22,.05)">
-    <p style="fontFamily:'Playfair Display',Georgia,serif;fontSize:19px;fontWeight:600;margin:0 0 12px;color:#231a13">Гости и продвижение</p>
-    <ul style="margin:0;paddingLeft:1.15em;fontSize:16.5px;lineHeight:1.62;color:#3c2e21">
-      <li style="margin:.5em 0"><b style="fontWeight:600">Карта лояльности каждому гостю:</b> 69% чеков идут по карте, но весной 6 недель подряд выдавалось 0–1 новых карт — похоже, карту переставали предлагать. База карт — бесплатный канал для анонса возвращений <span style="display:inline-block;fontSize:12px;fontWeight:600;padding:2px 9px;borderRadius:999px;background:#f6e7c6;color:#6b4e0e">размер базы уточняется</span>.</li>
-      <li style="margin:.5em 0"><b style="fontWeight:600">Новинки ставить на пятницу:</b> лучший день недели (43 чека против 33–40) — больше всего глаз на витрине.</li>
-      <li style="margin:.5em 0"><b style="fontWeight:600">«Открыты до 22:00» — в вывеску и карточку Яндекса:</b> после 20:00, когда все кофейни города закрыты, уже сейчас 4,8 чека в день без какого-либо анонса.</li>
-      <li style="margin:.5em 0"><b style="fontWeight:600">Оживить карточку Яндекса</b> (фото, меню, ответы на отзывы) — ноль затрат, 5,0★ и 252 оценки уже есть.</li>
-    </ul>
-  </div>
+<p style="margin:0 0 10px;color:#3c2e21;maxWidth:70ch">Это не поручения и не согласованный план, а перечень возможностей к обсуждению. Он собран по одному правилу: <b style="fontWeight:600">сначала то, что уже проверено на этой точке и на этих гостях</b>, потом то, что пробовали и не удержали, и только потом то, чего не пробовали. У каждого пункта — цифра из кассы, по которой его можно оспорить или подтвердить.</p>
+<div style="background:#fffdf9;border:1px solid rgba(90,60,28,.12);borderRadius:18px;padding:22px;boxShadow:0 1px 3px rgba(74,50,22,.05)">
+  <p style="fontFamily:'Playfair Display',Georgia,serif;fontSize:19px;fontWeight:600;margin:0 0 4px;color:#231a13">Уже давало результат здесь</p>
+  <p style="fontSize:13.5px;color:#8f7a61;margin:0 0 12px;lineHeight:1.45">проверено на самой точке за последние 12 месяцев</p>
+  <ul style="margin:0;paddingLeft:1.15em;fontSize:16.5px;lineHeight:1.62;color:#3c2e21"><li style="margin:.55em 0"><b style="fontWeight:600">Расширить ассортимент на 8–10 позиций.</b> Ровно это сделали в марте 2026: отставание от прошлого года сократилось с −49% до −31% — лучший месяц года, и без единого рубля на рекламу. Оговорка: тогда же стабилизировался состав команды, так что часть эффекта может быть её. Самый сильный из наблюдаемых рычагов, но подтверждён одним эпизодом. <span class="chip" style="display:inline-block;fontSize:12px;fontWeight:600;padding:2px 9px;borderRadius:999px;background:#f0e2ca;color:#5b4835;whiteSpace:nowrap">цена: закупка + тех-карты</span></li><li style="margin:.55em 0"><b style="fontWeight:600">Вернуть сэндвичи и держать их в наличии.</b> В мае и июне давали по 66 шт в месяц — при том что в меню-борде и витрине их не было, предлагали устно. В июле продажи упали вчетверо, в августе до нуля, хотя поток не падал. <span class="chip" style="display:inline-block;fontSize:12px;fontWeight:600;padding:2px 9px;borderRadius:999px;background:#f0e2ca;color:#5b4835;whiteSpace:nowrap">цена: заготовки</span></li><li style="margin:.55em 0"><b style="fontWeight:600">Сезонная линейка к сентябрю.</b> Летняя линейка апреля-2026 (лимонады, крем-латте, глясе) дала 144 шт в мае, а айс-латте в августе вышел на первое место среди всех напитков. Сезонные напитки — самая устойчивая категория точки: −12% при общем −52%. <span class="chip" style="display:inline-block;fontSize:12px;fontWeight:600;padding:2px 9px;borderRadius:999px;background:#f0e2ca;color:#5b4835;whiteSpace:nowrap">цена: сиропы + борд</span></li><li style="margin:.55em 0"><b style="fontWeight:600">Поднять потолок объёма у капучино до 0,4 л.</b> В апреле так сделали с латте и рафом: доля большого стакана выросла с 8% до 46% за четыре месяца. Капучино продаётся вдвое чаще, чем латте и раф вместе (474 штуки против 229 в июле), поэтому здесь тот же шаг должен весить заметно больше. У «Мус» 0,4 л стоит 280 ₽; ориентир цены — 330–360 ₽. <span class="chip" style="display:inline-block;fontSize:12px;fontWeight:600;padding:2px 9px;borderRadius:999px;background:#f6e7c6;color:#6b4e0e;whiteSpace:nowrap">эффект набирается 2–4 месяца</span></li></ul>
+</div>
+<div style="background:#fffdf9;border:1px solid rgba(90,60,28,.12);borderRadius:18px;padding:22px;boxShadow:0 1px 3px rgba(74,50,22,.05)">
+  <p style="fontFamily:'Playfair Display',Georgia,serif;fontSize:19px;fontWeight:600;margin:0 0 4px;color:#231a13">Пробовали — и не удержали</p>
+  <p style="fontSize:13.5px;color:#8f7a61;margin:0 0 12px;lineHeight:1.45">спрос подтверждён, но позиция уходила из продажи</p>
+  <ul style="margin:0;paddingLeft:1.15em;fontSize:16.5px;lineHeight:1.62;color:#3c2e21"><li style="margin:.55em 0"><b style="fontWeight:600">Френч-доги.</b> Февраль–март 2026: 67 → 97 шт, 31 тыс. ₽, совпало с лучшим месяцем года. К июню — ноль. Спрос был, позиция ушла.</li><li style="margin:.55em 0"><b style="fontWeight:600">Сэндвичи.</b> Дважды: декабрь-2025 и август-2026, оба раза с работающего уровня.</li><li style="margin:.55em 0"><b style="fontWeight:600">Чайно-травяная линейка.</b> Единственное, что сентябрьское обновление добавило: чайная категория выросла с 43 до 133 шт в месяц, новые позиции давали 22–36 тыс. ₽. В мае-2026 половину линейки сняли — продажи вернулись к прежним 31–72 шт.</li><li style="margin:.55em 0">Общий знаменатель: <b style="fontWeight:600">позиции уходили при живом спросе, и в кассе не видно почему</b>. Пока это не выяснено, любой новый ввод рискует повторить тот же путь — поэтому первым делом стоит не расширять меню, а понять причину (вопросы в разделе 7).</li></ul>
+</div>
+<div style="background:#fffdf9;border:1px solid rgba(90,60,28,.12);borderRadius:18px;padding:22px;boxShadow:0 1px 3px rgba(74,50,22,.05)">
+  <p style="fontFamily:'Playfair Display',Georgia,serif;fontSize:19px;fontWeight:600;margin:0 0 4px;color:#231a13">Не пробовали</p>
+  <p style="fontSize:13.5px;color:#8f7a61;margin:0 0 12px;lineHeight:1.45">стоит ноль или почти ноль</p>
+  <ul style="margin:0;paddingLeft:1.15em;fontSize:16.5px;lineHeight:1.62;color:#3c2e21"><li style="margin:.55em 0"><b style="fontWeight:600">Еда — в меню-борд и в витрину.</b> Сейчас в борде нет ни одной позиции еды, только напитки, сиропы и пять снеков. Стоит попробовать: сэндвичи давали по 66 шт в месяц, не будучи ни в борде, ни в витрине. <span class="chip" style="display:inline-block;fontSize:12px;fontWeight:600;padding:2px 9px;borderRadius:999px;background:#dff0e6;color:#1c7a4a;whiteSpace:nowrap">ноль затрат</span></li><li style="margin:.55em 0"><b style="fontWeight:600">Карта лояльности каждому гостю.</b> 69% чеков идут по карте, но весной шесть недель подряд выдавалось 0–1 новых карт. База карт — бесплатный канал, чтобы сообщить о возврате объёмов и еды. <span class="chip" style="display:inline-block;fontSize:12px;fontWeight:600;padding:2px 9px;borderRadius:999px;background:#f6e7c6;color:#6b4e0e;whiteSpace:nowrap">размер базы уточняется</span></li><li style="margin:.55em 0"><b style="fontWeight:600">«Открыты до 22:00» — в вывеску и в карточку Яндекса.</b> После 20:00, когда все кофейни города закрыты, уже сейчас 4,8 чека в день без какого-либо анонса. <span class="chip" style="display:inline-block;fontSize:12px;fontWeight:600;padding:2px 9px;borderRadius:999px;background:#dff0e6;color:#1c7a4a;whiteSpace:nowrap">ноль затрат</span></li><li style="margin:.55em 0"><b style="fontWeight:600">Карточка Яндекса: фото, меню, ответы на отзывы.</b> Рейтинг 5,0 и 252 оценки уже есть — карточка работает вхолостую. <span class="chip" style="display:inline-block;fontSize:12px;fontWeight:600;padding:2px 9px;borderRadius:999px;background:#dff0e6;color:#1c7a4a;whiteSpace:nowrap">ноль затрат</span></li><li style="margin:.55em 0"><b style="fontWeight:600">Новинки ставить на пятницу.</b> Лучший день недели: 43 чека против 33–40 в остальные — больше всего людей увидит витрину.</li></ul>
 </div>
 <div style="background:linear-gradient(#fffdf9,#fdf6ea);border:1px solid #dcc6a2;borderRadius:18px;padding:22px;margin:16px 0">
   <p style="fontFamily:'Playfair Display',Georgia,serif;fontSize:19px;fontWeight:600;margin:0 0 10px;color:#231a13">Как понять, что получается: 5 цифр раз в неделю</p>
-  <p style="margin:0;color:#3c2e21">Чеков в день · выручка в день · доля чеков с едой · продажи капучино по объёмам · новые карты. Все пять видны в кассе за минуту. Ориентиры через 8 недель после любых изменений: <b style="fontWeight:600">≥48 чеков в день</b> и <b style="fontWeight:600">еда в ≥8% чеков</b> — идём к сценариям А/Б; не дотянули — честно обсуждаем выход. <span style="display:inline-block;fontSize:12px;fontWeight:600;padding:2px 9px;borderRadius:999px;background:#f0e2ca;color:#5b4835">ориентиры расчётные, к обсуждению</span></p>
+  <p style="margin:0 0 10px;color:#3c2e21">Чеков в день · выручка в день · доля чеков с едой · продажи капучино по объёмам · новые карты. Все пять видны в кассе за минуту, считать их может кто угодно из участников.</p>
+  <p style="margin:0;color:#3c2e21">Отдельный вопрос — <b style="fontWeight:600">до каких значений договоримся дотянуть и за какой срок</b>. Для разговора можно оттолкнуться от расчётных ориентиров: <b style="fontWeight:600">48 чеков в день</b> (ноль с запасом, раздел 5) и <b style="fontWeight:600">еда в 8% чеков</b> (уровень первого года — было 10%). Срок стоит брать не меньше восьми недель: возврат объёма у латте набирал долю четыре месяца. Сами значения и срок — предмет договорённости участников, а не вывод этого документа. <span style="display:inline-block;fontSize:12px;fontWeight:600;padding:2px 9px;borderRadius:999px;background:#f6e7c6;color:#6b4e0e">ориентиры расчётные, к обсуждению</span></p>
 </div>
 </section>
 
 <!-- ═══════════ 7 ═══════════ -->
-<section id="s7" data-screen-label="7 Открытые вопросы" style="scrollMarginTop:80px;marginTop:64px">
+<section id="s7" data-screen-label="7 Что нужно для решения" style="scrollMarginTop:80px;marginTop:64px">
 <div style="display:flex;alignItems:center;gap:16px;margin:0 0 34px;color:#c9a06a"><span style="flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(168,112,58,.35))"></span><span style="display:flex;alignItems:center;gap:7px"><svg sc-camel-view-box="0 0 24 24" width="15" height="15" fill="none" aria-hidden="true" style="display:block;opacity:.85"><g transform="rotate(-38 12 12)"><ellipse cx="12" cy="12" rx="5.2" ry="8.2" fill="#f0e2ca" stroke="#c9a06a" stroke-width="1.4"></ellipse><path d="M12 4.4c-1.5 2.1 1.5 3.3 0 5.4-1.5 2.1 1.5 3.3 0 5.4" stroke="#c9a06a" stroke-width="1.4" stroke-linecap="round"></path></g></svg><svg sc-camel-view-box="0 0 24 24" width="11" height="11" fill="none" aria-hidden="true" style="display:block;opacity:.5"><g transform="rotate(22 12 12)"><ellipse cx="12" cy="12" rx="5.2" ry="8.2" fill="#f0e2ca" stroke="#c9a06a" stroke-width="1.7"></ellipse><path d="M12 4.4c-1.5 2.1 1.5 3.3 0 5.4-1.5 2.1 1.5 3.3 0 5.4" stroke="#c9a06a" stroke-width="1.7" stroke-linecap="round"></path></g></svg></span><span style="flex:1;height:1px;background:linear-gradient(90deg,rgba(168,112,58,.35),transparent)"></span></div>
 <h2 style="fontFamily:'Playfair Display',Georgia,serif;fontWeight:500;fontSize:clamp(25px,4.2vw,36px);lineHeight:1.2;letterSpacing:-.008em;margin:0 0 18px;display:flex;alignItems:baseline;gap:14px">
   <span style="flex:none;width:38px;height:38px;borderRadius:50%;background:#f0e2ca;border:1px solid #c9a06a;color:#8a5a2b;display:inline-flex;alignItems:center;justifyContent:center;fontSize:18px;transform:translateY(4px)">7</span>
-  <span>Открытые вопросы — без них решение не принять</span>
+  <span>Что ещё нужно, чтобы принять решение</span>
 </h2>
 <div style="display:grid;gridTemplateColumns:repeat(auto-fit,minmax(320px,1fr));gap:16px;margin:20px 0">
   <div style="background:#fffdf9;border:1px solid rgba(90,60,28,.12);borderRadius:18px;padding:22px;boxShadow:0 1px 3px rgba(74,50,22,.05)">
     <p style="fontFamily:'Playfair Display',Georgia,serif;fontSize:19px;fontWeight:600;margin:0 0 12px;color:#231a13">К Дмитрию А.</p>
     <ol style="margin:0;paddingLeft:1.3em;fontSize:16.5px;lineHeight:1.62;color:#3c2e21">
-      <li style="margin:.55em 0"><b style="fontWeight:600">Состав сетевого АУП на точке</b> (91 тыс./мес): кто входит, что исчезнет при закрытии, входит ли Алиса. <i style="color:#5b4835">Определяет, теряет точка 85 тыс. в месяц или работает в ноль.</i></li>
+      <li style="margin:.55em 0"><span style="display:inline-block;fontSize:11.5px;fontWeight:700;padding:2px 9px;borderRadius:999px;background:#dff0e6;color:#1c7a4a;marginRight:6px;verticalAlign:2px">частично закрыт</span><b style="fontWeight:600">Состав сетевого АУП на точке.</b> Ответ Дмитрия А. получен: при закрытии точки АУП не исчез бы — его пришлось бы сокращать дальше; сокращение уже идёт, план на следующий месяц ~40 тыс./мес. Осталось уточнить состав: кто входит персонально и входит ли Алиса. <i style="color:#5b4835">От состава зависит, как читать десять месяцев истории: −86 тыс./мес по кассе или около нуля.</i></li>
       <li style="margin:.55em 0"><b style="fontWeight:600">Договор аренды:</b> до какого месяца фикс 140 тыс., формулировка права повышения, условия выхода. <i style="color:#5b4835">Определяет цену сценария В и переговорную позицию.</i></li>
       <li style="margin:.55em 0"><b style="fontWeight:600">Граница потерь («стоп-лосс»):</b> до какой суммы и до какого месяца он готов покрывать минус точки. <i style="color:#5b4835">Определяет, сколько времени есть на попытку.</i></li>
       <li style="margin:.55em 0"><b style="fontWeight:600">Условия «совместного управления»</b> — что конкретно предлагается.</li>
-      <li style="margin:.55em 0"><b style="fontWeight:600">Налоговый режим и полная нагрузка</b> (в кассе за 7 месяцев проведено всего 59,6 тыс. ₽ налогов при зарплатах персонала 1,52 млн — учёт явно неполный). <i style="color:#5b4835">Сдвигает безубыток.</i></li>
+      <li style="margin:.55em 0"><span style="display:inline-block;fontSize:11.5px;fontWeight:700;padding:2px 9px;borderRadius:999px;background:#fae3e2;color:#962621;marginRight:6px;verticalAlign:2px">срочно</span><b style="fontWeight:600">Налоги: юрлицо и порог НДС.</b> По словам Дмитрия А., юрлицо у точки общее с точкой на Пруду, и совокупная выручка подойдёт к порогу освобождения от НДС — возможно, до конца августа. Решить, как разводить: вариант — перевести точку на отдельное юрлицо или ИП, в том числе на ИП инвесторов (готовы обсудить). Отдельно уточнить полную налоговую нагрузку: касса отражает не всю (за 7 месяцев проведено 59,6 тыс. ₽; патент оплачивается вне кассы). <i style="color:#5b4835">Сдвигает безубыток и цену всех сценариев; по срокам — самый быстрый вопрос списка.</i></li>
       <li style="margin:.55em 0"><b style="fontWeight:600">Расширить партнёрский доступ в кассе:</b> склад и списания, меню, клиенты, сотрудники. <i style="color:#5b4835">Откроет списания и базу для рассылки.</i></li>
       <li style="margin:.55em 0"><b style="fontWeight:600">Тех-карты 2024/25</b> (обещано) и <b style="fontWeight:600">сумма первоначальных инвестиций</b>.</li>
-      <li style="margin:.55em 0"><b style="fontWeight:600">Опыт «Дзержинки» (вторая кофейня сети, г. Дзержинский) после сентября:</b> что меняли и что сработало (если удобно — помесячные чеки). <i style="color:#5b4835">Отделит эффект общих решений от местного управления.</i></li>
+      <li style="margin:.55em 0;opacity:.62"><span style="display:inline-block;fontSize:11.5px;fontWeight:700;padding:2px 9px;borderRadius:999px;background:#dff0e6;color:#1c7a4a;marginRight:6px;verticalAlign:2px">закрыт</span><b style="fontWeight:600">Опыт «Дзержинки» для сравнения двух точек.</b> Ответ получен: в 2025 году кофейня в Дзержинском превратилась в кафе, в ноябре был перезапуск — кухня, ремонт, более дорогая концепция. <i style="color:#5b4835">Сравнивать её с Лыткарино действительно нельзя: это разные форматы. На выводы по Лыткарино это не влияет — они сделаны на своих данных. Зато сам этот опыт полезен по другому поводу — см. раздел 4.</i></li>
     </ol>
+    <p style="margin:14px 0 0;fontSize:15px;lineHeight:1.55;color:#5b4835">Первые три пункта — то, без чего решение по сценариям А/Б/В не считается: они меняют не оттенок картины, а сам ответ. Остальные уточняют.</p>
   </div>
   <div style="background:#fffdf9;border:1px solid rgba(90,60,28,.12);borderRadius:18px;padding:22px;boxShadow:0 1px 3px rgba(74,50,22,.05)">
     <p style="fontFamily:'Playfair Display',Georgia,serif;fontSize:19px;fontWeight:600;margin:0 0 12px;color:#231a13">К Алисе</p>
     <ol style="margin:0;paddingLeft:1.3em;fontSize:16.5px;lineHeight:1.62;color:#3c2e21">
-      <li style="margin:.55em 0"><b style="fontWeight:600">Сэндвичи:</b> в мае и июне — по 66 штук в месяц, в июле продажи рухнули (по декадам: 15 → 4 → 5 шт), 1–5 августа — ноль. Общий поток при этом по декадам июля был стабилен (372 / 391 / 400 чеков). Их перестали делать, кончились заготовки, убрали с витрины? <i style="color:#5b4835">Единственный случай, где можно поймать потерю продаж из-за наличия.</i></li>
-      <li style="margin:.55em 0"><b style="fontWeight:600">«Цезарь» и новинки:</b> где гость их видит — борд, витрина, стол? По кассе позиции без продаж невидимы.</li>
+      <li style="margin:.55em 0"><b style="fontWeight:600">Что произошло с сэндвичами и френч-догами.</b> Сэндвичи: май и июнь — по 66 штук в месяц, июль по декадам 15 → 4 → 5, август — ноль; поток при этом по декадам июля был ровным (372 / 391 / 400 чеков). Френч-доги: 97 штук в марте → ноль к июню. Перестали делать, кончились заготовки, ушли с витрины, перестали предлагать? Рабочая версия Дмитрия А.: заготовки списывались, а продажи еды зависят от того, кто за стойкой. <i style="color:#5b4835">Проверяется журналом списаний и графиком смен. Ответ определяет, с чего начинать возврат еды: с контроля наличия или с новых позиций.</i></li>
+      <li style="margin:.55em 0"><b style="fontWeight:600">Что сейчас видит гость.</b> Блинчики с мясом и готовые сырники появились в августе — они в витрине, в борде или их предлагают устно? И где стоит «Цезарь»? <i style="color:#5b4835">Позиции, у которых не было ни одной продажи, в кассе не видны, поэтому по ней нельзя понять, что стоит в меню.</i></li>
       <li style="margin:.55em 0"><b style="fontWeight:600">Пять вопросов из памятки от 05.08</b> (тех-карты расходников, итог инвентаризации, граммовки 5 позиций, журнал списаний, порядок занесения закупок). <i style="color:#5b4835">Закрывают тему потерь на складе и реальную маржу еды.</i></li>
-      <li style="margin:.55em 0"><b style="fontWeight:600">Карты лояльности:</b> почему весной 6 недель не выдавались; сколько активных карт в базе.</li>
+      <li style="margin:.55em 0"><b style="fontWeight:600">Карты лояльности:</b> весной шесть недель подряд выдавалось 0–1 новых карт, потом выдача возобновилась — что менялось? И сколько всего активных карт в базе. <i style="color:#5b4835">69% чеков идут по карте: если база большая, это готовый бесплатный канал, чтобы сообщить гостям о возврате объёмов и еды.</i></li>
       <li style="margin:.55em 0"><b style="fontWeight:600">Два платежа:</b> «Прочее» 23 200 ₽ (июль) и «Соц.сети/Авито» 2 338 ₽ (август) — что это? Если второе — наём, то маркетинга по-прежнему ноль девять месяцев подряд.</li>
     </ol>
   </div>
@@ -844,23 +957,38 @@
   <span>Откуда цифры и как перепроверить</span>
 </h2>
 <div style="background:#fffdf9;border:1px solid rgba(90,60,28,.12);borderRadius:18px;padding:22px;margin:16px 0;boxShadow:0 1px 3px rgba(74,50,22,.05)">
-  <p style="margin:0 0 10px;color:#3c2e21"><b style="fontWeight:600">Источник — касса yTimes</b> (кабинет back.ytimes.ru, точка «ТЕПЛЕЕ ♡ | Лыткарино»), данные пересняты 05.08.2026:</p>
+  <p style="margin:0 0 10px;color:#3c2e21"><b style="fontWeight:600">Источник — касса yTimes</b> (кабинет back.ytimes.ru, точка «ТЕПЛЕЕ ♡ | Лыткарино»). Основной массив снят 05.08.2026, история меню и августовские цифры — 12.08.2026:</p>
   <ul style="margin:.4em 0 .7em;paddingLeft:1.15em;color:#3c2e21;fontSize:16.5px;lineHeight:1.62">
     <li style="margin:.5em 0"><b style="fontWeight:600">Чеки, выручка, гости:</b> «Показатели → Выручка» (по дням и месяцам). Недельные ряды на Рис. 3 — сумма дневных значений, недели пн–вс.</li>
-    <li style="margin:.5em 0"><b style="fontWeight:600">Состав чеков</b> (объёмы, цены позиций, «с собой», совместные покупки — Рис. 1, 2, Таблица 1): «Финансы → История продаж → Продажи за день» — каждый чек по позициям. Контрольная сумма чеков за июль-2026 (1 163) сходится с отчётом «Гости и чеки» до штуки; за июль-2025 (2 422) — тоже.</li>
-    <li style="margin:.5em 0"><b style="fontWeight:600">Продажи по позициям и группам</b> (Рис. 5, 6): «Заказы»; выручка всех групп за июль-2026 = 585 256 ₽ = выручке месяца, до рубля.</li>
+    <li style="margin:.5em 0"><b style="fontWeight:600">Состав чеков</b> (объёмы, цены позиций, «с собой», совместные покупки — Рис. 1, 2, Таблица 3): «Финансы → История продаж → Продажи за день» — каждый чек по позициям. Контрольная сумма чеков за июль-2026 (1 163) сходится с отчётом «Гости и чеки» до штуки; за июль-2025 (2 422) — тоже.</li>
+    <li style="margin:.5em 0"><b style="fontWeight:600">Продажи по позициям и группам</b> (Рис. 5, 6, Таблицы 1 и 2): «Заказы» отдельно по каждому из 25 месяцев — 302 позиции за всю историю точки. Выручка всех групп за июль-2026 = 585 256 ₽ = выручке месяца, до рубля; помесячные ряды чеков сошлись с прежними рядами отчёта до десятой.</li>
     <li style="margin:.5em 0"><b style="fontWeight:600">Расходы и АУП</b> (Рис. 7, 8): «Финансы», статья «Зарплата» и подстатьи «ФОТ Персонал» / «ФОТ АУП»; сумма всех статей сходится с расходами месяца по всем месяцам (расхождение ≤2 ₽).</li>
+    <li style="margin:.5em 0"><b style="fontWeight:600">Погода</b> (раздел 3): суточные и месячные данные метеостанции Москва (ВДНХ), ВМО 27612, через «Погоду и климат» — своей метеостанции у Лыткарино нет, ВДНХ в 30 км. Перекрёстная проверка — реанализ ERA5 (Open-Meteo) в узле сетки в 2 км от центра города, расхождение со станцией меньше 0,5 °C. Месячные итоги сверены с Гидрометцентром России.</li>
+    <li style="margin:.5em 0"><b style="fontWeight:600">Город и конкуренты</b> (раздел 3): публикации администрации Лыткарино и REGIONS.RU / РИАМО за 2024–2026 годы; даты открытия заведений — по первым отзывам на Яндекс.Картах (это оценка, а не документ); население — Росстат и Мособлстат, ряд по городскому округу.</li>
     <li style="margin:.5em 0"><b style="fontWeight:600">Команда и смены:</b> «История смен» (кто открывал смены по датам).</li>
-    <li style="margin:.5em 0"><b style="fontWeight:600">Внешнее:</b> Яндекс.Карты (рейтинги, аспекты, конкуренты — снято 05.08.2026), фотографии меню-бордов «Теплее», «Мус», «Моти» (август-2026), открытые публикации по рынку 2026 («Коммерсантъ»/«Эвотор», Росстат, отраслевые обзоры).</li>
+    <li style="margin:.5em 0"><b style="fontWeight:600">Внешнее:</b> Яндекс.Карты (рейтинги, аспекты, конкуренты — снято 05.08.2026 и 12.08.2026), фотографии меню-бордов «Теплее», «Мус», «Моти» (август-2026), открытые публикации по рынку 2026 («Коммерсантъ»/«Эвотор», «Платформа ОФД», «2ГИС», Росстат).</li>
   </ul>
-  <p style="margin:0 0 10px;color:#3c2e21"><b style="fontWeight:600">Методика Рис. 6 (еда):</b> 2024–25 — панини, чиабатты, бейглы, сырники, каши, скрамблы, сэндвичи (без круассанов и десертов); 2026 — сэндвичи, косичка, френч-доги, салаты. Июль-2025 тем же фильтром не пересчитывался (переходное меню), поэтому столбца нет — консервативно.</p>
-  <p style="margin:0;color:#3c2e21"><b style="fontWeight:600">Чего в данных нет</b> (и что поэтому в документе не утверждается): списаний и остатков склада; наличия позиций на витрине; данных других точек сети; полного налогового учёта (значит, «прибыль» во всех трактовках — оптимистичная граница); причин исчезновения позиций из продажи. Всё это — в вопросах раздела 7.</p>
+  <p style="margin:0 0 10px;color:#3c2e21"><b style="fontWeight:600">Методика Рис. 6 (еда):</b> один и тот же фильтр на все 24 месяца — панини, чиабатты, бейглы, сырники, каши, скрамблы, сэндвичи, френч-доги, косичка с ветчиной, блинчики; круассаны и десерты в него не входят (одноимённая «косичка с фисташкой» — выпечка, в фильтр не попадает). <b style="fontWeight:600">Сезонный контроль:</b> везде, где в документе говорится об эффекте изменения, сравнение идёт с тем же календарным месяцем прошлого года — это убирает обычную сезонность; степень уверенности по каждому выводу разобрана в разделе 3.</p>
+  <div style="background:#faf5ec;border:1px solid #e3d5bd;borderRadius:14px;padding:18px 20px;margin:16px 0">
+  <p style="margin:0 0 10px;fontSize:12.5px;letterSpacing:.08em;textTransform:uppercase;color:#8f7a61;fontWeight:600">Что исправлено в редакции от 12.08.2026</p>
+  <ul style="margin:0;paddingLeft:1.15em;fontSize:16px;lineHeight:1.6;color:#3c2e21">
+    <li style="margin:.45em 0"><b style="fontWeight:600">«С 21.09.2025 по январь-2026 несладкой еды в меню не было»</b> — неверно. Продажи шли на уровне 9–27 тыс. ₽ в месяц: косичка с ветчиной, остатки чиабатт и сэндвичей. На Рис. 6 эти месяцы были закрыты серой полосой, теперь показаны цифрами.</li>
+    <li style="margin:.45em 0"><b style="fontWeight:600">Масштаб сокращения меню был завышен.</b> Из 42 позиций, пропавших между сентябрём и октябрём 2025, шесть — переименования при унификации меню сети (Раф → Раф Классический, Флэт уайт → Флэт Уайт и другие). Реально из продажи вышли 36 позиций, и одновременно вошли 9.</li>
+    <li style="margin:.45em 0"><b style="fontWeight:600">«В марте 2026 вернули бабл-ти»</b> — неверно. Бабл-ти продавался с марта по июнь 2025 и больше не возвращался; в марте 2026 вернулись сэндвичи, а в феврале появились френч-доги.</li>
+    <li style="margin:.45em 0"><b style="fontWeight:600">Фильтр «несладкой еды» на Рис. 6 был разным для 2025 и 2026 годов</b> — косичка входила только во вторую половину ряда. Теперь фильтр единый, из-за чего часть столбцов сдвинулась на 1–5 тыс. ₽.</li>
+    <li style="margin:.45em 0"><b style="fontWeight:600">Сопоставление продаж капучино до и после 21.09 приведено к одинаковым окнам</b> — в пересчёте на день 29,8 → 25,4. Прежняя пара «595 против 194» сравнивала двадцать дней с десятью и весь капучино с одним объёмом — так делать нельзя.</li>
+    <li style="margin:.45em 0"><b style="fontWeight:600">Судьба еды после 21.09 уточнена.</b> Завтраки продавались всё реже с начала сентября и после 21-го не вернулись, а сэндвичи и чиабатты после десятидневной паузы продавались до конца декабря. Прежняя формулировка «всё одним пакетом» была грубее данных.</li>
+    <li style="margin:.45em 0"><b style="fontWeight:600">Снято утверждение «налоговая реформа-2026 точку не затрагивает до 2028 года».</b> Порог освобождения от НДС считается по юрлицу, а не по точке — а юрлицо общее с другой точкой сети (раздел 5).</li>
+    <li style="margin:.45em 0"><b style="fontWeight:600">Линейка напитков описывалась двумя состояниями вместо трёх.</b> В апреле 2026 вернулись большой латте, большой раф и какао 0,4 л; из первой редакции следовало, что большие объёмы не возвращали.</li>
+  </ul>
+</div>
+<p style="margin:0;color:#3c2e21"><b style="fontWeight:600">Чего в данных нет</b> (и что поэтому в документе не утверждается): списаний и остатков склада; наличия позиций на витрине; данных других точек сети; полного налогового учёта; расходы в финмодуль вносятся вручную, и потерянный расход вероятнее задвоенного — поэтому «прибыль» во всех трактовках оптимистичная граница; причин исчезновения позиций из продажи. Всё это — в вопросах раздела 7.</p>
 </div>
 </section>
 
 <footer style="marginTop:64px;paddingTop:22px;borderTop:1px solid #e3d5bd;fontSize:14.5px;color:#8f7a61;display:flex;gap:12px;alignItems:flex-start;lineHeight:1.6">
   <svg width="19" height="19" sc-camel-view-box="0 0 24 24" fill="none" stroke="#a8703a" stroke-width="1.6" stroke-linecap="round" style="flex:none;margin-top:3px"><path d="M4 10h12v6a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4v-6z"></path><path d="M16 11h2.2a2.3 2.3 0 0 1 0 4.6H16"></path><path d="M8 3.5c-.8 1.2.8 1.8 0 3M12 3.5c-.8 1.2.8 1.8 0 3"></path></svg>
-  <span>Сварено на данных кассы 05.08.2026; внешние источники — на ту же дату. Документ — материал к обсуждению, а не решение: варианты действий в разделах 4–6 являются предложениями и требуют согласования участниками.</span>
+  <span>Сварено на данных кассы: основной массив — 05.08.2026, история меню и август — 12.08.2026; внешние источники — 05.08.2026. Редакция от 12 августа 2026. Документ — материал к обсуждению, а не решение: варианты действий в разделах 4–6 являются предложениями и требуют согласования участниками.</span>
 </footer>
 
 </div>
@@ -870,7 +998,7 @@
 const NS='http://www.w3.org/2000/svg';
 const CL={ink:'#231a13',ink2:'#3c2e21',ink3:'#5b4835',muted:'#8f7a61',grid:'#eee3d0',axis:'#c0ab8d',
   s1:'#2f6fb8',s2:'#d9722f',s3:'#2b9e6e',neg:'#b03a34',pos:'#2f6fb8',mid:'#f0e2ca',surface:'#fffdf9',good:'#1c7a4a'};
-const SECS=[['s1','Итоги созвона'],['s2','Перелом 21 сентября'],['s3','Хронология спада'],['s4','Ответы на вопросы'],['s5','Экономика сейчас'],['s6','Что можно делать'],['s7','Открытые вопросы'],['s8','Данные и проверка']];
+const SECS=[['s1','Итоги созвона'],['s2','Изменения 21 сентября'],['s3','Что меняли и что вышло'],['s4','Ответы на вопросы'],['s5','Экономика сейчас'],['s6','Что можно делать'],['s7','Что нужно для решения'],['s8','Данные и проверка']];
 
 function el(n,a,txt){const e=document.createElementNS(NS,n);for(const k in a)e.setAttribute(k,a[k]);if(txt!=null)e.appendChild(document.createTextNode(txt));return e;}
 function fmt(n){return String(n).replace(/\B(?=(\d{3})+(?!\d))/g,' ');}
@@ -1041,39 +1169,67 @@ class Component extends DCLogic {
         borderTop:gone?('1.5px dashed '+CL.neg):'3px solid #b8905d',opacity:gone?.5:1}}));
     const tag=(txt,kind)=>h('span',{style:{position:'absolute',top:-19,left:'50%',transform:'translateX(-50%)',
       fontSize:10.5,fontWeight:700,padding:'2px 8px',borderRadius:999,whiteSpace:'nowrap',
-      background:kind==='max'?'#e4eefa':kind==='new'?'#fbe8db':'#fae3e2',
-      color:kind==='max'?'#255ea3':kind==='new'?'#9d4415':'#962621'}},txt);
+      background:kind==='max'?'#e4eefa':kind==='new'?'#fbe8db':kind==='back'?'#dff0e6':'#fae3e2',
+      color:kind==='max'?'#255ea3':kind==='new'?'#9d4415':kind==='back'?'#1c7a4a':'#962621'}},txt);
     const box=(o)=>h('div',{key:o.k,style:{display:'flex',flexDirection:'column',alignItems:'center',gap:5,position:'relative'}},
-      o.tag?tag(o.tag,o.tagKind):null, cupEl(o.w,o.h,o.gone,o.tagKind==='max'||o.tagKind==='new'),
+      o.tag?tag(o.tag,o.tagKind):null, cupEl(o.w,o.h,o.gone,o.tagKind==='max'||o.tagKind==='new'||o.tagKind==='back'),
       o.gone?h('span',{style:{position:'absolute',top:'38%',fontWeight:800,color:CL.neg,fontSize:18}},'✕'):null,
       h('span',{style:{fontSize:13,color:o.gone?CL.muted:CL.ink,fontWeight:600,whiteSpace:'nowrap',fontVariantNumeric:'tabular-nums'}},o.p),
       h('span',{style:{fontSize:12,color:CL.muted,whiteSpace:'nowrap'}},o.v));
+    const note=(txt,kind)=>h('div',{style:{fontSize:13.5,lineHeight:1.5,alignSelf:'center',maxWidth:186,
+      color:kind==='same'?CL.ink2:CL.ink3,
+      background:kind==='same'?'#faf5ec':'none',border:kind==='same'?'1px dashed #ddc9a8':'none',
+      borderRadius:kind==='same'?10:0,padding:kind==='same'?'10px 12px':0}},txt);
     const rows=[
-      {n:'Капучино',before:[{k:1,w:56,h:56,p:'230 ₽',v:'0,2 л'},{k:2,w:80,h:92,p:'330 ₽',v:'0,4 л',tag:'самый ходовой',tagKind:'max'}],
+      {n:'Капучино',s:'самый ходовой напиток — примерно в трети чеков',
+       before:[{k:1,w:56,h:56,p:'230 ₽',v:'0,2 л'},{k:2,w:80,h:92,p:'330 ₽',v:'0,4 л',tag:'самый ходовой',tagKind:'max'}],
        after:[{k:3,w:56,h:56,p:'270 ₽',v:'0,2 л'},{k:4,w:68,h:74,p:'350 ₽',v:'0,3 л',tag:'новый потолок',tagKind:'new'},{k:5,w:80,h:92,p:'—',v:'0,4 л',gone:1,tag:'убран',tagKind:'del'}],
-       sum:['Большой стакан исчез. Кто брал 0,4 за 330 ₽, теперь может взять максимум 0,3 за 350 ₽ — ','+41% за литр',' при «внешне» почти той же цене.']},
-      {n:'Латте',before:[{k:1,w:60,h:64,p:'240 ₽',v:'0,25 л'},{k:2,w:88,h:108,p:'340 ₽',v:'0,5 л',tag:'самый ходовой',tagKind:'max'}],
+       now:{t:'Без изменений: те же 0,2 и 0,3 л. Стакан 0,4 л не возвращали.',k:'same'},
+       sum:['Единственный из четырёх, у кого объём не менялся с сентября. Для гостя, бравшего большой стакан, это ','+41% за литр',' — 825 ₽/л было, 1 167 ₽/л стало.']},
+      {n:'Латте',s:'второй по деньгам',
+       before:[{k:1,w:60,h:64,p:'240 ₽',v:'0,25 л'},{k:2,w:88,h:108,p:'340 ₽',v:'0,5 л',tag:'самый ходовой',tagKind:'max'}],
        after:[{k:3,w:68,h:74,p:'330 ₽',v:'0,3 л',tag:'остался один',tagKind:'new'},{k:4,w:60,h:64,p:'—',v:'0,25 л',gone:1,tag:'убран',tagKind:'del'},{k:5,w:88,h:108,p:'—',v:'0,5 л',gone:1,tag:'убран',tagKind:'del'}],
-       sum:['Оба старых размера исчезли, остался один средний. Кто брал 0,5 за 340 ₽, получил 0,3 за 330 ₽ — ','+62% за литр','.']},
-      {n:'Американо',before:[{k:1,w:56,h:56,p:'170 ₽',v:'0,2 л'},{k:2,w:80,h:92,p:'270 ₽',v:'0,4 л'}],
+       now:[{k:6,w:68,h:74,p:'330 ₽',v:'0,3 л'},{k:7,w:96,h:124,p:'480 ₽',v:'0,6 л',tag:'вернули в апреле',tagKind:'back'}],
+       sum:['Сначала остался один средний объём (','+62% за литр','), но в апреле 2026 большой вернули — и даже больше прежнего. К августу на 0,6 л приходится 46% всех продаж латте.']},
+      {n:'Раф классический',s:'самый дорогой из основных',
+       before:{t:'«стандарт» 280 ₽ и «двойной» 380 ₽. Объём в кассе не записан — он проходил модификатором, поэтому сравнить его в литрах нельзя.'},
+       after:[{k:3,w:68,h:74,p:'370 ₽',v:'0,3 л',tag:'остался один',tagKind:'new'}],
+       now:[{k:6,w:68,h:74,p:'370 ₽',v:'0,3 л'},{k:7,w:96,h:124,p:'520 ₽',v:'0,6 л',tag:'вернули в апреле',tagKind:'back'}],
+       sum:['Большой объём вернули вместе с латте. При этом раф — единственный напиток, дорожавший весь год: средняя цена продажи ','334 → 411 ₽',' с июля-2025 по июль-2026.']},
+      {n:'Американо',s:'третий по штукам',
+       before:[{k:1,w:56,h:56,p:'170 ₽',v:'0,2 л'},{k:2,w:80,h:92,p:'270 ₽',v:'0,4 л'}],
        after:[{k:3,w:56,h:56,p:'220 ₽',v:'0,2 л'},{k:4,w:68,h:74,p:'290 ₽',v:'0,3 л',tag:'новый потолок',tagKind:'new'},{k:5,w:80,h:92,p:'—',v:'0,4 л',gone:1,tag:'убран',tagKind:'del'}],
-       sum:['Большой убран; малый подорожал 170 → 220 ₽. По большому стакану — ','+43% за литр','.']}
+       now:{t:'Без изменений: те же 0,2 и 0,3 л. Стакан 0,4 л не возвращали.',k:'same'},
+       sum:['Потолок 0,3 л сохраняется, малый подорожал 170 → 220 ₽. По большому стакану — ','+43% за литр','.']}
     ];
-    const head=h('div',{key:'hd','data-row':'1',style:{display:'grid',gridTemplateColumns:'100px 1fr 28px 1.3fr',gap:10,fontSize:11.5,
-      color:CL.muted,textTransform:'uppercase',letterSpacing:'.07em',fontWeight:600,borderBottom:'1px solid '+CL.grid,paddingBottom:8,marginBottom:2}},
-      h('span',null,''),h('span',null,'до 21.09.2025'),h('span',null,''),h('span',null,'с 21.09.2025'));
-    const setStyle={display:'flex',gap:16,alignItems:'flex-end',flexWrap:'wrap',paddingTop:22};
+    const GRID='128px 1fr 1.25fr 1fr';
+    const STATES=['до 21.09.2025','с 21.09.2025','сейчас · август 2026'];
+    const sep={borderLeft:'1px dashed #e2d4ba',paddingLeft:12};
+    // Шапка повторяется у каждого напитка: при прокрутке всегда видно, какая колонка к какой дате
+    const miniHead=(key)=>h('div',{key:key,style:{display:'grid',gridTemplateColumns:GRID,gap:14,fontSize:10.5,
+      color:CL.muted,textTransform:'uppercase',letterSpacing:'.08em',fontWeight:700,
+      borderBottom:'1px solid '+CL.grid,paddingBottom:6,marginBottom:2}},
+      h('span',null,''),
+      h('span',{style:sep},STATES[0]),
+      h('span',{style:sep},STATES[1]),
+      h('span',{style:Object.assign({color:'#8a5a2b'},sep)},STATES[2]));
+    const setStyle={display:'flex',gap:12,alignItems:'flex-end',flexWrap:'wrap',paddingTop:22};
+    const cell=(v)=>Array.isArray(v)
+      ? h('div',{style:Object.assign({},setStyle,sep)},v.map(box))
+      : h('div',{style:sep},note(v.t,v.k));
     return h('div',{style:{display:'flex',flexDirection:'column'}},
       h('div',{className:'xscroll',style:{overflowX:'auto',WebkitOverflowScrolling:'touch'}},
-        h('div',{style:{minWidth:600}},head,
-          rows.map((r,i)=>h('div',{key:r.n,'data-row':'1',style:{display:'grid',gridTemplateColumns:'100px 1fr 28px 1.3fr',gap:10,
-            alignItems:'end',padding:'14px 0 12px',borderBottom:i<2?'1px dashed '+CL.grid:'none'}},
-            h('div',{style:{fontWeight:600,fontSize:16,paddingBottom:28}},r.n),
-            h('div',{style:setStyle},r.before.map(box)),
-            h('div',{style:{alignSelf:'center',color:CL.muted,fontSize:20,paddingBottom:26}},'→'),
-            h('div',{style:setStyle},r.after.map(box)),
-            h('div',{style:{gridColumn:'1/-1',fontSize:15,color:CL.ink3,padding:'12px 0 0',lineHeight:1.55}},
-              r.sum[0],h('b',{style:{color:CL.neg,fontWeight:700}},r.sum[1]),r.sum[2])
+        h('div',{style:{minWidth:830}},
+          rows.map((r,i)=>h('div',{key:r.n,style:{padding:i?'22px 0 0':'0',
+            borderTop:i?'1px dashed '+CL.axis:'none',marginTop:i?18:0}},
+            miniHead('h'+i),
+            h('div',{'data-row':'1',style:{display:'grid',gridTemplateColumns:GRID,gap:14,alignItems:'end',padding:'6px 0 12px'}},
+              h('div',{style:{paddingBottom:28}},
+                h('div',{style:{fontWeight:600,fontSize:16}},r.n),
+                h('div',{style:{fontSize:12,color:CL.muted,lineHeight:1.35,marginTop:3}},r.s)),
+              cell(r.before),cell(r.after),cell(r.now),
+              h('div',{style:{gridColumn:'1/-1',fontSize:15,color:CL.ink3,padding:'12px 0 0',lineHeight:1.55}},
+                r.sum[0],h('b',{style:{color:i===1||i===2?CL.good:CL.neg,fontWeight:700}},r.sum[1]),r.sum[2]))
           ))
       )));
   }
@@ -1082,12 +1238,12 @@ class Component extends DCLogic {
   phases(){
     const h=React.createElement;
     const P=[
-      ['июнь — 20 сен 2025','Плато','502–622 чека в неделю всё лето (с марта — не ниже 488). Фон к прошлому году −11%.',CL.axis],
-      ['21 сен — окт 2025','Удар','Пакет изменений → −18% чеков на первой же полной неделе (518 → 424); сверх обычного сезонного спада — ещё −13% за десять дней. Октябрь не отыграл.',CL.neg],
-      ['ноя 2025 — фев 2026','Осыпание','400 → 236 чеков в неделю. Утро 7–10 сжалось с 15–18 до 4–6 чеков в день. Параллельно почти полностью сменилась команда (в декабре 85% смен закрывали люди, которых не было на точке 3 месяца назад) — смена команды началась после падения, а не до.',CL.neg],
-      ['март 2026','Отскок — важнейший факт для плана','Меню расширили с 62 до 72 позиций (вернули сэндвичи, бабл-ти, чаи; пик френч-догов — 97 шт за месяц) → чеки +42% за месяц при сезонной норме +6% (такой был рост февраль→март в 2025-м). Маркетинга при этом не было совсем.',CL.s3],
-      ['апр — июл 2026','Сползание','После мартовских 53 — вниз: 49 → 45 → 43 → 37,5 чека в день. Возвращённые новинки исчезали из продажи одна за другой: френч-доги 97 → 40 → 21 → 0 шт за месяц; сэндвичи 66 → 24. Причина исчезновений в кассе не видна — вопрос к точке (раздел 7).',CL.s2],
-      ['1–5 авг 2026','Сейчас','В среднем 42,8 чека в день, но окно нетипичное: суббота 01.08 дала 62 чека — вдвое выше субботней нормы июля (33,5). Без этой субботы — ~38, то есть на уровне июля. Сэндвичей за пять дней не продано ни одного.','#8a5a2b']
+      ['июнь — 20 сен 2025','Ровный ход','502–622 чека в неделю всё лето (с марта — не ниже 488). К прошлому году точка шла на −11%.',CL.axis],
+      ['21 сен — окт 2025','Обновление линейки','Объёмы, цены и ассортимент напитков поменялись одним днём; несладкая еда пропала из чеков на десять дней (завтраки после этого не вернулись, сэндвичи и чиабатты — вернулись) → −18% чеков на первой полной неделе (518 → 424); сверх обычного сезонного спада — ещё около 13% гостей за десять дней. Октябрь не отыграл. В плюс из этого обновления пошла новая чайно-травяная линейка: вся чайная категория выросла с 43 до 133 шт в месяц.',CL.neg],
+      ['ноя 2025 — фев 2026','Постепенное снижение','400 → 236 чеков в неделю. Утро 7–10 сжалось с 15–18 до 4–6 чеков в день. Параллельно почти полностью сменилась команда (в декабре 85% смен закрывали люди, которых не было на точке 3 месяца назад) — смена команды началась после падения, а не до.',CL.neg],
+      ['март 2026','Подъём — важнейший факт для плана','Меню расширили с 62 до 72 позиций (вернули сэндвичи, добавили френч-доги — их пик, 97 шт за месяц). Чеки +42% за месяц при сезонной норме +6%; отставание от прошлого года сократилось с −49% до −31% — лучший показатель года. Маркетинговых расходов не было. В этом же месяце стабилизировался состав команды, поэтому вклад меню и вклад команды по данным не разделяются.',CL.s3],
+      ['апр — июл 2026','Снижение при частичном возврате','После мартовских 53 — вниз: 49 → 45 → 43 → 37,5 чека в день. В апреле вернули большие объёмы латте и рафа и ввели летнюю линейку; на общий поток гостей это не повлияло. Френч-доги и сэндвичи в это же время перестали продаваться (97 → 0 и 66 → 0). Причина в кассе не видна — вопрос к точке (раздел 7).',CL.s2],
+      ['1–11 авг 2026','Сейчас','448 чеков за 11 дней = 40,7 в день, с поправкой на структуру дней недели ≈ 40 — то есть на уровне июля (37,5) или чуть выше. Средний чек 483 ₽. Еда в 4,0% чеков; появились блинчики с мясом и готовые сырники — первые тёплые завтраки с сентября 2025. Сэндвичи за эти дни не продавались.','#8a5a2b']
     ];
     return h('div',{style:{display:'flex',flexDirection:'column'}},
       P.map((p,i)=>h('div',{key:i,'data-row':'1',style:{display:'grid',gridTemplateColumns:'minmax(140px,150px) 1fr',gap:'6px 18px',
@@ -1103,7 +1259,7 @@ class Component extends DCLogic {
 
   /* ══════════ SVG charts ══════════ */
   buildAll(){
-    this.chVolumes();this.chWeekly();this.chDecades();this.chMenu();this.chChecks();
+    this.chVolumes();this.chWeekly();this.chDecades();this.chBands();
     this.chFood();this.chAup();this.chLens();this.chScale();
   }
   mount(id,svg){
@@ -1113,25 +1269,45 @@ class Component extends DCLogic {
   }
 
   chVolumes(){
-    const rows=[
-      {l:'июль-2025 · в продаже 0,2 и 0,4 л',big:'0,4 л',n1:411,n2:247},
-      {l:'октябрь-2025 · потолок опустили до 0,3 л',big:'0,3 л',n1:570,n2:161},
-      {l:'июль-2026 · потолок всё ещё 0,3 л',big:'0,3 л',n1:360,n2:114}
+    const groups=[
+      {t:'Капучино — потолок опустили в сентябре 2025 и с тех пор не поднимали',rows:[
+        {l:'июль-2025 · продавались 0,2 и 0,4 л',big:'0,4 л',n1:411,n2:247},
+        {l:'октябрь-2025 · потолок 0,3 л',big:'0,3 л',n1:570,n2:161},
+        {l:'июль-2026 · потолок 0,3 л',big:'0,3 л',n1:360,n2:114},
+        {l:'август-2026, 1–11 · потолок 0,3 л',big:'0,3 л',n1:100,n2:42}]},
+      {t:'Латте — потолок вернули на 0,6 л в апреле 2026',rows:[
+        {l:'апрель-2026 · первый месяц с 0,6 л',big:'0,6 л',n1:19,n2:206},
+        {l:'май-2026',big:'0,6 л',n1:43,n2:140},
+        {l:'июнь-2026',big:'0,6 л',n1:50,n2:112},
+        {l:'июль-2026',big:'0,6 л',n1:59,n2:103},
+        {l:'август-2026, 1–11',big:'0,6 л',n1:26,n2:31}]}
     ];
-    const W=680,H=236,L=6,R=6,T=8,rowH=64,bh=26,pw=W-L-R;
-    const svg=el('svg',{viewBox:'0 0 '+W+' '+H,role:'img','aria-label':'Рис. 2. Доля продаж капучино в максимальном доступном объёме'});
-    rows.forEach((r,i)=>{
-      const tot=r.n1+r.n2,p=r.n1/tot,y=T+20+i*rowH,w1=pw*p-2,w2=pw*(1-p)-2;
-      svg.appendChild(el('text',{x:L,y:y-6,'font-size':13.5,fill:CL.ink2,'font-family':'Golos Text, sans-serif'},r.l));
-      const a=el('rect',{x:L,y:y,width:Math.max(0,w1),height:bh,rx:5,fill:CL.s1});
-      a.setAttribute('data-tip','<b>'+r.l+'</b><br>максимальный ('+r.big+'): '+r.n1+' шт из '+tot);
-      svg.appendChild(this.grow(a,'x',i*0.13));
-      const b=el('rect',{x:L+w1+3,y:y,width:Math.max(0,w2),height:bh,rx:5,fill:CL.mid,stroke:'#ddc9a8'});
-      b.setAttribute('data-tip','<b>'+r.l+'</b><br>меньший объём: '+r.n2+' шт из '+tot);
-      svg.appendChild(this.grow(b,'x',i*0.13+0.09));
-      svg.appendChild(el('text',{x:L+10,y:y+bh-8,'font-size':13,'font-weight':600,fill:'#fff','font-family':'Golos Text, sans-serif'},Math.round(p*100)+'% берут '+r.big));
+    const W=680,L=6,R=6,rowH=52,bh=24,pw=W-L-R,titleH=30;
+    const nRows=groups.reduce((s,g)=>s+g.rows.length,0);
+    const H=8+groups.length*titleH+nRows*rowH+38;
+    const svg=el('svg',{viewBox:'0 0 '+W+' '+H,role:'img','aria-label':'Рис. 2. Доля продаж в максимальном доступном объёме — капучино и латте'});
+    let y=8,k=0;
+    groups.forEach(g=>{
+      svg.appendChild(el('text',{x:L,y:y+14,'font-size':13,'font-weight':600,fill:CL.ink,'font-family':'Golos Text, sans-serif'},g.t));
+      y+=titleH;
+      g.rows.forEach(r=>{
+        const tot=r.n1+r.n2,p=r.n1/tot,w1=pw*p-2,w2=pw*(1-p)-2,pct=Math.round(p*100);
+        svg.appendChild(el('text',{x:L,y:y+11,'font-size':13,fill:CL.ink3,'font-family':'Golos Text, sans-serif'},r.l));
+        const by=y+18;
+        const a=el('rect',{x:L,y:by,width:Math.max(0,w1),height:bh,rx:5,fill:CL.s1});
+        a.setAttribute('data-tip','<b>'+r.l+'</b><br>максимальный ('+r.big+'): '+r.n1+' шт из '+tot);
+        svg.appendChild(this.grow(a,'x',k*0.09));
+        const b=el('rect',{x:L+w1+3,y:by,width:Math.max(0,w2),height:bh,rx:5,fill:CL.mid,stroke:'#ddc9a8'});
+        b.setAttribute('data-tip','<b>'+r.l+'</b><br>меньший объём: '+r.n2+' шт из '+tot);
+        svg.appendChild(this.grow(b,'x',k*0.09+0.06));
+        const inside=p>=0.30;
+        svg.appendChild(el('text',{x:inside?L+10:L+w1+12,y:by+bh-7,'font-size':13,'font-weight':600,
+          fill:inside?'#fff':CL.ink2,'font-family':'Golos Text, sans-serif'},pct+'% берут '+r.big));
+        y+=rowH;k++;
+      });
     });
-    svg.appendChild(el('text',{x:L,y:H-6,'font-size':11.5,fill:CL.muted,'font-family':'Golos Text, sans-serif'},'сентябрь-2025 — переходный месяц, три объёма продавались разом: 0,4 л — 386 шт · 0,3 л — 194 · 0,2 л — 269'));
+    svg.appendChild(el('text',{x:L,y:H-20,'font-size':11.5,fill:CL.muted,'font-family':'Golos Text, sans-serif'},'По капучино: сентябрь-2025 — переходный месяц, в нём продавались все три объёма сразу.'));
+    svg.appendChild(el('text',{x:L,y:H-5,'font-size':11.5,fill:CL.muted,'font-family':'Golos Text, sans-serif'},'0,4 л — 386 шт · 0,3 л — 194 шт · 0,2 л — 269 шт. Поэтому отдельной строкой сентябрь не показан.'));
     this.mount('chVolumes',svg);
   }
 
@@ -1205,81 +1381,102 @@ class Component extends DCLogic {
     this.mount('chDecades',svg);
   }
 
-  chMenu(){
-    const lab=['июл','авг','сен','окт','ноя','дек','янв','фев','мар','апр','май','июн','июл'];
-    const yr=['25','25','25','25','25','25','26','26','26','26','26','26','26'];
-    const pos=[115,99,100,67,78,77,67,62,72,74,67,59,65];
-    const W=720,L=42,R=12,T=26,B=28,pw=W-L-R,Hb=196,ph=Hb-T-B,maxY=120;
-    const svg=el('svg',{viewBox:'0 0 '+W+' '+Hb,role:'img','aria-label':'Рис. 5, панель 1: позиций в продаже по месяцам'});
-    svg.appendChild(el('text',{x:L,y:14,'font-size':12.5,'font-weight':600,fill:CL.ink2,'font-family':'Golos Text, sans-serif'},'Позиций в продаже за месяц'));
-    [0,60,120].forEach(g=>{const y=T+ph*(1-g/maxY);
-      svg.appendChild(el('line',{x1:L,x2:W-R,y1:y,y2:y,stroke:CL.grid}));
-      svg.appendChild(el('text',{x:L-7,y:y+4,'text-anchor':'end','font-size':10.5,fill:CL.muted,'font-family':'Golos Text, sans-serif'},g));});
-    const step=pw/13,bw=Math.min(34,step-8);
-    pos.forEach((v,i)=>{
-      const x=L+step*i+(step-bw)/2,hh=ph*v/maxY;
-      const r=el('rect',{x:x,y:T+ph-hh,width:bw,height:hh,rx:5,fill:i===8?CL.s3:CL.s1});
-      r.setAttribute('data-tip','<b>'+lab[i]+' ’'+yr[i]+'</b><br>'+v+' позиций');
-      svg.appendChild(this.grow(r,'y',i*0.07));
-      svg.appendChild(el('text',{x:x+bw/2,y:T+ph-hh-5,'text-anchor':'middle','font-size':10.5,fill:CL.muted,'font-family':'Golos Text, sans-serif'},v));
-      svg.appendChild(el('text',{x:x+bw/2,y:Hb-8,'text-anchor':'middle','font-size':10.5,fill:CL.muted,'font-family':'Golos Text, sans-serif'},lab[i]+(lab[i]==='янв'?'’26':'')));
+  chBands(){
+    const lab=['сен','окт','ноя','дек','янв','фев','мар','апр','май','июн','июл','авг','сен','окт','ноя','дек','янв','фев','мар','апр','май','июн','июл','авг'];
+    const yr=['24','24','24','24','25','25','25','25','25','25','25','25','25','25','25','25','26','26','26','26','26','26','26','26'];
+    const cpd=[86.3,81.9,65.8,63.8,62.7,73.3,77.6,74.8,79.1,76.6,78.1,79.2,73.7,61.1,55.9,45.9,37.1,37.4,53.2,49.2,45.0,42.6,37.5,40.7];
+    const ROWS=[
+      ['Капучино 0,4 л',[[0,12,'o']]],
+      ['Латте 0,5 → 0,6 л',[[0,12,'o'],[19,23,'n']]],
+      ['Раф «двойной» → 0,6 л',[[0,12,'o'],[19,23,'n']]],
+      ['Американо 0,4 л',[[0,12,'o']]],
+      ['Флэт уайт 0,5 л',[[0,12,'o']]],
+      ['Завтраки: сырники, каша',[[0,12,'o'],[23,23,'n']]],
+      ['Панини и чиабатты',[[0,15,'o']]],
+      ['Сэндвичи и бейглы',[[0,15,'o'],[18,22,'n']]],
+      ['Френч-доги',[[17,20,'n']]],
+      ['Бабл-ти',[[6,9,'o']]],
+      ['Чайно-травяная линейка',[[12,23,'n']]],
+      ['Летняя линейка 2026',[[19,23,'n']]]
+    ];
+    const W=880,L=186,R=12,T=46,rowH=25,pw=W-L-R,n=24,step=pw/n;
+    const bandsH=ROWS.length*rowH, lineT=T+bandsH+40, lineH=96, H=lineT+lineH+34;
+    const svg=el('svg',{viewBox:'0 0 '+W+' '+H,role:'img','aria-label':'Рис. 5. Что было в продаже по месяцам и сколько было чеков в день'});
+    const X=i=>L+step*i;
+    // подложка: чередующиеся месяцы + вертикаль на 21.09.2025
+    for(let i=0;i<n;i++) if(i%2)
+      svg.appendChild(el('rect',{x:X(i),y:T-8,width:step,height:bandsH+8,fill:'#faf5ec'}));
+    const mark=(i,txt,col,ty,anchorEnd)=>{
+      svg.appendChild(el('line',{x1:X(i),x2:X(i),y1:ty+4,y2:lineT+lineH,stroke:col,'stroke-width':1.4,'stroke-dasharray':'4 3'}));
+      const t=el('text',{x:anchorEnd?W-R:X(i)+5,y:ty,'font-size':11.5,'font-weight':600,fill:col,'font-family':'Golos Text, sans-serif'},txt);
+      if(anchorEnd)t.setAttribute('text-anchor','end');
+      svg.appendChild(t);
+    };
+    mark(13,'21.09.2025 · новая линейка',CL.neg,14,false);
+    mark(19,'апрель-2026 · вернули объёмы',CL.good,32,true);
+    ROWS.forEach((r,ri)=>{
+      const y=T+ri*rowH;
+      svg.appendChild(el('text',{x:L-10,y:y+13,'text-anchor':'end','font-size':12.5,fill:CL.ink2,'font-family':'Golos Text, sans-serif'},r[0]));
+      r[1].forEach(sg=>{
+        const x1=X(sg[0]),x2=X(sg[1]+1),col=sg[2]==='n'?CL.good:CL.s1;
+        const rect=el('rect',{x:x1+1.5,y:y+3,width:Math.max(3,x2-x1-3),height:rowH-9,rx:5,fill:col,opacity:.85});
+        rect.setAttribute('data-tip','<b>'+r[0]+'</b><br>в продаже: '+lab[sg[0]]+' ’'+yr[sg[0]]+' — '+lab[sg[1]]+' ’'+yr[sg[1]]);
+        svg.appendChild(this.grow(rect,'x',ri*0.05));
+      });
     });
-    this.mount('chMenu',svg);
-  }
-
-  chChecks(){
-    const lab=['июл','авг','сен','окт','ноя','дек','янв','фев','мар','апр','май','июн','июл'];
-    const yr=['25','25','25','25','25','25','26','26','26','26','26','26','26'];
-    const cpd=[78.1,79.2,73.7,61.1,55.9,45.9,37.1,37.4,53.2,49.2,45.0,42.6,37.5];
-    const W=720,L=42,R=12,T=26,B=28,pw=W-L-R,H2=182,ph=H2-T-B,maxY=90;
-    const svg=el('svg',{viewBox:'0 0 '+W+' '+H2,role:'img','aria-label':'Рис. 5, панель 2: чеков в день по месяцам'});
-    svg.appendChild(el('text',{x:L,y:14,'font-size':12.5,'font-weight':600,fill:CL.ink2,'font-family':'Golos Text, sans-serif'},'Чеков в день'));
-    [0,45,90].forEach(g=>{const y=T+ph*(1-g/maxY);
-      svg.appendChild(el('line',{x1:L,x2:W-R,y1:y,y2:y,stroke:CL.grid}));
-      svg.appendChild(el('text',{x:L-7,y:y+4,'text-anchor':'end','font-size':10.5,fill:CL.muted,'font-family':'Golos Text, sans-serif'},g));});
-    const step=pw/13,X=i=>L+step*i+step/2,Y=v=>T+ph*(1-v/maxY);
-    let d='';cpd.forEach((v,i)=>{d+=(i?'L':'M')+X(i).toFixed(1)+','+Y(v).toFixed(1);});
-    const path=el('path',{d:d,fill:'none',stroke:CL.s1,'stroke-width':2.2,'stroke-linejoin':'round'});
+    // линия «чеков в день»
+    svg.appendChild(el('text',{x:L-10,y:lineT-10,'text-anchor':'end','font-size':12.5,'font-weight':600,fill:CL.ink,'font-family':'Golos Text, sans-serif'},'Чеков в день'));
+    const maxY=90,Y=v=>lineT+lineH*(1-v/maxY);
+    [0,45,90].forEach(g=>{
+      svg.appendChild(el('line',{x1:L,x2:W-R,y1:Y(g),y2:Y(g),stroke:CL.grid}));
+      svg.appendChild(el('text',{x:L-8,y:Y(g)+4,'text-anchor':'end','font-size':10.5,fill:CL.muted,'font-family':'Golos Text, sans-serif'},g));
+    });
+    let dd='';cpd.forEach((v,i)=>{dd+=(i?'L':'M')+(X(i)+step/2).toFixed(1)+','+Y(v).toFixed(1);});
+    const path=el('path',{d:dd,fill:'none',stroke:CL.s1,'stroke-width':2.2,'stroke-linejoin':'round'});
     svg.appendChild(path);
     cpd.forEach((v,i)=>{
-      svg.appendChild(this.fade(el('circle',{cx:X(i),cy:Y(v),r:3.6,fill:CL.s1,stroke:CL.surface,'stroke-width':2}),0.3+i*0.16));
-      if(i===0||i===5||i===8||i===12)
-        svg.appendChild(this.fade(el('text',{x:X(i),y:Y(v)-9,'text-anchor':'middle','font-size':11,'font-weight':600,fill:CL.ink2,'font-family':'Golos Text, sans-serif'},ru(v)),0.5+i*0.16));
-      const hit=el('rect',{x:X(i)-step/2,y:T,width:step,height:ph,fill:'transparent'});
+      svg.appendChild(this.fade(el('circle',{cx:X(i)+step/2,cy:Y(v),r:3.2,fill:CL.s1,stroke:CL.surface,'stroke-width':2}),0.3+i*0.07));
+      const hit=el('rect',{x:X(i),y:lineT,width:step,height:lineH,fill:'transparent'});
       hit.setAttribute('data-tip','<b>'+lab[i]+' ’'+yr[i]+'</b><br>'+ru(v)+' чека/день');
       svg.appendChild(hit);
-      svg.appendChild(el('text',{x:X(i),y:H2-8,'text-anchor':'middle','font-size':10.5,fill:CL.muted,'font-family':'Golos Text, sans-serif'},lab[i]));
+      svg.appendChild(el('text',{x:X(i)+step/2,y:H-14,'text-anchor':'middle','font-size':10.5,fill:CL.muted,'font-family':'Golos Text, sans-serif'},lab[i]));
+      if(i===0||i===4||i===16)
+        svg.appendChild(el('text',{x:X(i)+step/2,y:H-2,'text-anchor':'middle','font-size':10,fill:CL.muted,'font-family':'Golos Text, sans-serif'},'’'+yr[i]));
     });
-    if(this.mount('chChecks',svg))this.line(path);
+    if(this.mount('chBands',svg))this.line(path);
   }
 
   chFood(){
-    const data=[['сен’24',74.6],['окт',105.5],['ноя',80.6],['дек',65.2],['янв’25',70.9],['фев',68.2],['мар',71.2],['апр',59.7],['май',77.5],['июн',70.2],null,['фев’26',21.1],['мар',41.0],['апр',32.3],['май',31.6],['июн',24.8],['июл',12.5]];
-    const W=720,H=232,L=42,R=12,T=34,B=30,pw=W-L-R,ph=H-T-B,maxY=110;
+    const lab=['сен','окт','ноя','дек','янв','фев','мар','апр','май','июн','июл','авг','сен','окт','ноя','дек','янв','фев','мар','апр','май','июн','июл','авг'];
+    const yr=['24','24','24','24','25','25','25','25','25','25','25','25','25','25','25','25','26','26','26','26','26','26','26','26'];
+    const val=[73.1,105.0,80.6,65.2,70.9,68.2,73.0,59.7,79.5,71.3,61.4,55.2,32.5,19.3,26.5,14.4,8.5,23.8,45.0,37.9,36.6,29.7,12.5,4.5];
+    const W=800,H=262,L=42,R=12,T=52,B=34,pw=W-L-R,ph=H-T-B,maxY=110,n=val.length,step=pw/n;
     const svg=el('svg',{viewBox:'0 0 '+W+' '+H,role:'img','aria-label':'Рис. 6. Выручка несладкой еды по месяцам, тысяч рублей'});
     [0,50,100].forEach(g=>{const y=T+ph*(1-g/maxY);
       svg.appendChild(el('line',{x1:L,x2:W-R,y1:y,y2:y,stroke:CL.grid}));
       svg.appendChild(el('text',{x:L-7,y:y+4,'text-anchor':'end','font-size':10.5,fill:CL.muted,'font-family':'Golos Text, sans-serif'},g));});
-    const n=data.length,step=pw/n,bw=Math.min(30,step-6);let k=0;
-    svg.appendChild(el('text',{x:L,y:15,'font-size':11.5,fill:CL.muted,'font-family':'Golos Text, sans-serif'},'панини · чиабатты · сырники · каши · скрамблы · сэндвичи'));
-    svg.appendChild(el('text',{x:W-R,y:15,'text-anchor':'end','font-size':11.5,fill:CL.muted,'font-family':'Golos Text, sans-serif'},'доги · сэндвичи · косичка'));
-    data.forEach((dp,i)=>{
-      const x=L+step*i+(step-bw)/2;
-      if(!dp){
-        svg.appendChild(el('rect',{x:x-3,y:T,width:bw+6,height:ph,fill:CL.mid,opacity:.7,rx:3}));
-        const c1=x+bw/2-5,c2=x+bw/2+7;
-        svg.appendChild(el('text',{x:c1,y:T+ph/2-8,'text-anchor':'middle','font-size':9.5,fill:CL.muted,'font-family':'Golos Text, sans-serif',transform:'rotate(-90 '+c1+' '+(T+ph/2-8)+')'},'июл–сен: переход'));
-        svg.appendChild(el('text',{x:c2,y:T+ph/2-8,'text-anchor':'middle','font-size':9.5,fill:CL.muted,'font-family':'Golos Text, sans-serif',transform:'rotate(-90 '+c2+' '+(T+ph/2-8)+')'},'окт–янв: еды нет'));
-        return;
-      }
-      const hh=Math.max(2,ph*dp[1]/maxY);
-      const r=el('rect',{x:x,y:T+ph-hh,width:bw,height:hh,rx:5,fill:CL.s1});
-      r.setAttribute('data-tip','<b>'+dp[0]+'</b><br>'+ru(dp[1])+' тыс. ₽');
-      svg.appendChild(this.grow(r,'y',k*0.07));k++;
-      if(dp[1]>=100||dp[1]===41.0||dp[0]==='июл')
-        svg.appendChild(el('text',{x:x+bw/2,y:T+ph-hh-5,'text-anchor':'middle','font-size':10.5,'font-weight':600,fill:CL.ink2,'font-family':'Golos Text, sans-serif'},ru(dp[1])));
-      svg.appendChild(el('text',{x:x+bw/2,y:H-8,'text-anchor':'middle','font-size':10,fill:CL.muted,'font-family':'Golos Text, sans-serif'},dp[0]));
+    const X=i=>L+step*i, bw=Math.min(24,step-5);
+    // границы событий
+    const gate=(i,txt,col,anchorEnd)=>{
+      svg.appendChild(el('line',{x1:X(i),x2:X(i),y1:T-16,y2:T+ph,stroke:col,'stroke-width':1.4,'stroke-dasharray':'4 3'}));
+      const t=el('text',{x:anchorEnd?W-R:X(i)+4,y:T-20,'font-size':11,'font-weight':600,fill:col,'font-family':'Golos Text, sans-serif'},txt);
+      if(anchorEnd)t.setAttribute('text-anchor','end');
+      svg.appendChild(t);
+    };
+    gate(12,'21.09.2025',CL.neg,false);
+    gate(17,'возврат еды, фев–мар 2026',CL.good,true);
+    val.forEach((v,i)=>{
+      const hh=Math.max(2,ph*v/maxY),x=X(i)+(step-bw)/2;
+      const r=el('rect',{x:x,y:T+ph-hh,width:bw,height:hh,rx:4,fill:i>=17?CL.good:CL.s1,opacity:i===23?.55:1});
+      r.setAttribute('data-tip','<b>'+lab[i]+' ’'+yr[i]+'</b><br>'+ru(v)+' тыс. ₽'+(i===23?'<br>только 1–11 августа':''));
+      svg.appendChild(this.grow(r,'y',i*0.05));
+      if(i===1||i===12||i===16||i===18||i===22)
+        svg.appendChild(el('text',{x:x+bw/2,y:T+ph-hh-5,'text-anchor':'middle','font-size':10.5,'font-weight':600,fill:CL.ink2,'font-family':'Golos Text, sans-serif'},ru(v)));
+      svg.appendChild(el('text',{x:x+bw/2,y:H-16,'text-anchor':'middle','font-size':10,fill:CL.muted,'font-family':'Golos Text, sans-serif'},lab[i]));
+      if(i===0||i===4||i===16)
+        svg.appendChild(el('text',{x:x+bw/2,y:H-4,'text-anchor':'middle','font-size':9.5,fill:CL.muted,'font-family':'Golos Text, sans-serif'},'’'+yr[i]));
     });
+    svg.appendChild(el('text',{x:L,y:15,'font-size':11.5,fill:CL.muted,'font-family':'Golos Text, sans-serif'},'панини · чиабатты · бейглы · сырники · каши · скрамблы · сэндвичи · френч-доги · косичка с ветчиной · блинчики'));
     this.mount('chFood',svg);
   }
 
@@ -1349,7 +1546,7 @@ class Component extends DCLogic {
     svg.appendChild(this.fade(band,0.5));
     const marks=[
       {v:37.5,t:'июль',d:'37,5 — факт июля',up:false,col:CL.s1},
-      {v:38.5,t:'август*',d:'≈38 — темп 1–5 августа без аномальной субботы 01.08',up:true,col:CL.s1},
+      {v:40.7,t:'август*',d:'40,7 — факт 1–11 августа (≈40 с поправкой на дни недели)',up:true,col:CL.good},
       {v:44.3,t:'безубыток',d:'43–45 — ноль при нынешних расходах',up:false,col:CL.s2,band:true},
       {v:50,t:'цель · ~50',d:'48–50 — ноль с запасом и полными налогами',up:true,col:CL.ink},
       {v:61,t:'аренда 15%',d:'61 — уровень, где аренда = 15% выручки',up:false,col:CL.ink}
@@ -1365,7 +1562,7 @@ class Component extends DCLogic {
       g.appendChild(el('text',{x:X(m.v),y:ty,'text-anchor':'middle','font-size':12,'font-weight':m.band?700:600,fill:CL.ink2,'font-family':'Golos Text, sans-serif'},m.t));
       svg.appendChild(this.fade(g,0.15*i));
     });
-    svg.appendChild(el('text',{x:L,y:H-6,'font-size':11.5,fill:CL.muted,'font-family':'Golos Text, sans-serif'},'* суббота 01.08 (62 чека — разовый всплеск, вдвое выше нормы) в оценку темпа не включена'));
+    svg.appendChild(el('text',{x:L,y:H-6,'font-size':11.5,fill:CL.muted,'font-family':'Golos Text, sans-serif'},'* 448 чеков за 1–11 августа. В окне 4 выходных дня из 11 при обычных 3 — с поправкой на это темп ≈ 40 чеков в день'));
     this.mount('chScale',svg);
   }
 }
